@@ -1,8 +1,6 @@
 <mat-sidenav-container style="height: 100vh">
-  <mat-sidenav #drawer mode="over" position="start" class="text-center p-2">
-    <p>Menu lateral</p>
-    <button class="w-100" matButton="filled" >Teste</button>
-    <button class="w-100 mt-2" matButton="filled" (click)="drawer.close()">Fechar</button>
+  <mat-sidenav #drawer mode="over" position="start">
+    <app-side-menu (closeMenu)="closeMenu()"></app-side-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-home (alternarMenu)="alternarMenu()"></app-home>

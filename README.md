@@ -29,3 +29,10 @@ Atualizar em angular.json:
 ## Angular Material
 
 ng add @angular/material
+
+## Configurar PWA
+
+ng add @angular/pwa
+
+Editar o nome da aplicação em manifest.webmanifest
+

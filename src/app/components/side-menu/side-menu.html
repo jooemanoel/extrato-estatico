@@ -1,0 +1,23 @@
+<mat-toolbar class="px-2" color="primary">
+  <button matMiniFab style="visibility: hidden;">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="flex-fill text-center">Menu</span>
+  <button matMiniFab aria-label="Fechar" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-nav-list>
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>dashboard</mat-icon>
+    <span matListItemTitle>Painel</span>
+  </a>
+  <a mat-list-item routerLink="/extrato" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>receipt_long</mat-icon>
+    <span matListItemTitle>Extrato</span>
+  </a>
+  <a mat-list-item routerLink="/configuracoes" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>settings</mat-icon>
+    <span matListItemTitle>Configurações</span>
+  </a>
+</mat-nav-list>

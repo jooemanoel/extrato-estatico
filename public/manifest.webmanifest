@@ -1,6 +1,6 @@
 {
-  "name": "extrato-estatico",
-  "short_name": "extrato-estatico",
+  "name": "Extrato",
+  "short_name": "Extrato",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1753624527168,
+  "timestamp": 1753625859321,
   "index": "/extrato-estatico/index.html",
   "assetGroups": [
     {
@@ -42,18 +42,18 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/extrato-estatico/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/extrato-estatico/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
-    "/extrato-estatico/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
-    "/extrato-estatico/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
-    "/extrato-estatico/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
-    "/extrato-estatico/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
-    "/extrato-estatico/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
-    "/extrato-estatico/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
-    "/extrato-estatico/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/extrato-estatico/favicon.ico": "a77fafa96bb7bdacf7bdba92c9ae5ef8a4989ede",
+    "/extrato-estatico/icons/icon-128x128.png": "30620b8d2f29f235d27d8075e5d9d5633aba05e1",
+    "/extrato-estatico/icons/icon-144x144.png": "688af23fd8ff7da6a66d976d6c25567f9c411fdd",
+    "/extrato-estatico/icons/icon-152x152.png": "8b97314ca64302f7683c17eaeb64ce63fdb6d4c0",
+    "/extrato-estatico/icons/icon-192x192.png": "38640c6d6f3b40b9827a23fec975ba6dab991432",
+    "/extrato-estatico/icons/icon-384x384.png": "44fd38df23e44b91f92a433f22cd514db09f5656",
+    "/extrato-estatico/icons/icon-512x512.png": "4e97db57703c0b69dbd64dcc1a2d802377650906",
+    "/extrato-estatico/icons/icon-72x72.png": "72b10740c7c8f4b5e7d1c4b3adf6f78e495c710d",
+    "/extrato-estatico/icons/icon-96x96.png": "1f8deff38826f76b7d546ba426322bd72e348cdb",
     "/extrato-estatico/index.html": "a77cd64a0526dd0cf33aacdad26e309f021e3992",
     "/extrato-estatico/main-XFGR4Y5A.js": "4e514eba217e1b7ee3f1c708b195132ad4390445",
-    "/extrato-estatico/manifest.webmanifest": "39eaa5a0997c5137504f43f9993db73216fd350e",
+    "/extrato-estatico/manifest.webmanifest": "eb8dc20ccbdfc7a215bd4ce8dea5bf13d4e811b8",
     "/extrato-estatico/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
     "/extrato-estatico/styles-YYQHDA47.css": "150b46a61eb6db8c201b4a1df07ca8bbfb184a32"
   },

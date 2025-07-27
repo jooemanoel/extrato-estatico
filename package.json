@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
+    "postbuild": "cp -r docs/browser/* docs/ && rm -rf docs/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -20,12 +21,15 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^20.1.3",
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
     "@angular/core": "^20.1.0",
     "@angular/forms": "^20.1.0",
+    "@angular/material": "^20.1.3",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "bootstrap": "^5.3.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

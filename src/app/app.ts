@@ -1,12 +1,17 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, ViewChild } from '@angular/core';
+import { Home } from './pages/home/home';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Home, MatSidenavModule , MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('extrato-estatico');
+  @ViewChild(MatSidenav) drawer!: MatSidenav;
+  alternarMenu(){
+    this.drawer?.toggle();
+  }
 }

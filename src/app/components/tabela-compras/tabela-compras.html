@@ -1,0 +1,31 @@
+<div class="container p-2 pt-0">
+  <mat-card appearance="filled">
+    <mat-card-header class="m-0 p-2 justify-content-center">
+      <mat-card-title>ÚLTIMAS COMPRAS</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-2">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        style="background-color: transparent"
+      >
+        <ng-container matColumnDef="descricao_compra">
+          <th mat-header-cell *matHeaderCellDef>DESCRIÇÃO</th>
+          <td mat-cell *matCellDef="let element">
+            <span>{{ data(element.timestamp_compra) }}</span>
+            <br>
+            <b>{{ element.descricao_compra }}</b>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="valor_compra">
+          <th mat-header-cell *matHeaderCellDef>VALOR</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            {{ formatarParaReal(element.valor_compra) }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

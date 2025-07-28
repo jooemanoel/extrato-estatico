@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1753625859321,
+  "timestamp": 1753668613793,
   "index": "/extrato-estatico/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/extrato-estatico/favicon.ico",
         "/extrato-estatico/index.html",
-        "/extrato-estatico/main-XFGR4Y5A.js",
+        "/extrato-estatico/main-HNNBRZTY.js",
         "/extrato-estatico/manifest.webmanifest",
         "/extrato-estatico/polyfills-B6TNHZQ6.js",
-        "/extrato-estatico/styles-YYQHDA47.css"
+        "/extrato-estatico/styles-TSMUBWJ3.css"
       ],
       "patterns": []
     },
@@ -42,7 +42,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/extrato-estatico/favicon.ico": "a77fafa96bb7bdacf7bdba92c9ae5ef8a4989ede",
+    "/extrato-estatico/favicon.ico": "02c96009f39b66e12aabe4a9ff11931c82ba8254",
     "/extrato-estatico/icons/icon-128x128.png": "30620b8d2f29f235d27d8075e5d9d5633aba05e1",
     "/extrato-estatico/icons/icon-144x144.png": "688af23fd8ff7da6a66d976d6c25567f9c411fdd",
     "/extrato-estatico/icons/icon-152x152.png": "8b97314ca64302f7683c17eaeb64ce63fdb6d4c0",
@@ -51,11 +51,11 @@
     "/extrato-estatico/icons/icon-512x512.png": "4e97db57703c0b69dbd64dcc1a2d802377650906",
     "/extrato-estatico/icons/icon-72x72.png": "72b10740c7c8f4b5e7d1c4b3adf6f78e495c710d",
     "/extrato-estatico/icons/icon-96x96.png": "1f8deff38826f76b7d546ba426322bd72e348cdb",
-    "/extrato-estatico/index.html": "a77cd64a0526dd0cf33aacdad26e309f021e3992",
-    "/extrato-estatico/main-XFGR4Y5A.js": "4e514eba217e1b7ee3f1c708b195132ad4390445",
+    "/extrato-estatico/index.html": "55400942af684da21b832d3880c48a5800288910",
+    "/extrato-estatico/main-HNNBRZTY.js": "786240100034393ea613604a44a98b88513ed856",
     "/extrato-estatico/manifest.webmanifest": "eb8dc20ccbdfc7a215bd4ce8dea5bf13d4e811b8",
     "/extrato-estatico/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
-    "/extrato-estatico/styles-YYQHDA47.css": "150b46a61eb6db8c201b4a1df07ca8bbfb184a32"
+    "/extrato-estatico/styles-TSMUBWJ3.css": "05bb91ebb92bcc14bb230d089267f4a8686d0929"
   },
   "navigationUrls": [
     {

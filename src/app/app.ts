@@ -1,30 +1,38 @@
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
-import { Home } from './pages/home/home';
+// app.ts
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { SideMenu } from './components/side-menu/side-menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { filter } from 'rxjs';
+import { SideMenu } from './components/side-menu/side-menu';
+import { Home } from './pages/home/home';
+import { Header } from './components/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [Home, SideMenu, MatSidenavModule, MatSnackBarModule],
+  imports: [Header, Home, SideMenu, MatSidenavModule, MatSnackBarModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App implements OnInit {
   @ViewChild(MatSidenav) drawer!: MatSidenav;
-  constructor(private updates: SwUpdate, private _snackBar: MatSnackBar) {}
+  constructor(
+    private swUpdate: SwUpdate,
+    private snackBar: MatSnackBar
+  ) {}
   ngOnInit(): void {
-    if (this.updates.isEnabled) {
-      this.updates.versionUpdates
+    this.checkForUpdates();
+  }
+  checkForUpdates() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates
         .pipe(filter((evt) => evt.type === 'VERSION_READY'))
         .subscribe(() => {
-          this._snackBar
+          this.snackBar
             .open('Nova versão disponível', 'Atualizar')
             .onAction()
             .subscribe(() => {
-              this.updates
+              this.swUpdate
                 .activateUpdate()
                 .then(() => document.location.reload());
             });

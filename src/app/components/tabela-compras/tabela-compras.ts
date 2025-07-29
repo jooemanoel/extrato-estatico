@@ -36,7 +36,8 @@ export class TabelaCompras {
     });
   }
   formatarParaData(timestamp: string) {
-    return new Date(timestamp).toLocaleDateString('pt-br');
+    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
+    return `${dia}/${mes}/${ano}`;
   }
   detalhar(element: Compra){
     this.compraService.compra.set(element);

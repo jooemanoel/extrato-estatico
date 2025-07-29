@@ -55,7 +55,7 @@ export class InserirCompra {
   }
   adicionar() {
     const compra: Compra = {
-      descricao_compra: this.formCompra.value.descricao_compra ?? '',
+      descricao_compra: (this.formCompra.value.descricao_compra ?? '').toUpperCase(),
       data_compra: this.getDataFormatada(
         this.formCompra.value.data_compra ?? new Date()
       ),

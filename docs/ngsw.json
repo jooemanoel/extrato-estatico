@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1753828951128,
+  "timestamp": 1753829858369,
   "index": "/extrato-estatico/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/extrato-estatico/favicon.ico",
         "/extrato-estatico/index.html",
-        "/extrato-estatico/main-TRINFVVH.js",
+        "/extrato-estatico/main-JUDNSO4X.js",
         "/extrato-estatico/manifest.webmanifest",
         "/extrato-estatico/polyfills-B6TNHZQ6.js",
         "/extrato-estatico/styles-TSMUBWJ3.css"
@@ -51,8 +51,8 @@
     "/extrato-estatico/icons/icon-512x512.png": "4e97db57703c0b69dbd64dcc1a2d802377650906",
     "/extrato-estatico/icons/icon-72x72.png": "72b10740c7c8f4b5e7d1c4b3adf6f78e495c710d",
     "/extrato-estatico/icons/icon-96x96.png": "1f8deff38826f76b7d546ba426322bd72e348cdb",
-    "/extrato-estatico/index.html": "1de6cf9374774a3c00b6e073a74f8a200793cb02",
-    "/extrato-estatico/main-TRINFVVH.js": "a40644471282c89a7bd6925c5bcd670ee7790079",
+    "/extrato-estatico/index.html": "e08b915007d6a017181abe42dd7e4256d7db1b8f",
+    "/extrato-estatico/main-JUDNSO4X.js": "6f79e0435cfde0bc01f627373c9280953ccaaaa3",
     "/extrato-estatico/manifest.webmanifest": "eb8dc20ccbdfc7a215bd4ce8dea5bf13d4e811b8",
     "/extrato-estatico/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
     "/extrato-estatico/styles-TSMUBWJ3.css": "05bb91ebb92bcc14bb230d089267f4a8686d0929"

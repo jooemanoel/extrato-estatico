@@ -5,7 +5,8 @@ export class Mock {
     return {
       codigo_compra: 0,
       descricao_compra: '',
-      timestamp_compra: '',
+      valor_compra: '',
+      data_compra: '',
       codigo_categoria_compra: 0,
     };
   }

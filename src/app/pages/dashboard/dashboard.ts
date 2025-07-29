@@ -11,8 +11,17 @@ import { CompraService } from '../../services/compra-service';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  constructor(private comprasService: CompraService) {}
+  constructor(private compraService: CompraService) {}
+  get total_compras() {
+    return this.compraService.total_compras;
+  }
   ngOnInit(): void {
-    this.comprasService.listarCompras();
+    this.compraService.listarCompras();
+  }
+  formatarParaReal(valor: number): string {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
   }
 }

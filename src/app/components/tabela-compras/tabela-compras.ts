@@ -1,21 +1,27 @@
-import { AfterViewInit, Component, effect, ViewChild } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { CompraService } from '../../services/compra-service';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { Compra } from '../../shared/models/interfaces/compra';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CompraService } from '../../services/compra-service';
+import { Compra } from '../../shared/models/interfaces/compra';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-tabela-compras',
-  imports: [MatCardModule, MatTableModule, MatSortModule, MatProgressSpinnerModule],
+  imports: [
+    MatCardModule,
+    MatTableModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './tabela-compras.html',
-  styleUrl: './tabela-compras.css'
+  styleUrl: './tabela-compras.css',
 })
 export class TabelaCompras {
   displayedColumns: string[] = ['descricao_compra', 'valor_compra'];
   dataSource = new MatTableDataSource<Compra>([]);
-  constructor(private compraService: CompraService) {
+  constructor(private compraService: CompraService, private controleService: ControleService) {
     effect(() => {
       this.dataSource.data = this.compraService.compras();
     });
@@ -24,9 +30,16 @@ export class TabelaCompras {
     return this.compraService.carregando;
   }
   formatarParaReal(valor: string): string {
-  return parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-  data(timestamp: string){
+    return parseFloat(valor).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  }
+  formatarParaData(timestamp: string) {
     return new Date(timestamp).toLocaleDateString('pt-br');
+  }
+  detalhar(element: Compra){
+    this.compraService.compra.set(element);
+    this.controleService.navegar('detalhar-compra');
   }
 }

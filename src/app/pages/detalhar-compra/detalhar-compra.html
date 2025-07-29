@@ -1,0 +1,26 @@
+<div class="container p-2">
+    <mat-card appearance="filled">
+      <mat-card-content>
+        {{ compra().descricao_compra }}
+        <br>
+        {{ formatarParaReal(compra().valor_compra) }}
+        <br>
+        {{ formatarParaData(compra().data_compra) }}
+      </mat-card-content>
+      <mat-card-actions class="d-flex gap-2">
+        <button
+          class="w-50"
+          matButton="filled"
+        >
+          Editar
+        </button>
+        <button
+          class="w-50"
+          matButton="filled"
+          (click)="apagarCompra()"
+        >
+          Apagar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+</div>

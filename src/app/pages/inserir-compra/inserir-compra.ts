@@ -6,6 +6,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
@@ -20,6 +21,7 @@ import { Compra } from '../../shared/models/interfaces/compra';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatSelectModule,
     CurrencyMaskModule,
   ],
   providers: [provideNativeDateAdapter()],
@@ -57,6 +59,14 @@ export class InserirCompra {
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };
     this.compraService.inserirCompra(compra);
-    this.controleService.navegar('dashboard');
+    this.controleService.navegar('extrato');
+  }
+  codigosCategoriaCompra() {
+    return Object.keys(this.compraService.categoriaCompra).map((x) =>
+      parseInt(x)
+    );
+  }
+  categoriaCompra(codigo: number) {
+    return this.compraService.categoriaCompra[codigo];
   }
 }

@@ -27,7 +27,7 @@ export class DetalharCompra {
   }
   apagarCompra() {
     this.compraService.apagarCompra(this.compraService.compra().codigo_compra ?? 0);
-    this.controleService.navegar('dashboard');
+    this.controleService.navegar('extrato');
   }
   editarCompra() {
     this.controleService.navegar('editar-compra');

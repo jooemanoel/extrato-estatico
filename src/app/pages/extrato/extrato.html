@@ -1,0 +1,23 @@
+<div class="container p-2 d-flex gap-2">
+  <div class="w-50">
+    <mat-card appearance="filled">
+      <mat-card-header class="d-flex justify-content-center">
+        <mat-card-title>-</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="d-flex justify-content-center">
+        <p>Conta</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="w-50">
+    <mat-card appearance="filled">
+      <mat-card-header class="d-flex justify-content-center">
+        <mat-card-title>{{ formatarParaReal(total_compras()) }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="d-flex justify-content-center">
+        <p>Total de compras</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<app-tabela-compras></app-tabela-compras>

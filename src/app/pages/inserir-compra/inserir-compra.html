@@ -30,6 +30,16 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Categoria da compra</mat-label>
+          <mat-select formControlName="codigo_categoria_compra">
+            @for (codigo of codigosCategoriaCompra(); track codigo) {
+            <mat-option [value]="codigo">{{
+              categoriaCompra(codigo).nome
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
         <button

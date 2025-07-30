@@ -2,14 +2,15 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { Compra } from '../../shared/models/interfaces/compra';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-editar-compra',
@@ -20,6 +21,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatSelectModule,
     CurrencyMaskModule,
   ],
   providers: [provideNativeDateAdapter()],
@@ -47,8 +49,8 @@ export class EditarCompra {
       descricao_compra: this.compra().descricao_compra,
       valor_compra: this.compra().valor_compra,
       data_compra: new Date(this.compra().data_compra.slice(0, 19)),
-      codigo_categoria_compra: this.compra().codigo_categoria_compra
-    })
+      codigo_categoria_compra: this.compra().codigo_categoria_compra,
+    });
   }
   getDataFormatada(data: Date = new Date()) {
     const ano = data.getFullYear();
@@ -71,6 +73,14 @@ export class EditarCompra {
     };
     console.log(compra);
     this.compraService.editarCompra(compra);
-    this.controleService.navegar('dashboard');
+    this.controleService.navegar('extrato');
+  }
+  codigosCategoriaCompra() {
+    return Object.keys(this.compraService.categoriaCompra).map((x) =>
+      parseInt(x)
+    );
+  }
+  categoriaCompra(codigo: number) {
+    return this.compraService.categoriaCompra[codigo];
   }
 }

@@ -7,6 +7,13 @@ import { Mock } from '../shared/utils/mock';
   providedIn: 'root',
 })
 export class CompraService {
+  categoriaCompra: Record<number, {nome: string, icon: string}> = {
+    1: {nome: 'MERCADO', icon: 'shopping_cart'},
+    2: {nome: 'SAÚDE', icon: 'health_cross'},
+    3: {nome: 'TRANSPORTE', icon: 'directions_bus'},
+    4: {nome: 'LAZER', icon: 'mood'},
+    5: {nome: 'VARIEDADES', icon: 'shopping_bag'}
+  };
   carregando = signal(true);
   total_compras = signal(0);
   compras = signal<Compra[]>([]);

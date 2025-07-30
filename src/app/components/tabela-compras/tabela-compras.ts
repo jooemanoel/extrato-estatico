@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CompraService } from '../../services/compra-service';
 import { Compra } from '../../shared/models/interfaces/compra';
 import { ControleService } from '../../services/controle-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tabela-compras',
@@ -14,12 +15,13 @@ import { ControleService } from '../../services/controle-service';
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    MatIconModule
   ],
   templateUrl: './tabela-compras.html',
   styleUrl: './tabela-compras.css',
 })
 export class TabelaCompras {
-  displayedColumns: string[] = ['descricao_compra', 'valor_compra'];
+  displayedColumns: string[] = ['codigo_categoria_compra', 'descricao_compra', 'valor_compra'];
   dataSource = new MatTableDataSource<Compra>([]);
   constructor(private compraService: CompraService, private controleService: ControleService) {
     effect(() => {
@@ -42,5 +44,8 @@ export class TabelaCompras {
   detalhar(element: Compra){
     this.compraService.compra.set(element);
     this.controleService.navegar('detalhar-compra');
+  }
+  categoriaCompra(codigo: number) {
+    return this.compraService.categoriaCompra[codigo];
   }
 }

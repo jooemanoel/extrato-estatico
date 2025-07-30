@@ -5,10 +5,11 @@ import { Injectable, signal } from '@angular/core';
 })
 export class ControleService {
   titulosPorPagina: Record<string, string> = {
-    dashboard: 'Extrato',
+    dashboard: 'Painel',
     'inserir-compra': 'Nova Compra',
     'detalhar-compra': 'Detalhar Compra',
-    'editar-compra': 'Editar Compra'
+    'editar-compra': 'Editar Compra',
+    extrato: 'Extrato',
   };
   pagina = signal('dashboard');
   titulo = signal('Extrato');

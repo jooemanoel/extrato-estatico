@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { TabelaCompras } from '../../components/tabela-compras/tabela-compras';
 import { CompraService } from '../../services/compra-service';
 
 @Component({
-  selector: 'app-dashboard',
-  imports: [MatCardModule, MatButtonModule],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  selector: 'app-extrato',
+  imports: [TabelaCompras, MatCardModule, MatButtonModule],
+  templateUrl: './extrato.html',
+  styleUrl: './extrato.css',
 })
-export class Dashboard {
+export class Extrato {
   constructor(private compraService: CompraService) {}
   get total_compras() {
     return this.compraService.total_compras;
@@ -22,11 +23,5 @@ export class Dashboard {
       style: 'currency',
       currency: 'BRL',
     });
-  }
-  somaCategoria(categoria: number) {
-    return this.compraService
-      .compras()
-      .filter(x => x.codigo_categoria_compra == categoria)
-      .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
   }
 }

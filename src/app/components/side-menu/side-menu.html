@@ -1,5 +1,5 @@
 <mat-toolbar class="px-2" color="primary">
-  <button matMiniFab style="visibility: hidden;">
+  <button matMiniFab style="visibility: hidden">
     <mat-icon>menu</mat-icon>
   </button>
   <span class="flex-fill text-center">Menu</span>
@@ -7,25 +7,17 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-toolbar>
-
 <mat-nav-list>
   <a mat-list-item (click)="navegar('dashboard')">
     <mat-icon matListItemIcon>dashboard</mat-icon>
     <span matListItemTitle>Painel</span>
   </a>
-
   <a mat-list-item (click)="navegar('inserir-compra')">
     <mat-icon matListItemIcon>add_shopping_cart</mat-icon>
     <span matListItemTitle>Nova compra</span>
   </a>
-
-  <a mat-list-item (click)="navegar('dashboard')">
+  <a mat-list-item (click)="navegar('extrato')">
     <mat-icon matListItemIcon>shopping_bag</mat-icon>
     <span matListItemTitle>Ver compras</span>
-  </a>
-
-  <a mat-list-item (click)="navegar('dashboard')">
-    <mat-icon matListItemIcon>settings</mat-icon>
-    <span matListItemTitle>Configurações</span>
   </a>
 </mat-nav-list>

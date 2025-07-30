@@ -4,10 +4,11 @@ import { InserirCompra } from '../inserir-compra/inserir-compra';
 import { ControleService } from '../../services/controle-service';
 import { DetalharCompra } from '../detalhar-compra/detalhar-compra';
 import { EditarCompra } from '../editar-compra/editar-compra';
+import { Extrato } from '../extrato/extrato';
 
 @Component({
   selector: 'app-home',
-  imports: [Dashboard, InserirCompra, DetalharCompra, EditarCompra],
+  imports: [Dashboard, InserirCompra, DetalharCompra, EditarCompra, Extrato],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

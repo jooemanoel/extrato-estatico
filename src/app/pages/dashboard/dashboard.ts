@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompraService } from '../../services/compra-service';
 import { MatIconModule } from '@angular/material/icon';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  constructor(private compraService: CompraService) {}
+  constructor(private compraService: CompraService, private controleService: ControleService) {}
   get total_compras() {
     return this.compraService.total_compras;
   }
@@ -42,5 +43,9 @@ export class Dashboard {
       .compras()
       .filter((x) => x.codigo_categoria_compra == categoria)
       .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
+  }
+  navegarExtrato(codigo_categoria_compra: number) {
+    this.compraService.codigo_categoria_compra.set(codigo_categoria_compra);
+    this.controleService.navegar('extrato');
   }
 }

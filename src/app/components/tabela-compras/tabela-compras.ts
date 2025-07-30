@@ -15,17 +15,30 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './tabela-compras.html',
   styleUrl: './tabela-compras.css',
 })
 export class TabelaCompras {
-  displayedColumns: string[] = ['codigo_categoria_compra', 'descricao_compra', 'valor_compra'];
+  displayedColumns: string[] = [
+    'codigo_categoria_compra',
+    'descricao_compra',
+    'valor_compra',
+  ];
   dataSource = new MatTableDataSource<Compra>([]);
-  constructor(private compraService: CompraService, private controleService: ControleService) {
+  constructor(
+    private compraService: CompraService,
+    private controleService: ControleService
+  ) {
     effect(() => {
-      this.dataSource.data = this.compraService.compras();
+      const compras = this.compraService.compras();
+      const codigo_categoria_compra = compraService.codigo_categoria_compra();
+      this.dataSource.data = codigo_categoria_compra
+        ? compras.filter(
+            (x) => x.codigo_categoria_compra === codigo_categoria_compra
+          )
+        : compras;
     });
   }
   get carregando() {
@@ -41,7 +54,7 @@ export class TabelaCompras {
     const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
     return `${dia}/${mes}/${ano}`;
   }
-  detalhar(element: Compra){
+  detalhar(element: Compra) {
     this.compraService.compra.set(element);
     this.controleService.navegar('detalhar-compra');
   }

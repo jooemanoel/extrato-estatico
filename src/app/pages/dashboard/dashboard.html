@@ -12,7 +12,7 @@
 }
 <div class="container p-1 d-flex flex-wrap" [class.visually-hidden]="carregando()">
   <div class="w-50 p-1">
-    <mat-card class="h-100" appearance="filled">
+    <mat-card class="h-100" appearance="filled" (click)="navegarExtrato(0)">
       <mat-card-header class="d-flex justify-content-center">
         <mat-card-title>{{ formatarParaReal(total_compras()) }}</mat-card-title>
       </mat-card-header>
@@ -23,7 +23,7 @@
   </div>
     @for(codigo of codigosCategoriaCompra(); track codigo){
     <div class="w-50 p-1">
-      <mat-card appearance="filled">
+      <mat-card appearance="filled" (click)="navegarExtrato(codigo)">
         <mat-card-header class="d-flex justify-content-center">
           <mat-card-title>{{
             formatarParaReal(somaCategoria(codigo))

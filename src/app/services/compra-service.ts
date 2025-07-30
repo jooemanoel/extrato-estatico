@@ -18,6 +18,7 @@ export class CompraService {
   };
   carregando = signal(true);
   total_compras = signal(0);
+  codigo_categoria_compra = signal(0);
   compras = signal<Compra[]>([]);
   compra = signal<Compra>(Mock.compraVazia());
   private readonly API = 'https://extrato-api-express.vercel.app/compras';

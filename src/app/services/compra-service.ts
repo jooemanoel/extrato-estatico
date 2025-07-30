@@ -9,10 +9,12 @@ import { Mock } from '../shared/utils/mock';
 export class CompraService {
   categoriaCompra: Record<number, {nome: string, icon: string}> = {
     1: {nome: 'MERCADO', icon: 'shopping_cart'},
-    2: {nome: 'SAÚDE', icon: 'health_cross'},
+    2: {nome: 'SAÚDE', icon: 'local_hospital'},
     3: {nome: 'TRANSPORTE', icon: 'directions_bus'},
     4: {nome: 'LAZER', icon: 'mood'},
-    5: {nome: 'VARIEDADES', icon: 'shopping_bag'}
+    5: {nome: 'VARIEDADES', icon: 'shopping_bag'},
+    6: {nome: 'EDUCAÇÃO', icon: 'school'},
+    7: {nome: 'INTERNET', icon: 'wifi_calling_bar_3'}
   };
   carregando = signal(true);
   total_compras = signal(0);

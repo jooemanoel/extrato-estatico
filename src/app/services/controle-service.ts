@@ -12,7 +12,7 @@ export class ControleService {
     extrato: 'Extrato',
   };
   pagina = signal('dashboard');
-  titulo = signal('Extrato');
+  titulo = signal(this.titulosPorPagina[this.pagina()]);
   navegar(pagina: string) {
     this.pagina.set(pagina);
     this.titulo.set(this.titulosPorPagina[pagina]);

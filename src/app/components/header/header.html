@@ -3,13 +3,17 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="flex-fill text-center">{{ titulo() }}</span>
-  @if(pagina() === 'dashboard' || pagina() === 'extrato') {
+  @if(pagina() === 'dashboard') {
   <button matMiniFab style="visibility: hidden">
     <mat-icon>logout</mat-icon>
+  </button>
+  } @else { @if(pagina() === 'extrato') {
+  <button matMiniFab (click)="novaCompra()">
+    <mat-icon>add_shopping_cart</mat-icon>
   </button>
   } @else {
   <button matMiniFab (click)="voltar()">
     <mat-icon>arrow_circle_left</mat-icon>
   </button>
-  }
+  } }
 </mat-toolbar>

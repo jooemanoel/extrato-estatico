@@ -4,17 +4,14 @@
     <mat-card-content>
       <div class="d-flex flex-column align-items-center gap-3">
         <mat-spinner diameter="40" color="primary"></mat-spinner>
-        <p class="mb-0">Carregando compras...</p>
+        <p class="mb-0">Carregando...</p>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
-} @else {
-<div class="container p-2 pt-0">
+}
+<div class="container p-2 pt-0" [class.visually-hidden]="carregando()">
   <mat-card appearance="filled">
-    <mat-card-header class="m-0 p-2 justify-content-center">
-      <mat-card-title>ÚLTIMAS COMPRAS</mat-card-title>
-    </mat-card-header>
     <mat-card-content class="p-2">
       <table
         mat-table
@@ -24,7 +21,9 @@
         <ng-container matColumnDef="codigo_categoria_compra">
           <th class="p-0 pe-1" mat-header-cell *matHeaderCellDef></th>
           <td class="p-0 pe-1" mat-cell *matCellDef="let element">
-            <mat-icon>{{ categoriaCompra(element.codigo_categoria_compra).icon }}</mat-icon>
+            <mat-icon>{{
+              categoriaCompra(element.codigo_categoria_compra).icon
+            }}</mat-icon>
           </td>
         </ng-container>
         <ng-container matColumnDef="descricao_compra">
@@ -36,7 +35,9 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="valor_compra">
-          <th class="p-0 text-center" mat-header-cell *matHeaderCellDef>VALOR</th>
+          <th class="p-0 text-center" mat-header-cell *matHeaderCellDef>
+            VALOR
+          </th>
           <td class="p-0 text-center" mat-cell *matCellDef="let element">
             {{ formatarParaReal(element.valor_compra) }}
           </td>
@@ -51,4 +52,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-}

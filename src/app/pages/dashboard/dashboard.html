@@ -1,126 +1,39 @@
-<div class="container p-2 pb-0 d-flex gap-2">
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>-</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Conta</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="w-50">
-    <mat-card appearance="filled">
+@if(carregando()) {
+<div class="container p-2 pt-0">
+  <mat-card>
+    <mat-card-content>
+      <div class="d-flex flex-column align-items-center gap-3">
+        <mat-spinner diameter="40" color="primary"></mat-spinner>
+        <p class="mb-0">Carregando...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+}
+<div class="container p-1 d-flex flex-wrap" [class.visually-hidden]="carregando()">
+  <div class="w-50 p-1">
+    <mat-card class="h-100" appearance="filled">
       <mat-card-header class="d-flex justify-content-center">
         <mat-card-title>{{ formatarParaReal(total_compras()) }}</mat-card-title>
       </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Total de compras</p>
+      <mat-card-content class="h-100 d-flex align-items-end justify-content-center">
+        <span>TOTAL DE COMPRAS</span>
       </mat-card-content>
     </mat-card>
   </div>
-</div>
-<div class="container p-2 pb-0 d-flex gap-2">
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(1))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Mercado</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(2))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Saúde</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-<div class="container p-2 pb-0 d-flex gap-2">
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(3))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Transporte</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(4))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Lazer</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-<div class="container p-2 pb-0 d-flex gap-2">
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(5))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Variedades</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(6))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Educação</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-<div class="container p-2 pb-0 d-flex gap-2">
-  <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(7))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Internet</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <!-- <div class="w-50">
-    <mat-card appearance="filled">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          formatarParaReal(somaCategoria(6))
-        }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="d-flex justify-content-center">
-        <p>Educação</p>
-      </mat-card-content>
-    </mat-card>
-  </div> -->
+    @for(codigo of codigosCategoriaCompra(); track codigo){
+    <div class="w-50 p-1">
+      <mat-card appearance="filled">
+        <mat-card-header class="d-flex justify-content-center">
+          <mat-card-title>{{
+            formatarParaReal(somaCategoria(codigo))
+          }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column align-items-center">
+          <span><mat-icon>{{ categoriaCompra(codigo).icon }}</mat-icon></span>
+          <span>{{ categoriaCompra(codigo).nome }}</span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    }
 </div>

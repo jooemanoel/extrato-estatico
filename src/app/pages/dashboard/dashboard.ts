@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompraService } from '../../services/compra-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -13,6 +15,9 @@ export class Dashboard {
   constructor(private compraService: CompraService) {}
   get total_compras() {
     return this.compraService.total_compras;
+  }
+  get carregando() {
+    return this.compraService.carregando;
   }
   ngOnInit(): void {
     this.compraService.listarCompras();
@@ -23,10 +28,19 @@ export class Dashboard {
       currency: 'BRL',
     });
   }
+  codigosCategoriaCompra() {
+    return Object.keys(this.compraService.categoriaCompra).map((x) =>
+      parseInt(x)
+    );
+  }
+  categoriaCompra(codigo: number) {
+    return this.compraService.categoriaCompra[codigo];
+  }
   somaCategoria(categoria: number) {
+    if(!categoria) return this.compraService.total_compras();
     return this.compraService
       .compras()
-      .filter(x => x.codigo_categoria_compra == categoria)
+      .filter((x) => x.codigo_categoria_compra == categoria)
       .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
   }
 }

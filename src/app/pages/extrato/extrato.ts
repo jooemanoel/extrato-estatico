@@ -15,6 +15,9 @@ export class Extrato {
   get total_compras() {
     return this.compraService.total_compras;
   }
+  get carregando() {
+    return this.compraService.carregando;
+  }
   ngOnInit(): void {
     this.compraService.listarCompras();
   }

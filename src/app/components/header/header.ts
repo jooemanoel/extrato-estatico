@@ -25,4 +25,7 @@ export class Header {
   voltar() {
     this.controleService.navegar('extrato');
   }
+  novaCompra(){
+    this.controleService.navegar('inserir-compra')
+  }
 }

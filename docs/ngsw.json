@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1753904207882,
+  "timestamp": 1753916082514,
   "index": "/extrato-estatico/index.html",
   "assetGroups": [
     {
@@ -42,15 +42,15 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/extrato-estatico/favicon.ico": "02c96009f39b66e12aabe4a9ff11931c82ba8254",
-    "/extrato-estatico/icons/icon-128x128.png": "30620b8d2f29f235d27d8075e5d9d5633aba05e1",
-    "/extrato-estatico/icons/icon-144x144.png": "688af23fd8ff7da6a66d976d6c25567f9c411fdd",
-    "/extrato-estatico/icons/icon-152x152.png": "8b97314ca64302f7683c17eaeb64ce63fdb6d4c0",
-    "/extrato-estatico/icons/icon-192x192.png": "38640c6d6f3b40b9827a23fec975ba6dab991432",
-    "/extrato-estatico/icons/icon-384x384.png": "44fd38df23e44b91f92a433f22cd514db09f5656",
-    "/extrato-estatico/icons/icon-512x512.png": "4e97db57703c0b69dbd64dcc1a2d802377650906",
-    "/extrato-estatico/icons/icon-72x72.png": "72b10740c7c8f4b5e7d1c4b3adf6f78e495c710d",
-    "/extrato-estatico/icons/icon-96x96.png": "1f8deff38826f76b7d546ba426322bd72e348cdb",
+    "/extrato-estatico/favicon.ico": "f855ea95eec17ce2511b9a369a5adffa752380f6",
+    "/extrato-estatico/icons/icon-128x128.png": "a096a779b3b0e921f1d78855579b5daed5ed409c",
+    "/extrato-estatico/icons/icon-144x144.png": "8d94f8e5fe504f6eb962658230ee88b6a9e80519",
+    "/extrato-estatico/icons/icon-152x152.png": "7b2d91b441e4b49802234b3a152f899dd2f9900f",
+    "/extrato-estatico/icons/icon-192x192.png": "47bd6cdcbd6b97d705cbe97d53747659ffa554b7",
+    "/extrato-estatico/icons/icon-384x384.png": "2c7103343b938df2912dcc783670daf28a9e1782",
+    "/extrato-estatico/icons/icon-512x512.png": "17ab4f9d3b081052a2f2641d0b6915b3eccd4a09",
+    "/extrato-estatico/icons/icon-72x72.png": "d9ca07d9a77f8e7b583b1f11ee5298c792cf6664",
+    "/extrato-estatico/icons/icon-96x96.png": "442adba9222cf1bd613363035b7b81d657ae9742",
     "/extrato-estatico/index.html": "7143001a293f2e410ee68763348197d132b442da",
     "/extrato-estatico/main-2GKUW2CG.js": "cbead7ea14fb46e8f9751f0af489127c0601d32b",
     "/extrato-estatico/manifest.webmanifest": "eb8dc20ccbdfc7a215bd4ce8dea5bf13d4e811b8",

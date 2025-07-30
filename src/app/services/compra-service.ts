@@ -7,7 +7,7 @@ import { Mock } from '../shared/utils/mock';
   providedIn: 'root',
 })
 export class CompraService {
-  carregando = true;
+  carregando = signal(true);
   total_compras = signal(0);
   compras = signal<Compra[]>([]);
   compra = signal<Compra>(Mock.compraVazia());
@@ -17,26 +17,26 @@ export class CompraService {
     this.http.get<Compra[]>(this.API).subscribe((compras) => {
       this.compras.set(compras);
       this.total_compras.set(compras.reduce((acc, x) => acc + parseFloat(x.valor_compra), 0));
-      this.carregando = false;
+      this.carregando.set(false);
     });
   }
   inserirCompra(compra: Compra) {
-    this.carregando = true;
+    this.carregando.set(true);
     this.http.post<Compra>(this.API, compra).subscribe((res) => {
       this.listarCompras();
     });
   }
   apagarCompra(codigo_compra: number) {
-    this.carregando = true;
+    this.carregando.set(true);
     this.http.delete(`${this.API}/${codigo_compra}`).subscribe((res) => {
       console.log('Apagar Compra', res);
       this.listarCompras();
     });
   }
-  editarCompra(compra: Compra, codigo_compra: number) {
-    this.carregando = true;
+  editarCompra(compra: Compra) {
+    this.carregando.set(true);
     this.http
-      .put<Compra>(`${this.API}/${codigo_compra}`, compra)
+      .put<Compra>(`${this.API}/${compra.codigo_compra}`, compra)
       .subscribe((res) => {
         console.log('Editar Compra', res);
         this.listarCompras();

@@ -13,10 +13,16 @@ import { ControleService } from '../../services/controle-service';
 export class Header {
   @Output() alternarMenu = new EventEmitter();
   constructor(private controleService: ControleService) {}
+  get pagina() {
+    return this.controleService.pagina;
+  }
   get titulo() {
     return this.controleService.titulo;
   }
   alternar() {
     this.alternarMenu.emit();
+  }
+  voltar() {
+    this.controleService.pagina.set('dashboard');
   }
 }

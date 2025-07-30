@@ -3,7 +3,13 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="flex-fill text-center">{{ titulo() }}</span>
-  <button matMiniFab style="visibility: hidden;">
+  @if(pagina() === 'dashboard') {
+  <button matMiniFab style="visibility: hidden">
     <mat-icon>logout</mat-icon>
   </button>
+  } @else {
+  <button matMiniFab (click)="voltar()">
+    <mat-icon>arrow_circle_left</mat-icon>
+  </button>
+  }
 </mat-toolbar>

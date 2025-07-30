@@ -22,10 +22,14 @@ export class DetalharCompra {
     });
   }
   formatarParaData(timestamp: string) {
-    return new Date(timestamp).toLocaleDateString('pt-br');
+    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
+    return `${dia}/${mes}/${ano}`;
   }
   apagarCompra() {
     this.compraService.apagarCompra(this.compraService.compra().codigo_compra ?? 0);
     this.controleService.navegar('dashboard');
+  }
+  editarCompra() {
+    this.controleService.navegar('editar-compra');
   }
 }

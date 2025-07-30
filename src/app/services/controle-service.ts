@@ -7,7 +7,8 @@ export class ControleService {
   titulosPorPagina: Record<string, string> = {
     dashboard: 'Extrato',
     'inserir-compra': 'Nova Compra',
-    'detalhar-compra': 'Detalhar Compra'
+    'detalhar-compra': 'Detalhar Compra',
+    'editar-compra': 'Editar Compra'
   };
   pagina = signal('dashboard');
   titulo = signal('Extrato');

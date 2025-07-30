@@ -23,6 +23,6 @@ export class Header {
     this.alternarMenu.emit();
   }
   voltar() {
-    this.controleService.pagina.set('dashboard');
+    this.controleService.navegar('dashboard');
   }
 }

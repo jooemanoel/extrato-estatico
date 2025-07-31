@@ -19,6 +19,9 @@ export class Extrato {
   get carregando() {
     return this.compraService.carregando;
   }
+  get codigo_categoria_compra() {
+    return this.compraService.codigo_categoria_compra;
+  }
   ngOnInit(): void {
     this.compraService.listarCompras();
     this.titulo =
@@ -35,5 +38,8 @@ export class Extrato {
       style: 'currency',
       currency: 'BRL',
     });
+  }
+  somaCategoria(categoria: number) {
+    return this.compraService.somaCategoria(categoria);
   }
 }

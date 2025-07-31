@@ -52,4 +52,11 @@ export class CompraService {
         this.listarCompras();
       });
   }
+  somaCategoria(categoria: number) {
+    if(!categoria) return this.total_compras();
+    return this
+      .compras()
+      .filter((x) => x.codigo_categoria_compra == categoria)
+      .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
+  }
 }

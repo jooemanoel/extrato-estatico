@@ -7,14 +7,15 @@ import { Mock } from '../shared/utils/mock';
   providedIn: 'root',
 })
 export class CompraService {
-  categoriaCompra: Record<number, {nome: string, icon: string}> = {
-    1: {nome: 'MERCADO', icon: 'shopping_cart'},
-    2: {nome: 'SAÚDE', icon: 'local_hospital'},
-    3: {nome: 'TRANSPORTE', icon: 'directions_bus'},
-    4: {nome: 'LAZER', icon: 'mood'},
-    5: {nome: 'VARIEDADES', icon: 'shopping_bag'},
-    6: {nome: 'EDUCAÇÃO', icon: 'school'},
-    7: {nome: 'INTERNET', icon: 'wifi_calling_bar_3'}
+  openReloadSnack = signal(0);
+  categoriaCompra: Record<number, { nome: string; icon: string }> = {
+    1: { nome: 'MERCADO', icon: 'shopping_cart' },
+    2: { nome: 'SAÚDE', icon: 'local_hospital' },
+    3: { nome: 'TRANSPORTE', icon: 'directions_bus' },
+    4: { nome: 'LAZER', icon: 'mood' },
+    5: { nome: 'VARIEDADES', icon: 'shopping_bag' },
+    6: { nome: 'EDUCAÇÃO', icon: 'school' },
+    7: { nome: 'INTERNET', icon: 'wifi_calling_bar_3' },
   };
   carregando = signal(true);
   total_compras = signal(0);
@@ -24,10 +25,17 @@ export class CompraService {
   private readonly API = 'https://extrato-api-express.vercel.app/compras';
   constructor(private http: HttpClient) {}
   listarCompras() {
-    this.http.get<Compra[]>(this.API).subscribe((compras) => {
-      this.compras.set(compras);
-      this.total_compras.set(compras.reduce((acc, x) => acc + parseFloat(x.valor_compra), 0));
-      this.carregando.set(false);
+    this.http.get<Compra[]>(this.API).subscribe({
+      next: (compras) => {
+        this.compras.set(compras);
+        this.total_compras.set(
+          compras.reduce((acc, x) => acc + parseFloat(x.valor_compra), 0)
+        );
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.openReloadSnack.update((x) => x + 1);
+      },
     });
   }
   inserirCompra(compra: Compra) {
@@ -53,9 +61,8 @@ export class CompraService {
       });
   }
   somaCategoria(categoria: number) {
-    if(!categoria) return this.total_compras();
-    return this
-      .compras()
+    if (!categoria) return this.total_compras();
+    return this.compras()
       .filter((x) => x.codigo_categoria_compra == categoria)
       .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
   }

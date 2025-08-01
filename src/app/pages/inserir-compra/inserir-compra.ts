@@ -7,9 +7,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
-import { ControleService } from '../../services/controle-service';
 import { Compra } from '../../shared/models/interfaces/compra';
 
 @Component({
@@ -36,10 +36,7 @@ export class InserirCompra {
     data_compra: new FormControl(new Date()),
     codigo_categoria_compra: new FormControl(1),
   });
-  constructor(
-    private compraService: CompraService,
-    private controleService: ControleService
-  ) {}
+  constructor(private compraService: CompraService, private router: Router) {}
   getDataFormatada(data: Date = new Date()) {
     const ano = data.getFullYear();
     const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -59,7 +56,7 @@ export class InserirCompra {
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };
     this.compraService.inserirCompra(compra);
-    this.controleService.navegar('extrato');
+    this.router.navigateByUrl('extrato');
   }
   codigosCategoriaCompra() {
     return Object.keys(this.compraService.categoriaCompra).map((x) =>

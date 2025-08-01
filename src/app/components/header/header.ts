@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavigationEnd, Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,20 +15,27 @@ import { ControleService } from '../../services/controle-service';
 })
 export class Header {
   @Output() alternarMenu = new EventEmitter();
-  constructor(private controleService: ControleService) {}
-  get pagina() {
-    return this.controleService.pagina;
-  }
+  constructor(
+    private controleService: ControleService,
+    private router: Router,
+    private location: Location
+  ) {}
+  pagina = signal('');
   get titulo() {
-    return this.controleService.titulo;
+    return this.controleService.titulosPorPagina[this.pagina()];
+  }
+  ngOnInit() {
+    this.router.events.pipe(filter(x => x instanceof NavigationEnd)).subscribe((x) => {
+      this.pagina.set(x.urlAfterRedirects.replace('/', ''))
+    });
   }
   alternar() {
     this.alternarMenu.emit();
   }
   voltar() {
-    this.controleService.navegar('extrato');
+    this.location.back();
   }
-  novaCompra(){
-    this.controleService.navegar('inserir-compra')
+  novaCompra() {
+    this.router.navigateByUrl('inserir-compra');
   }
 }

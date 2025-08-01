@@ -4,16 +4,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompraService } from '../../services/compra-service';
 import { MatIconModule } from '@angular/material/icon';
-import { ControleService } from '../../services/controle-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatIconModule],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  constructor(private compraService: CompraService, private controleService: ControleService) {}
+  constructor(
+    private compraService: CompraService,
+    private router: Router
+  ) {}
   get total_compras() {
     return this.compraService.total_compras;
   }
@@ -38,7 +46,7 @@ export class Dashboard {
     return this.compraService.categoriaCompra[codigo];
   }
   somaCategoria(categoria: number) {
-    if(!categoria) return this.compraService.total_compras();
+    if (!categoria) return this.compraService.total_compras();
     return this.compraService
       .compras()
       .filter((x) => x.codigo_categoria_compra == categoria)
@@ -46,6 +54,6 @@ export class Dashboard {
   }
   navegarExtrato(codigo_categoria_compra: number) {
     this.compraService.codigo_categoria_compra.set(codigo_categoria_compra);
-    this.controleService.navegar('extrato');
+    this.router.navigateByUrl('extrato');
   }
 }

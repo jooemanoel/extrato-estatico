@@ -28,7 +28,6 @@ export class Extrato {
       this.compraService.categoriaCompra[
         this.compraService.codigo_categoria_compra()
       ]?.nome ?? 'TOTAL DE COMPRAS';
-    console.log(this.titulo);
   }
   ngOnDestroy() {
     this.compraService.codigo_categoria_compra.set(0);

@@ -11,10 +11,4 @@ export class ControleService {
     'editar-compra': 'Editar Compra',
     extrato: 'Extrato',
   };
-  pagina = signal('dashboard');
-  titulo = signal(this.titulosPorPagina[this.pagina()]);
-  navegar(pagina: string) {
-    this.pagina.set(pagina);
-    this.titulo.set(this.titulosPorPagina[pagina]);
-  }
 }

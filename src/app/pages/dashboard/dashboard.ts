@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CompraService } from '../../services/compra-service';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,13 +21,14 @@ import { Router } from '@angular/router';
 export class Dashboard {
   constructor(
     private compraService: CompraService,
+    private controleService: ControleService,
     private router: Router
   ) {}
   get total_compras() {
     return this.compraService.total_compras;
   }
   get carregando() {
-    return this.compraService.carregando;
+    return this.controleService.carregando;
   }
   ngOnInit(): void {
     this.compraService.listarCompras();

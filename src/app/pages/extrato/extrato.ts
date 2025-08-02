@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { TabelaCompras } from '../../components/tabela-compras/tabela-compras';
 import { CompraService } from '../../services/compra-service';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-extrato',
@@ -12,12 +13,12 @@ import { CompraService } from '../../services/compra-service';
 })
 export class Extrato {
   titulo = '';
-  constructor(private compraService: CompraService) {}
+  constructor(private compraService: CompraService, private controleService: ControleService) {}
   get total_compras() {
     return this.compraService.total_compras;
   }
   get carregando() {
-    return this.compraService.carregando;
+    return this.controleService.carregando;
   }
   get codigo_categoria_compra() {
     return this.compraService.codigo_categoria_compra;

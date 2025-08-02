@@ -1,0 +1,53 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
+import { normalizar } from '../../shared/utils/functions';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ControleService } from '../../services/controle-service';
+
+@Component({
+  selector: 'app-cadastro',
+  imports: [
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
+  templateUrl: './cadastro.html',
+  styleUrl: './cadastro.css',
+})
+export class Cadastro {
+  hide = true;
+  formCadastro = new FormGroup({
+    nome_usuario: new FormControl(''),
+    senha_usuario: new FormControl(''),
+  });
+  confirmar_senha_usuario = new FormControl('');
+  constructor(
+    private controleService: ControleService
+  ) {}
+  compararSenhas() {
+    return (
+      this.formCadastro.value.senha_usuario ===
+      this.confirmar_senha_usuario.value
+    );
+  }
+  cadastrar() {
+    if (!this.compararSenhas()) {
+      console.log();
+      this.controleService.showMessage('As senhas não são iguais');
+      return;
+    }
+    this.formCadastro.controls.nome_usuario.setValue(
+      normalizar(this.formCadastro.value.nome_usuario?.toUpperCase() ?? '')
+    );
+    this.controleService.cadastrar(this.formCadastro.value as UsuarioEntrada);
+  }
+}

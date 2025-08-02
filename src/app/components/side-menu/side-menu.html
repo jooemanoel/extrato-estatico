@@ -8,6 +8,7 @@
   </button>
 </mat-toolbar>
 <mat-nav-list>
+  @if(usuarioLogado){
   <a mat-list-item (click)="navegar('dashboard')">
     <mat-icon matListItemIcon>dashboard</mat-icon>
     <span matListItemTitle>Painel</span>
@@ -20,4 +21,18 @@
     <mat-icon matListItemIcon>shopping_bag</mat-icon>
     <span matListItemTitle>Ver compras</span>
   </a>
+  <a mat-list-item (click)="logout()">
+    <mat-icon matListItemIcon>logout</mat-icon>
+    <span matListItemTitle>Sair</span>
+  </a>
+  } @else {
+  <a mat-list-item (click)="navegar('login')">
+    <mat-icon matListItemIcon>login</mat-icon>
+    <span matListItemTitle>Login</span>
+  </a>
+  <a mat-list-item (click)="navegar('cadastro')">
+    <mat-icon matListItemIcon>add</mat-icon>
+    <span matListItemTitle>Cadastro</span>
+  </a>
+  }
 </mat-nav-list>

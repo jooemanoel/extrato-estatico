@@ -8,6 +8,7 @@ import { filter } from 'rxjs';
 import { Header } from './components/header/header';
 import { SideMenu } from './components/side-menu/side-menu';
 import { CompraService } from './services/compra-service';
+import { ControleService } from './services/controle-service';
 
 @Component({
   selector: 'app-root',
@@ -27,11 +28,13 @@ export class App implements OnInit {
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
     private compraService: CompraService,
+    private controleService: ControleService,
     private injector: Injector
   ) {}
   ngOnInit(): void {
     this.checkForUpdates();
     this.checkLoadingFailed();
+    this.controleService.validarToken();
   }
   checkForUpdates() {
     if (this.swUpdate.isEnabled) {

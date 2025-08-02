@@ -7,6 +7,7 @@ import { CompraService } from '../../services/compra-service';
 import { Compra } from '../../shared/models/interfaces/compra';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-tabela-compras',
@@ -29,6 +30,7 @@ export class TabelaCompras {
   dataSource = new MatTableDataSource<Compra>([]);
   constructor(
     private compraService: CompraService,
+    private controleService: ControleService,
     private router: Router
   ) {
     effect(() => {
@@ -42,7 +44,7 @@ export class TabelaCompras {
     });
   }
   get carregando() {
-    return this.compraService.carregando;
+    return this.controleService.carregando;
   }
   formatarParaReal(valor: string): string {
     return parseFloat(valor).toLocaleString('pt-BR', {

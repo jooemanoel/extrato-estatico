@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ControleService } from '../../services/controle-service';
 import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
 import { normalizar } from '../../shared/utils/functions';
@@ -18,6 +19,7 @@ import { normalizar } from '../../shared/utils/functions';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css',
@@ -30,6 +32,9 @@ export class Cadastro {
   });
   confirmar_senha_usuario = new FormControl('');
   constructor(private controleService: ControleService) {}
+  get carregando() {
+    return this.controleService.carregando;
+  }
   compararSenhas() {
     return (
       this.formCadastro.value.senha_usuario ===

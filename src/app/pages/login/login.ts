@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
 import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
@@ -19,6 +20,7 @@ import { normalizar } from '../../shared/utils/functions';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -33,6 +35,9 @@ export class Login {
     private controleService: ControleService,
     private router: Router
   ) {}
+  get carregando() {
+    return this.controleService.carregando;
+  }
   login() {
     this.formLogin.controls.nome_usuario.setValue(
       normalizar(this.formLogin.value.nome_usuario ?? '')

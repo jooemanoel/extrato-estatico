@@ -25,7 +25,7 @@ export class ControleService {
     'editar-compra': 'Editar Compra',
     extrato: 'Extrato',
     login: 'Bem vindo ao Extrato!',
-    cadastro: 'Cadastro'
+    cadastro: 'Cadastro',
   };
   constructor(
     private http: HttpClient,
@@ -33,20 +33,26 @@ export class ControleService {
     private snackBar: MatSnackBar
   ) {}
   login(entrada: UsuarioEntrada) {
+    this.carregando.set(true);
     this.http
       .post<RespostaLogin>(`${this.API}/usuario/login`, entrada)
       .subscribe({
         next: (res) => {
-          console.log(res);
+          this.carregando.set(false);
           if (res.token) {
             this.token.set(res.token);
             localStorage.setItem('extrato-estatico-token', res.token);
           }
-          if (res.usuarioResposta) this.usuario.set(res.usuarioResposta);
+          if (res.usuario) {
+            this.usuario.set(res.usuario);
+            this.showMessage(
+              `Bem vindo(a), ${res.usuario.nome_usuario}!`,
+              ''
+            );
+          }
           this.router.navigateByUrl('dashboard');
         },
         error: (res) => {
-          console.log(res);
           this.showMessage(res?.error?.message ?? 'Erro desconhecido');
         },
       });
@@ -55,15 +61,16 @@ export class ControleService {
     const token = localStorage.getItem('extrato-estatico-token');
     if (token) {
       this.token.set(token);
-      // pega os dados do usuário no endpoint API/usuario/perfil
+      this.carregando.set(true);
       this.http
         .get<UsuarioResposta>(`${this.API}/usuario/perfil`, {
           headers: this.headers(),
         })
         .subscribe({
           next: (res) => {
+            this.carregando.set(false);
             this.usuario.set(res);
-            this.showMessage(`Bem vindo, ${res.nome_usuario}!`, '');
+            this.showMessage(`Bem vindo(a), ${res.nome_usuario}!`, '');
             this.router.navigateByUrl('dashboard');
           },
           error: (res) => {
@@ -73,16 +80,17 @@ export class ControleService {
     }
   }
   cadastrar(entrada: UsuarioEntrada) {
+    this.carregando.set(true);
     this.http
       .post<RespostaLogin>(`${this.API}/usuario/cadastro`, entrada)
       .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.showMessage('Sucesso');
+        next: () => {
+          this.carregando.set(false);
+          this.showMessage(`Usuário ${entrada.nome_usuario} cadastrado com sucesso`);
           this.router.navigateByUrl('login');
         },
         error: (res) => {
-          console.log(res);
+          this.carregando.set(false);
           const message: string = res?.error?.message ?? 'Erro desconhecido';
           if (message.startsWith('duplicate')) {
             this.showMessage('Este usuário já existe');

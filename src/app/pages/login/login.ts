@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
 import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
+import { normalizar } from '../../shared/utils/functions';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
 })
 export class Login {
   hide = true;
-  formCompra = new FormGroup({
+  formLogin = new FormGroup({
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
   });
@@ -33,10 +34,10 @@ export class Login {
     private router: Router
   ) {}
   login() {
-    this.formCompra.controls.nome_usuario.setValue(
-      this.formCompra.value.nome_usuario?.toUpperCase() ?? ''
+    this.formLogin.controls.nome_usuario.setValue(
+      normalizar(this.formLogin.value.nome_usuario ?? '')
     );
-    this.controleService.login(this.formCompra.value as UsuarioEntrada);
+    this.controleService.login(this.formLogin.value as UsuarioEntrada);
   }
   cadastrar() {
     this.router.navigateByUrl('cadastro');

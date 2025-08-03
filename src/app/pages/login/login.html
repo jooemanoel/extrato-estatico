@@ -1,5 +1,5 @@
 <div class="container p-2">
-  <form [formGroup]="formCompra" autocomplete="on">
+  <form [formGroup]="formLogin" autocomplete="on">
     <mat-card appearance="filled">
       <mat-card-content class="d-flex flex-column p-2 gap-2">
         <mat-form-field class="w-100">
@@ -30,7 +30,7 @@
           matButton="filled"
           (click)="login()"
           [disabled]="
-            !formCompra.value.nome_usuario || !formCompra.value.senha_usuario
+            !formLogin.value.nome_usuario || !formLogin.value.senha_usuario
           "
         >
           Login

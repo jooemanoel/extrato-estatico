@@ -8,7 +8,7 @@ import { Login } from './pages/login/login';
 import { Cadastro } from './pages/cadastro/cadastro';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: Login },
   { path: 'dashboard', component: Dashboard },
   { path: 'extrato', component: Extrato },
   { path: 'inserir-compra', component: InserirCompra },

@@ -86,4 +86,7 @@ export class Extrato {
   categoriaCompra(codigo: number) {
     return this.compraService.categoriaCompra[codigo];
   }
+  navegarDashboard() {
+    this.router.navigateByUrl('dashboard');
+  }
 }

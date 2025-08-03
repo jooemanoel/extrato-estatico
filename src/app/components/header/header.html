@@ -3,7 +3,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="flex-fill text-center">{{ titulo }}</span>
-  @if(pagina() === 'extrato') {
+  @if(pagina() === 'extrato' || pagina() === 'dashboard') {
   <button matMiniFab (click)="novaCompra()">
     <mat-icon>add_shopping_cart</mat-icon>
   </button>

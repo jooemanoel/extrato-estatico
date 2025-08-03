@@ -31,6 +31,7 @@ export class Dashboard {
     return this.controleService.carregando;
   }
   ngOnInit(): void {
+    this.compraService.codigo_categoria_compra.set(0);
     this.compraService.listarCompras();
   }
   formatarParaReal(valor: number): string {

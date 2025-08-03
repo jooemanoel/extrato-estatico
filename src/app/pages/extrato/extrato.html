@@ -10,8 +10,17 @@
   </mat-card>
 </div>
 }
-<div class="container p-2" [class.visually-hidden]="carregando()">
-  <mat-card class="h-100" appearance="filled">
+<div class="container p-2" [class.visually-hidden]="!!carregando()">
+  <mat-card
+    class="h-100"
+    appearance="filled"
+    (click)="navegarDashboard()"
+    role="button"
+    tabindex="0"
+    (keydown.enter)="navegarDashboard()"
+    (keydown.space)="navegarDashboard()"
+    aria-label="Ver extrato total de compras"
+  >
     <mat-card-header class="d-flex justify-content-center">
       <mat-card-title>{{
         formatarParaReal(somaCategoria(codigo_categoria_compra()))
@@ -24,7 +33,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="container p-2 pt-0" [class.visually-hidden]="carregando()">
+<div class="container p-2 pt-0" [class.visually-hidden]="!!carregando()">
   <mat-card appearance="filled">
     <mat-card-content class="p-2">
       <table
@@ -33,15 +42,15 @@
         style="background-color: transparent"
       >
         <ng-container matColumnDef="codigo_categoria_compra">
-          <th class="p-0 pe-1" mat-header-cell *matHeaderCellDef></th>
-          <td class="p-0 pe-1" mat-cell *matCellDef="let element">
+          <!-- <th class="p-0" mat-header-cell *matHeaderCellDef></th> -->
+          <td class="p-0" mat-cell *matCellDef="let element">
             <mat-icon>{{
               categoriaCompra(element.codigo_categoria_compra).icon
             }}</mat-icon>
           </td>
         </ng-container>
         <ng-container matColumnDef="descricao_compra">
-          <th class="p-0" mat-header-cell *matHeaderCellDef>DESCRIÇÃO</th>
+          <!-- <th class="p-0" mat-header-cell *matHeaderCellDef>DESCRIÇÃO</th> -->
           <td class="p-0" mat-cell *matCellDef="let element">
             <span>{{ formatarParaData(element.data_compra) }}</span>
             <br />
@@ -49,14 +58,14 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="valor_compra">
-          <th class="p-0 text-center" mat-header-cell *matHeaderCellDef>
+          <!-- <th class="p-0 text-center" mat-header-cell *matHeaderCellDef>
             VALOR
-          </th>
+          </th> -->
           <td class="p-0 text-center" mat-cell *matCellDef="let element">
             {{ formatarParaReal(element.valor_compra) }}
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
         <tr
           mat-row
           (click)="detalhar(element)"

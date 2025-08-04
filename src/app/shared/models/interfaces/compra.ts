@@ -1,5 +1,5 @@
 export interface Compra extends Record<string, unknown> {
-  codigo_compra?: number;
+  codigo_compra: number;
   descricao_compra: string;
   valor_compra: string;
   data_compra: string;

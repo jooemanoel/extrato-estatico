@@ -21,6 +21,14 @@
     <mat-icon matListItemIcon>shopping_bag</mat-icon>
     <span matListItemTitle>Ver compras</span>
   </a>
+  <a mat-list-item (click)="navegar('painel-faturas')">
+    <mat-icon matListItemIcon>note_stack</mat-icon>
+    <span matListItemTitle>Minhas faturas</span>
+  </a>
+  <a mat-list-item (click)="navegar('criar-fatura')">
+    <mat-icon matListItemIcon>note_add</mat-icon>
+    <span matListItemTitle>Criar nova fatura</span>
+  </a>
   <a mat-list-item (click)="logout()">
     <mat-icon matListItemIcon>logout</mat-icon>
     <span matListItemTitle>Sair</span>

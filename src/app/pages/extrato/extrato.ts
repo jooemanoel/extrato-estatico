@@ -3,21 +3,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { Compra } from '../../shared/models/interfaces/compra';
+import { formatarTimestampParaData, formatarParaReal, formatarStringParaReal } from '../../shared/utils/functions';
+import { FaturaService } from '../../services/fatura-service';
 
 @Component({
   selector: 'app-extrato',
   imports: [
     MatCardModule,
     MatButtonModule,
-    MatCardModule,
     MatTableModule,
-    MatSortModule,
     MatProgressSpinnerModule,
     MatIconModule,
   ],
@@ -34,6 +33,7 @@ export class Extrato {
   dataSource = new MatTableDataSource<Compra>([]);
   constructor(
     private compraService: CompraService,
+    private faturaService: FaturaService,
     private controleService: ControleService,
     private router: Router
   ) {
@@ -50,14 +50,13 @@ export class Extrato {
   get carregando() {
     return this.controleService.carregando;
   }
-  get total_compras() {
-    return this.compraService.total_compras;
-  }
   get codigo_categoria_compra() {
     return this.compraService.codigo_categoria_compra;
   }
+  get faturaAtiva() {
+    return this.faturaService.faturaAtiva;
+  }
   ngOnInit(): void {
-    this.compraService.listarCompras();
     this.titulo =
       this.compraService.categoriaCompra[
         this.compraService.codigo_categoria_compra()
@@ -66,19 +65,12 @@ export class Extrato {
   ngOnDestroy() {
     this.compraService.codigo_categoria_compra.set(0);
   }
-  formatarParaReal(valor: number): string {
-    return valor.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  }
   somaCategoria(categoria: number) {
     return this.compraService.somaCategoria(categoria);
   }
-  formatarParaData(timestamp: string) {
-    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
-    return `${dia}/${mes}/${ano}`;
-  }
+  formatarParaReal = formatarParaReal.bind(this);
+  formatarStringParaReal = formatarStringParaReal.bind(this);
+  formatarParaData = formatarTimestampParaData.bind(this);
   detalhar(element: Compra) {
     this.compraService.compra.set(element);
     this.router.navigateByUrl('detalhar-compra');
@@ -88,5 +80,8 @@ export class Extrato {
   }
   navegarDashboard() {
     this.router.navigateByUrl('dashboard');
+  }
+  navegarPainelFaturas() {
+    this.router.navigateByUrl('painel-faturas');
   }
 }

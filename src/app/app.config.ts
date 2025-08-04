@@ -10,6 +10,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
 import { routes } from './app.routes';
 
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),

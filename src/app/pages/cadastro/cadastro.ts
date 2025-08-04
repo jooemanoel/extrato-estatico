@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ControleService } from '../../services/controle-service';
+import { UsuarioService } from '../../services/usuario-service';
 import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
 import { normalizar } from '../../shared/utils/functions';
 
@@ -31,7 +32,10 @@ export class Cadastro {
     senha_usuario: new FormControl(''),
   });
   confirmar_senha_usuario = new FormControl('');
-  constructor(private controleService: ControleService) {}
+  constructor(
+    private controleService: ControleService,
+    private usuarioService: UsuarioService
+  ) {}
   get carregando() {
     return this.controleService.carregando;
   }
@@ -49,6 +53,6 @@ export class Cadastro {
     this.formCadastro.controls.nome_usuario.setValue(
       normalizar(this.formCadastro.value.nome_usuario ?? '')
     );
-    this.controleService.cadastrar(this.formCadastro.value as UsuarioEntrada);
+    this.usuarioService.cadastrar(this.formCadastro.value as UsuarioEntrada);
   }
 }

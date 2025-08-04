@@ -1,5 +1,5 @@
 // app.ts
-import { Component, effect, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
@@ -7,8 +7,8 @@ import { SwUpdate } from '@angular/service-worker';
 import { filter } from 'rxjs';
 import { Header } from './components/header/header';
 import { SideMenu } from './components/side-menu/side-menu';
-import { CompraService } from './services/compra-service';
-import { ControleService } from './services/controle-service';
+import { UsuarioService } from './services/usuario-service';
+import { FaturaService } from './services/fatura-service';
 
 @Component({
   selector: 'app-root',
@@ -27,14 +27,13 @@ export class App implements OnInit {
   constructor(
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
-    private compraService: CompraService,
-    private controleService: ControleService,
-    private injector: Injector
+    private usuarioService: UsuarioService,
+    private faturaService: FaturaService
   ) {}
   ngOnInit(): void {
     this.checkForUpdates();
-    this.checkLoadingFailed();
-    this.controleService.validarToken();
+    this.usuarioService.validarToken();
+    this.faturaService.validarFatura();
   }
   checkForUpdates() {
     if (this.swUpdate.isEnabled) {
@@ -51,21 +50,6 @@ export class App implements OnInit {
             });
         });
     }
-  }
-  checkLoadingFailed() {
-    effect(
-      () => {
-        if (this.compraService.openReloadSnack()) {
-          this.snackBar
-            .open('Erro no carregamento.', 'Recarregar')
-            .onAction()
-            .subscribe(() => {
-              this.compraService.listarCompras();
-            });
-        }
-      },
-      { injector: this.injector }
-    );
   }
   alternarMenu() {
     this.drawer?.toggle();

@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
 import { Compra } from '../../shared/models/interfaces/compra';
+import { formatarDateParaString } from '../../shared/utils/functions';
+import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
   selector: 'app-inserir-compra',
@@ -24,7 +31,15 @@ import { Compra } from '../../shared/models/interfaces/compra';
     MatSelectModule,
     CurrencyMaskModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [LOCALE_ID, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: BR_DATE_FORMATS },
+  ],
   templateUrl: './inserir-compra.html',
   styleUrl: './inserir-compra.css',
 })
@@ -37,19 +52,14 @@ export class InserirCompra {
     codigo_categoria_compra: new FormControl(1),
   });
   constructor(private compraService: CompraService, private router: Router) {}
-  getDataFormatada(data: Date = new Date()) {
-    const ano = data.getFullYear();
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
-    const dia = String(data.getDate()).padStart(2, '0');
-    return `${ano}-${mes}-${dia}`;
-  }
   adicionar() {
     const compra: Compra = {
+      codigo_compra: 0,
       descricao_compra: (
         this.formCompra.value.descricao_compra ?? ''
       ).toUpperCase(),
-      data_compra: this.getDataFormatada(
-        this.formCompra.value.data_compra ?? new Date()
+      data_compra: formatarDateParaString(
+        moment(this.formCompra.value.data_compra).toDate()
       ),
       valor_compra: `${this.formCompra.value.valor_compra ?? 0}`,
       codigo_categoria_compra:

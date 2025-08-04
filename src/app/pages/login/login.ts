@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
+import { UsuarioService } from '../../services/usuario-service';
 import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
 import { normalizar } from '../../shared/utils/functions';
 
@@ -33,6 +34,7 @@ export class Login {
   });
   constructor(
     private controleService: ControleService,
+    private usuarioService: UsuarioService,
     private router: Router
   ) {}
   get carregando() {
@@ -42,7 +44,7 @@ export class Login {
     this.formLogin.controls.nome_usuario.setValue(
       normalizar(this.formLogin.value.nome_usuario ?? '')
     );
-    this.controleService.login(this.formLogin.value as UsuarioEntrada);
+    this.usuarioService.login(this.formLogin.value as UsuarioEntrada);
   }
   cadastrar() {
     this.router.navigateByUrl('cadastro');

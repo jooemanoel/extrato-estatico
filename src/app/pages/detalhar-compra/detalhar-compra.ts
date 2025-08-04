@@ -34,13 +34,13 @@ export class DetalharCompra {
   categoriaCompra(codigo: number) {
     return this.compraService.categoriaCompra[codigo];
   }
-  apagarCompra() {
-    this.compraService.apagarCompra(
-      this.compraService.compra().codigo_compra ?? 0
-    );
-    this.location.back();
-  }
   editarCompra() {
     this.router.navigateByUrl('editar-compra');
+  }
+  apagarCompra() {
+    this.compraService.apagarCompra(
+      this.compraService.compra().codigo_compra
+    );
+    this.location.back();
   }
 }

@@ -1,9 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { RespostaLogin } from '../shared/models/interfaces/resposta-login';
-import { UsuarioEntrada } from '../shared/models/interfaces/usuario-entrada';
 import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 
 @Injectable({
@@ -26,80 +23,12 @@ export class ControleService {
     extrato: 'Extrato',
     login: 'Bem vindo ao Extrato!',
     cadastro: 'Cadastro',
+    'painel-faturas': 'Minhas Faturas',
+    'criar-fatura': 'Criar Fatura',
+    'detalhar-fatura': 'Detalhar Fatura',
+    'editar-fatura': 'Editar Fatura',
   };
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
-  login(entrada: UsuarioEntrada) {
-    this.carregando.set(true);
-    this.http
-      .post<RespostaLogin>(`${this.API}/usuario/login`, entrada)
-      .subscribe({
-        next: (res) => {
-          this.carregando.set(false);
-          if (res.token) {
-            this.token.set(res.token);
-            localStorage.setItem('extrato-estatico-token', res.token);
-          }
-          if (res.usuario) {
-            this.usuario.set(res.usuario);
-            this.showMessage(
-              `Bem vindo(a), ${res.usuario.nome_usuario}!`,
-              ''
-            );
-          }
-          this.router.navigateByUrl('dashboard');
-        },
-        error: (res) => {
-          this.showMessage(res?.error?.message ?? 'Erro desconhecido');
-        },
-      });
-  }
-  validarToken() {
-    const token = localStorage.getItem('extrato-estatico-token');
-    if (token) {
-      this.token.set(token);
-      this.carregando.set(true);
-      this.http
-        .get<UsuarioResposta>(`${this.API}/usuario/perfil`, {
-          headers: this.headers(),
-        })
-        .subscribe({
-          next: (res) => {
-            this.carregando.set(false);
-            this.usuario.set(res);
-            this.showMessage(`Bem vindo(a), ${res.nome_usuario}!`, '');
-            this.router.navigateByUrl('dashboard');
-          },
-          error: (res) => {
-            this.showMessage(res?.error?.message ?? 'Erro desconhecido');
-          },
-        });
-    }
-  }
-  cadastrar(entrada: UsuarioEntrada) {
-    this.carregando.set(true);
-    this.http
-      .post<RespostaLogin>(`${this.API}/usuario/cadastro`, entrada)
-      .subscribe({
-        next: () => {
-          this.carregando.set(false);
-          this.showMessage(`Usuário ${entrada.nome_usuario} cadastrado com sucesso`);
-          this.router.navigateByUrl('login');
-        },
-        error: (res) => {
-          this.carregando.set(false);
-          const message: string = res?.error?.message ?? 'Erro desconhecido';
-          if (message.startsWith('duplicate')) {
-            this.showMessage('Este usuário já existe');
-          } else {
-            this.showMessage(message);
-          }
-        },
-      });
-  }
+  constructor(private snackBar: MatSnackBar) {}
   headers() {
     return new HttpHeaders({
       Authorization: `Bearer ${this.token()}`,

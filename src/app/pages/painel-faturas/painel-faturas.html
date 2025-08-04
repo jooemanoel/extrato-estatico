@@ -1,0 +1,78 @@
+@if(carregando()) {
+<div class="container p-2">
+  <mat-card>
+    <mat-card-content>
+      <div class="d-flex flex-column align-items-center gap-3">
+        <mat-spinner diameter="40" color="primary"></mat-spinner>
+        <p class="mb-0">Carregando...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+}
+<div class="container p-2" [class.visually-hidden]="!!carregando()">
+  <mat-card class="p-2" appearance="filled">
+    <mat-card-content class="p-0 d-flex justify-content-center"
+      >FATURA SELECIONADA:</mat-card-content
+    >
+    <mat-card-header class="p-0 d-flex justify-content-center">
+      <mat-card-title>{{
+        faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
+      }}</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+</div>
+<div class="container p-2 pt-0" [class.visually-hidden]="!!carregando() || dataSource.data.length">
+  <mat-card appearance="filled">
+    <mat-card-content class="text-center">
+      <mat-icon
+        color="primary"
+        style="font-size: 40px; height: 40px; width: 40px"
+        >info</mat-icon
+      >
+      <p class="mt-2 mb-0">
+        Deseja visualizar as compras de um período específico? Crie uma fatura.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div
+  class="container p-2 pt-0"
+  [class.visually-hidden]="!!carregando() || !dataSource.data.length"
+>
+  <mat-card appearance="filled">
+    <mat-card-content class="p-2">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        style="background-color: transparent"
+      >
+        <ng-container matColumnDef="nome_fatura">
+          <td class="p-2" mat-cell *matCellDef="let element">
+            <b>{{ element.nome_fatura }}</b>
+            <br />
+            {{ formatarParaData(element.data_abertura_fatura) }} -
+            {{ formatarParaData(element.data_fechamento_fatura) }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chevron">
+          <td
+            class="p-2"
+            mat-cell
+            *matCellDef="let element"
+            style="width: 40px"
+          >
+            <button matIconButton [attr.aria-label]="'Detalhar'">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: displayedColumns"
+          (click)="detalhar(element)"
+        ></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

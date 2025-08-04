@@ -10,30 +10,31 @@
   </mat-card>
 </div>
 }
-<div class="container p-2" [class.visually-hidden]="!!carregando()">
+<div class="container p-2 pb-0" [class.visually-hidden]="!!carregando()">
   <mat-card
-    class="h-100"
+    class="p-2"
     appearance="filled"
-    (click)="navegarDashboard()"
+    (click)="navegarPainelFaturas()"
     role="button"
     tabindex="0"
-    (keydown.enter)="navegarDashboard()"
-    (keydown.space)="navegarDashboard()"
-    aria-label="Ver extrato total de compras"
+    (keydown.enter)="navegarPainelFaturas()"
+    (keydown.space)="navegarPainelFaturas()"
+    aria-label="Ver painel de faturas"
   >
-    <mat-card-header class="d-flex justify-content-center">
+    <mat-card-header class="p-0 d-flex justify-content-center">
       <mat-card-title>{{
-        formatarParaReal(somaCategoria(codigo_categoria_compra()))
+        faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
       }}</mat-card-title>
     </mat-card-header>
-    <mat-card-content
-      class="h-100 d-flex align-items-end justify-content-center"
-    >
-      <span>{{ titulo }}</span>
-    </mat-card-content>
+    <mat-card-content class="p-0 text-center">
+        @if(faturaAtiva().codigo_fatura) {
+        {{ formatarParaData(faturaAtiva().data_abertura_fatura) }} -
+        {{ formatarParaData(faturaAtiva().data_fechamento_fatura) }}
+        } @else { Mostrando compras dos últimos 30 dias }
+      </mat-card-content>
   </mat-card>
 </div>
-<div class="container p-2 pt-0" [class.visually-hidden]="!!carregando()">
+<div class="container p-2" [class.visually-hidden]="!!carregando()">
   <mat-card appearance="filled">
     <mat-card-content class="p-2">
       <table
@@ -42,15 +43,22 @@
         style="background-color: transparent"
       >
         <ng-container matColumnDef="codigo_categoria_compra">
-          <!-- <th class="p-0" mat-header-cell *matHeaderCellDef></th> -->
-          <td class="p-0" mat-cell *matCellDef="let element">
+          <th
+            class="p-2"
+            mat-header-cell
+            *matHeaderCellDef
+            style="width: 40px"
+          ></th>
+          <td class="p-2" mat-cell *matCellDef="let element">
             <mat-icon>{{
               categoriaCompra(element.codigo_categoria_compra).icon
             }}</mat-icon>
           </td>
         </ng-container>
         <ng-container matColumnDef="descricao_compra">
-          <!-- <th class="p-0" mat-header-cell *matHeaderCellDef>DESCRIÇÃO</th> -->
+          <th class="p-0" mat-header-cell *matHeaderCellDef>
+            <b>{{ titulo }}</b>
+          </th>
           <td class="p-0" mat-cell *matCellDef="let element">
             <span>{{ formatarParaData(element.data_compra) }}</span>
             <br />
@@ -58,14 +66,14 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="valor_compra">
-          <!-- <th class="p-0 text-center" mat-header-cell *matHeaderCellDef>
-            VALOR
-          </th> -->
-          <td class="p-0 text-center" mat-cell *matCellDef="let element">
-            {{ formatarParaReal(element.valor_compra) }}
+          <th class="p-2 text-center" mat-header-cell *matHeaderCellDef>
+            {{ formatarParaReal(somaCategoria(codigo_categoria_compra())) }}
+          </th>
+          <td class="p-2 text-center" mat-cell *matCellDef="let element">
+            {{ formatarStringParaReal(element.valor_compra) }}
           </td>
         </ng-container>
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
           (click)="detalhar(element)"

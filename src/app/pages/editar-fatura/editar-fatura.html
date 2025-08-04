@@ -1,0 +1,54 @@
+<div class="container p-2 pt-0">
+  <form [formGroup]="formFatura">
+    <mat-card appearance="filled">
+      <mat-card-content class="d-flex flex-column p-2 gap-2">
+        <mat-form-field class="w-100">
+          <mat-label>Nome da fatura</mat-label>
+          <input matInput type="text" formControlName="nome_fatura" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Data de abertura</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="data_abertura_fatura"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Data de fechamento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            formControlName="data_fechamento_fatura"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          class="w-100"
+          matButton="filled"
+          (click)="atualizar()"
+          [disabled]="
+            !formFatura.value.nome_fatura ||
+            !formFatura.value.data_abertura_fatura ||
+            !formFatura.value.data_fechamento_fatura
+          "
+        >
+          Atualizar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

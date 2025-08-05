@@ -18,6 +18,7 @@ export class FaturaService {
   ) {}
   validarFatura() {
     const stringFatura = localStorage.getItem('extrato-estatico-fatura');
+    console.log(stringFatura);
     if (stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
   }
   listarFaturas() {
@@ -73,5 +74,9 @@ export class FaturaService {
         console.log('Apagar fatura', res);
         this.listarFaturas();
       });
+  }
+  limparFaturaAtiva() {
+    this.faturaAtiva.set(Mock.faturaVazia());
+    localStorage.removeItem('extrato-estatico-fatura');
   }
 }

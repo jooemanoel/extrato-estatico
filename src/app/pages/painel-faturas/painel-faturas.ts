@@ -18,7 +18,7 @@ import { formatarTimestampParaData } from '../../shared/utils/functions';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './painel-faturas.html',
   styleUrl: './painel-faturas.css',
@@ -43,6 +43,11 @@ export class PainelFaturas {
   }
   get faturaAtiva() {
     return this.faturaService.faturaAtiva;
+  }
+  ngOnInit() {
+    if (!this.controleService.token()) {
+      this.router.navigateByUrl('');
+    }
   }
   detalhar(element: Fatura) {
     this.faturaService.fatura.set(element);

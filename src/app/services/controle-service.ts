@@ -9,7 +9,8 @@ import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 export class ControleService {
   // readonly API = 'http://localhost:8080';
   readonly API = 'https://extrato-api-express.vercel.app';
-  carregando = signal(false);
+  carregando = signal(0);
+  erro = signal('');
   usuario = signal<UsuarioResposta>({
     codigo_usuario: 0,
     nome_usuario: '',
@@ -21,7 +22,7 @@ export class ControleService {
     'detalhar-compra': 'Detalhar Compra',
     'editar-compra': 'Editar Compra',
     extrato: 'Extrato',
-    login: 'Bem vindo ao Extrato!',
+    '': 'Bem vindo ao Extrato!',
     cadastro: 'Cadastro',
     'painel-faturas': 'Minhas Faturas',
     'criar-fatura': 'Criar Fatura',
@@ -36,5 +37,19 @@ export class ControleService {
   }
   showMessage(message: string, action: string = '') {
     return this.snackBar.open(message, action, { duration: 3000 });
+  }
+  showErrorMessage(message: string, action: string = '') {
+    this.erro.set(message);
+    return this.showMessage(message, action);
+  }
+  load() {
+    this.carregando.update(x => x + 1);
+  }
+  unload() {
+    this.carregando.update(x => x - 1);
+  }
+  limparToken() {
+    this.token.set('');
+    localStorage.removeItem('extrato-estatico-token');
   }
 }

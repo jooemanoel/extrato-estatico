@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { finalize } from 'rxjs';
 import { Fatura } from '../shared/models/interfaces/fatura';
 import { Mock } from '../shared/utils/mock';
 import { ControleService } from './controle-service';
-import { CompraService } from './compra-service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,39 +18,40 @@ export class FaturaService {
   ) {}
   validarFatura() {
     const stringFatura = localStorage.getItem('extrato-estatico-fatura');
-    console.log(stringFatura);
     if (stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
   }
   listarFaturas() {
+    this.controleService.load();
     this.http
       .get<Fatura[]>(`${this.controleService.API}/faturas`, {
         headers: this.controleService.headers(),
       })
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
         next: (faturas) => {
           this.faturas.set(faturas);
-          this.controleService.carregando.set(false);
         },
         error: (res) => {
-          this.controleService.showMessage(
+          this.controleService.showErrorMessage(
             res?.error?.message ?? 'Erro desconhecido'
           );
         },
       });
   }
   inserirFatura(fatura: Fatura) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .post<Fatura>(`${this.controleService.API}/faturas`, fatura, {
         headers: this.controleService.headers(),
       })
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
         console.log('Inserir fatura', res);
         this.listarFaturas();
       });
   }
   editarFatura(fatura: Fatura) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .put<Fatura>(
         `${this.controleService.API}/faturas/${fatura.codigo_fatura}`,
@@ -59,17 +60,19 @@ export class FaturaService {
           headers: this.controleService.headers(),
         }
       )
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
         console.log('Editar fatura', res);
         this.listarFaturas();
       });
   }
   apagarFatura(codigo_fatura: number) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .delete(`${this.controleService.API}/faturas/${codigo_fatura}`, {
         headers: this.controleService.headers(),
       })
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
         console.log('Apagar fatura', res);
         this.listarFaturas();

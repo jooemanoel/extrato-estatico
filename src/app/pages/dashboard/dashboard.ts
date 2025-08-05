@@ -34,6 +34,9 @@ export class Dashboard {
     return this.faturaService.faturaAtiva;
   }
   ngOnInit(): void {
+    if(!this.controleService.token()){
+      this.router.navigateByUrl('');
+    }
     this.compraService.codigo_categoria_compra.set(0);
   }
   formatarParaReal = formatarParaReal.bind(this);

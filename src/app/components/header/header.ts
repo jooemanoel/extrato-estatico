@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { ControleService } from '../../services/controle-service';
 import { filter } from 'rxjs';
+import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-header',
@@ -25,9 +25,12 @@ export class Header {
     return this.controleService.titulosPorPagina[this.pagina()];
   }
   ngOnInit() {
-    this.router.events.pipe(filter(x => x instanceof NavigationEnd)).subscribe((x) => {
-      this.pagina.set(x.urlAfterRedirects.replace('/', ''))
-    });
+    this.router.events
+      .pipe(filter((x) => x instanceof NavigationEnd))
+      .subscribe((x) => {
+        // Faz a leitura da página atual
+        this.pagina.set(x.urlAfterRedirects.replace('/', ''));
+      });
   }
   alternar() {
     this.alternarMenu.emit();

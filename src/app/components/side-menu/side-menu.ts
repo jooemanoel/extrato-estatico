@@ -31,9 +31,8 @@ export class SideMenu {
     this.closeMenu.emit();
   }
   logout() {
-    this.controleService.token.set('');
-    localStorage.removeItem('extrato-estatico-token');
+    this.controleService.limparToken();
     this.faturaService.limparFaturaAtiva();
-    this.navegar('login');
+    this.navegar('');
   }
 }

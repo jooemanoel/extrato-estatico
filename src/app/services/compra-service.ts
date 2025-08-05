@@ -5,6 +5,7 @@ import { formatarDateParaString } from '../shared/utils/functions';
 import { Mock } from '../shared/utils/mock';
 import { ControleService } from './controle-service';
 import { FaturaService } from './fatura-service';
+import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,7 @@ export class CompraService {
     };
   }
   listarCompras() {
+    this.controleService.load();
     this.http
       .post<Compra[]>(
         `${this.controleService.API}/compras/por-data`,
@@ -47,30 +49,32 @@ export class CompraService {
           headers: this.controleService.headers(),
         }
       )
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
         next: (compras) => {
           this.compras.set(compras);
-          this.controleService.carregando.set(false);
         },
         error: (res) => {
-          this.controleService.showMessage(
+          this.controleService.showErrorMessage(
             res?.error?.message ?? 'Erro desconhecido'
           );
         },
       });
   }
   inserirCompra(compra: Compra) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .post<Compra>(`${this.controleService.API}/compras`, compra, {
         headers: this.controleService.headers(),
       })
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
+        console.log('Inserir Compra', res);
         this.listarCompras();
       });
   }
   editarCompra(compra: Compra) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .put<Compra>(
         `${this.controleService.API}/compras/${compra.codigo_compra}`,
@@ -79,17 +83,19 @@ export class CompraService {
           headers: this.controleService.headers(),
         }
       )
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
         console.log('Editar Compra', res);
         this.listarCompras();
       });
   }
   apagarCompra(codigo_compra: number) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .delete(`${this.controleService.API}/compras/${codigo_compra}`, {
         headers: this.controleService.headers(),
       })
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe((res) => {
         console.log('Apagar Compra', res);
         this.listarCompras();

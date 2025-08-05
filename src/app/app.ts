@@ -5,10 +5,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { filter } from 'rxjs';
+import { Erro } from './components/erro/erro';
 import { Header } from './components/header/header';
 import { SideMenu } from './components/side-menu/side-menu';
-import { UsuarioService } from './services/usuario-service';
+import { ControleService } from './services/controle-service';
 import { FaturaService } from './services/fatura-service';
+import { UsuarioService } from './services/usuario-service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ import { FaturaService } from './services/fatura-service';
     SideMenu,
     MatSidenavModule,
     MatSnackBarModule,
+    Erro,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -28,8 +31,12 @@ export class App implements OnInit {
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
     private usuarioService: UsuarioService,
-    private faturaService: FaturaService
+    private faturaService: FaturaService,
+    private controleService: ControleService
   ) {}
+  get erro() {
+    return this.controleService.erro;
+  }
   ngOnInit(): void {
     this.checkForUpdates();
     this.usuarioService.validarToken();

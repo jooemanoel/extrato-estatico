@@ -7,6 +7,7 @@ import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 import { CompraService } from './compra-service';
 import { ControleService } from './controle-service';
 import { FaturaService } from './fatura-service';
+import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +25,12 @@ export class UsuarioService {
     private router: Router
   ) {}
   login(entrada: UsuarioEntrada) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .post<RespostaLogin>(`${this.controleService.API}/usuario/login`, entrada)
       .subscribe({
         next: (res) => {
+          this.controleService.unload();
           if (res.token) {
             this.controleService.token.set(res.token);
             localStorage.setItem('extrato-estatico-token', res.token);
@@ -39,6 +41,7 @@ export class UsuarioService {
           this.carregarUsuario();
         },
         error: (res) => {
+          this.controleService.unload();
           this.controleService.showMessage(
             res?.error?.message ?? 'Erro desconhecido'
           );
@@ -48,13 +51,13 @@ export class UsuarioService {
   validarToken() {
     const token = localStorage.getItem('extrato-estatico-token');
     if (token) {
-      console.log('validarToken');
       this.controleService.token.set(token);
-      this.controleService.carregando.set(true);
+      this.controleService.load();
       this.http
         .get<UsuarioResposta>(`${this.controleService.API}/usuario/perfil`, {
           headers: this.controleService.headers(),
         })
+        .pipe(finalize(() => this.controleService.unload()))
         .subscribe({
           next: (res) => {
             this.usuario.set(res);
@@ -69,22 +72,21 @@ export class UsuarioService {
     }
   }
   cadastrar(entrada: UsuarioEntrada) {
-    this.controleService.carregando.set(true);
+    this.controleService.load();
     this.http
       .post<RespostaLogin>(
         `${this.controleService.API}/usuario/cadastro`,
         entrada
       )
+      .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
         next: () => {
-          this.controleService.carregando.set(false);
           this.controleService.showMessage(
             `Usuário ${entrada.nome_usuario} cadastrado com sucesso`
           );
-          this.router.navigateByUrl('login');
+          this.router.navigateByUrl('');
         },
         error: (res) => {
-          this.controleService.carregando.set(false);
           const message: string = res?.error?.message ?? 'Erro desconhecido';
           if (message.startsWith('duplicate')) {
             this.controleService.showMessage('Este usuário já existe');

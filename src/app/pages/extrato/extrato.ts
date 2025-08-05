@@ -57,6 +57,9 @@ export class Extrato {
     return this.faturaService.faturaAtiva;
   }
   ngOnInit(): void {
+    if(!this.controleService.token()){
+      this.router.navigateByUrl('');
+    }
     this.titulo =
       this.compraService.categoriaCompra[
         this.compraService.codigo_categoria_compra()

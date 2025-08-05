@@ -1,0 +1,32 @@
+@if(carregando()) {
+<div class="container p-2 pt-0">
+  <mat-card>
+    <mat-card-content>
+      <div class="d-flex flex-column align-items-center gap-3">
+        <mat-spinner diameter="40" color="primary"></mat-spinner>
+        <p class="mb-0">Carregando...</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+} @if(erro()) {
+<div class="container p-2 pt-0">
+  <mat-card>
+    <mat-card-content>
+      <div class="d-flex flex-column align-items-center gap-3">
+        <mat-icon>error</mat-icon>
+        <p class="mb-0">{{ erro() }}</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        class="w-100"
+        matButton="filled"
+        (click)="recarregar()"
+      >
+        Recarregar Página
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+}

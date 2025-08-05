@@ -18,7 +18,6 @@ export const routes: Routes = [
   { path: 'inserir-compra', component: InserirCompra },
   { path: 'detalhar-compra', component: DetalharCompra },
   { path: 'editar-compra', component: EditarCompra },
-  { path: 'login', component: Login },
   { path: 'cadastro', component: Cadastro },
   { path: 'painel-faturas', component: PainelFaturas },
   { path: 'criar-fatura', component: CriarFatura },

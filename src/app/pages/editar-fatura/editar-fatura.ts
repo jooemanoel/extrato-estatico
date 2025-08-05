@@ -12,12 +12,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import moment from 'moment';
+import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
 import { Fatura } from '../../shared/models/interfaces/fatura';
 import { formatarDateParaString } from '../../shared/utils/functions';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
-import { CompraService } from '../../services/compra-service';
 
 @Component({
   selector: 'app-editar-fatura',
@@ -54,9 +54,6 @@ export class EditarFatura {
     private compraService: CompraService,
     private router: Router
   ) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
   ngOnInit() {
     this.formFatura.setValue({
       codigo_fatura: this.faturaService.fatura().codigo_fatura,
@@ -89,7 +86,9 @@ export class EditarFatura {
       data_fechamento_fatura: formatarDateParaString(data_fechamento_fatura),
     };
     this.faturaService.editarFatura(fatura);
-    if (this.faturaService.faturaAtiva().codigo_fatura === fatura.codigo_fatura) {
+    if (
+      this.faturaService.faturaAtiva().codigo_fatura === fatura.codigo_fatura
+    ) {
       this.faturaService.faturaAtiva.set(fatura);
       this.compraService.listarCompras();
     }

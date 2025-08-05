@@ -54,9 +54,6 @@ export class CriarFatura {
     private faturaService: FaturaService,
     private router: Router
   ) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
   adicionar() {
     const data_abertura_fatura = moment(
       this.formFatura.value.data_abertura_fatura

@@ -27,22 +27,13 @@ export class PainelFaturas {
   displayedColumns: string[] = ['nome_fatura', 'chevron'];
   dataSource = new MatTableDataSource<Fatura>([]);
   constructor(
-    private faturaService: FaturaService,
-    private controleService: ControleService,
+    public faturaService: FaturaService,
+    public controleService: ControleService,
     private router: Router
   ) {
     effect(() => {
       this.dataSource.data = this.faturaService.faturas();
     });
-  }
-  get carregando() {
-    return this.controleService.carregando;
-  }
-  get fatura() {
-    return this.faturaService.fatura;
-  }
-  get faturaAtiva() {
-    return this.faturaService.faturaAtiva;
   }
   ngOnInit() {
     if (!this.controleService.token()) {

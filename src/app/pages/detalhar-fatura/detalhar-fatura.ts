@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { FaturaService } from '../../services/fatura-service';
 import { CompraService } from '../../services/compra-service';
+import { FaturaService } from '../../services/fatura-service';
 import { Mock } from '../../shared/utils/mock';
 
 @Component({
@@ -16,14 +16,11 @@ import { Mock } from '../../shared/utils/mock';
 })
 export class DetalharFatura {
   constructor(
-    private faturaService: FaturaService,
+    public faturaService: FaturaService,
     private compraService: CompraService,
     private router: Router,
     private location: Location
   ) {}
-  get fatura() {
-    return this.faturaService.fatura;
-  }
   formatarParaData(timestamp: string) {
     const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
     return `${dia}/${mes}/${ano}`;

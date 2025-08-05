@@ -1,31 +1,35 @@
-<div class="container p-2 pb-0" [class.visually-hidden]="!!carregando()">
-  <mat-card
-    class="p-2"
-    appearance="filled"
-    (click)="navegarPainelFaturas()"
-    role="button"
-    tabindex="0"
-    (keydown.enter)="navegarPainelFaturas()"
-    (keydown.space)="navegarPainelFaturas()"
-    aria-label="Ver painel de faturas"
-  >
-    <mat-card-header class="p-0 d-flex justify-content-center">
-      <mat-card-title>{{
-        faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
-      }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="p-0 text-center">
-        @if(faturaAtiva().codigo_fatura) {
-        {{ formatarParaData(faturaAtiva().data_abertura_fatura) }} -
-        {{ formatarParaData(faturaAtiva().data_fechamento_fatura) }}
-        } @else { Mostrando compras dos últimos 30 dias }
-      </mat-card-content>
-  </mat-card>
-</div>
 <div
   class="container p-1 d-flex flex-wrap"
-  [class.visually-hidden]="carregando()"
+  [class.visually-hidden]="controleService.carregando()"
 >
+  <div class="w-100 p-1">
+    <mat-card
+      class="p-2"
+      appearance="filled"
+      (click)="navegarPainelFaturas()"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="navegarPainelFaturas()"
+      (keydown.space)="navegarPainelFaturas()"
+      aria-label="Ver painel de faturas"
+    >
+      <mat-card-header class="p-0 d-flex justify-content-center">
+        <mat-card-title>{{
+          faturaService.faturaAtiva().nome_fatura ||
+            "Nenhuma fatura selecionada"
+        }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="p-0 text-center">
+        @if(faturaService.faturaAtiva().codigo_fatura) {
+        {{ formatarParaData(faturaService.faturaAtiva().data_abertura_fatura) }}
+        -
+        {{
+          formatarParaData(faturaService.faturaAtiva().data_fechamento_fatura)
+        }}
+        } @else { Mostrando compras dos últimos 30 dias }
+      </mat-card-content>
+    </mat-card>
+  </div>
   <div class="w-50 p-1">
     <mat-card
       class="h-100"

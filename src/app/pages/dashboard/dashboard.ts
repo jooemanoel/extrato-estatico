@@ -7,7 +7,10 @@ import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
-import { formatarTimestampParaData, formatarParaReal } from '../../shared/utils/functions';
+import {
+  formatarTimestampParaData,
+  formatarParaReal,
+} from '../../shared/utils/functions';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,19 +25,13 @@ import { formatarTimestampParaData, formatarParaReal } from '../../shared/utils/
 })
 export class Dashboard {
   constructor(
+    public controleService: ControleService,
     private compraService: CompraService,
-    private faturaService: FaturaService,
-    private controleService: ControleService,
+    public faturaService: FaturaService,
     private router: Router
   ) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
-  get faturaAtiva() {
-    return this.faturaService.faturaAtiva;
-  }
   ngOnInit(): void {
-    if(!this.controleService.token()){
+    if (!this.controleService.token()) {
       this.router.navigateByUrl('');
     }
     this.compraService.codigo_categoria_compra.set(0);

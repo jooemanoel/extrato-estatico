@@ -33,12 +33,9 @@ export class Cadastro {
   });
   confirmar_senha_usuario = new FormControl('');
   constructor(
-    private controleService: ControleService,
+    public controleService: ControleService,
     private usuarioService: UsuarioService
   ) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
   compararSenhas() {
     return (
       this.formCadastro.value.senha_usuario ===

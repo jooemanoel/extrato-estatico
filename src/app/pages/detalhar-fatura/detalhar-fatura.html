@@ -1,22 +1,22 @@
 <div class="container p-2 d-flex flex-column gap-2">
   <mat-card appearance="filled">
     <mat-card-content>
-      <div class="field-row"> 
-      <div class="field-label">NOME</div>
-      <div class="field-value">{{ fatura().nome_fatura }}</div>
-    </div>
-    <div class="field-row">
-      <div class="field-label">DATA DE ABERTURA</div>
-      <div class="field-value">
-        {{ formatarParaData(fatura().data_abertura_fatura) }}
+      <div class="field-row">
+        <div class="field-label">NOME</div>
+        <div class="field-value">{{ faturaService.fatura().nome_fatura }}</div>
       </div>
-    </div>
-    <div class="field-row">
-      <div class="field-label">DATA DE FECHAMENTO</div>
-      <div class="field-value">
-        {{ formatarParaData(fatura().data_fechamento_fatura) }}
+      <div class="field-row">
+        <div class="field-label">DATA DE ABERTURA</div>
+        <div class="field-value">
+          {{ formatarParaData(faturaService.fatura().data_abertura_fatura) }}
+        </div>
       </div>
-    </div>
+      <div class="field-row">
+        <div class="field-label">DATA DE FECHAMENTO</div>
+        <div class="field-value">
+          {{ formatarParaData(faturaService.fatura().data_fechamento_fatura) }}
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions class="d-flex gap-2">
       <button class="w-50" matButton="tonal" (click)="editarFatura()">

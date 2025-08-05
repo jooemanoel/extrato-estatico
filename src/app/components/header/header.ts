@@ -28,7 +28,6 @@ export class Header {
     this.router.events
       .pipe(filter((x) => x instanceof NavigationEnd))
       .subscribe((x) => {
-        // Faz a leitura da página atual
         this.pagina.set(x.urlAfterRedirects.replace('/', ''));
       });
   }

@@ -1,16 +1,24 @@
-<div class="container p-2" [class.visually-hidden]="!!carregando()">
+<div
+  class="container p-2"
+  [class.visually-hidden]="controleService.carregando()"
+>
   <mat-card class="p-2" appearance="filled">
     <mat-card-content class="p-0 d-flex justify-content-center"
       >FATURA SELECIONADA:</mat-card-content
     >
     <mat-card-header class="p-0 d-flex justify-content-center">
       <mat-card-title>{{
-        faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
+        faturaService.faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
       }}</mat-card-title>
     </mat-card-header>
   </mat-card>
 </div>
-<div class="container p-2 pt-0" [class.visually-hidden]="!!carregando() || dataSource.data.length">
+<div
+  class="container p-2 pt-0"
+  [class.visually-hidden]="
+    controleService.carregando() || dataSource.data.length
+  "
+>
   <mat-card appearance="filled">
     <mat-card-content class="text-center">
       <mat-icon
@@ -23,19 +31,17 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-        <button
-          class="w-100"
-          matButton="filled"
-          routerLink="/criar-fatura"
-        >
-          Criar Fatura
-        </button>
-      </mat-card-actions>
+      <button class="w-100" matButton="filled" routerLink="/criar-fatura">
+        Criar Fatura
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>
 <div
   class="container p-2 pt-0"
-  [class.visually-hidden]="!!carregando() || !dataSource.data.length"
+  [class.visually-hidden]="
+    controleService.carregando() || !dataSource.data.length
+  "
 >
   <mat-card appearance="filled">
     <mat-card-content class="p-2">

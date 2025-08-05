@@ -33,13 +33,10 @@ export class Login {
     senha_usuario: new FormControl(''),
   });
   constructor(
-    private controleService: ControleService,
+    public controleService: ControleService,
     private usuarioService: UsuarioService,
     private router: Router
   ) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
   login() {
     this.formLogin.controls.nome_usuario.setValue(
       normalizar(this.formLogin.value.nome_usuario ?? '')

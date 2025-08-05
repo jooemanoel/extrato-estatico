@@ -14,13 +14,10 @@ import { CompraService } from '../../services/compra-service';
 })
 export class DetalharCompra {
   constructor(
-    private compraService: CompraService,
+    public compraService: CompraService,
     private router: Router,
     private location: Location
   ) {}
-  get compra() {
-    return this.compraService.compra;
-  }
   formatarParaReal(valor: string): string {
     return parseFloat(valor).toLocaleString('pt-BR', {
       style: 'currency',

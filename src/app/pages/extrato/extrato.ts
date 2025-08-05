@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { Compra } from '../../shared/models/interfaces/compra';
@@ -14,6 +14,7 @@ import { FaturaService } from '../../services/fatura-service';
 @Component({
   selector: 'app-extrato',
   imports: [
+    RouterModule,
     MatCardModule,
     MatButtonModule,
     MatTableModule,
@@ -32,9 +33,9 @@ export class Extrato {
   ];
   dataSource = new MatTableDataSource<Compra>([]);
   constructor(
-    private compraService: CompraService,
-    private faturaService: FaturaService,
-    private controleService: ControleService,
+    public controleService: ControleService,
+    public compraService: CompraService,
+    public faturaService: FaturaService,
     private router: Router
   ) {
     effect(() => {
@@ -47,15 +48,6 @@ export class Extrato {
         : compras;
     });
   }
-  get carregando() {
-    return this.controleService.carregando;
-  }
-  get codigo_categoria_compra() {
-    return this.compraService.codigo_categoria_compra;
-  }
-  get faturaAtiva() {
-    return this.faturaService.faturaAtiva;
-  }
   ngOnInit(): void {
     if(!this.controleService.token()){
       this.router.navigateByUrl('');
@@ -67,9 +59,6 @@ export class Extrato {
   }
   ngOnDestroy() {
     this.compraService.codigo_categoria_compra.set(0);
-  }
-  somaCategoria(categoria: number) {
-    return this.compraService.somaCategoria(categoria);
   }
   formatarParaReal = formatarParaReal.bind(this);
   formatarStringParaReal = formatarStringParaReal.bind(this);

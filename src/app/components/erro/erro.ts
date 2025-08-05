@@ -11,13 +11,7 @@ import { ControleService } from '../../services/controle-service';
   styleUrl: './erro.css',
 })
 export class Erro {
-  constructor(private controleService: ControleService) {}
-  get carregando() {
-    return this.controleService.carregando;
-  }
-  get erro() {
-    return this.controleService.erro;
-  }
+  constructor(public controleService: ControleService) {}
   recarregar() {
     document.location.reload();
   }

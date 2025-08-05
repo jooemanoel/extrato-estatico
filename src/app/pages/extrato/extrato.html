@@ -1,4 +1,7 @@
-<div class="container p-2 pb-0" [class.visually-hidden]="!!carregando()">
+<div
+  class="container p-2"
+  [class.visually-hidden]="controleService.carregando()"
+>
   <mat-card
     class="p-2"
     appearance="filled"
@@ -11,18 +14,51 @@
   >
     <mat-card-header class="p-0 d-flex justify-content-center">
       <mat-card-title>{{
-        faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
+        faturaService.faturaAtiva().nome_fatura || "Nenhuma fatura selecionada"
       }}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="p-0 text-center">
-        @if(faturaAtiva().codigo_fatura) {
-        {{ formatarParaData(faturaAtiva().data_abertura_fatura) }} -
-        {{ formatarParaData(faturaAtiva().data_fechamento_fatura) }}
-        } @else { Mostrando compras dos últimos 30 dias }
-      </mat-card-content>
+      @if(faturaService.faturaAtiva().codigo_fatura) {
+      {{ formatarParaData(faturaService.faturaAtiva().data_abertura_fatura) }} -
+      {{ formatarParaData(faturaService.faturaAtiva().data_fechamento_fatura) }}
+      } @else { Mostrando compras dos últimos 30 dias }
+    </mat-card-content>
   </mat-card>
 </div>
-<div class="container p-2" [class.visually-hidden]="!!carregando()">
+
+<div
+  class="container p-2 pt-0"
+  [class.visually-hidden]="
+    controleService.carregando() || dataSource.data.length
+  "
+>
+  <mat-card appearance="filled">
+    <mat-card-content class="text-center">
+      <mat-icon
+        color="primary"
+        style="font-size: 40px; height: 40px; width: 40px"
+        >info</mat-icon
+      >
+      <p class="mt-2 mb-0">Você não possui nenhuma compra neste período.</p>
+      <p>
+        Além do botão abaixo, é possível adicionar uma compra a qualquer momento
+        pelo menu.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="w-100" matButton="filled" routerLink="/inserir-compra">
+        Nova compra
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div
+  class="container p-2 pt-0"
+  [class.visually-hidden]="
+    controleService.carregando() || !dataSource.data.length
+  "
+>
   <mat-card appearance="filled">
     <mat-card-content class="p-2">
       <table
@@ -55,7 +91,13 @@
         </ng-container>
         <ng-container matColumnDef="valor_compra">
           <th class="p-2 text-center" mat-header-cell *matHeaderCellDef>
-            {{ formatarParaReal(somaCategoria(codigo_categoria_compra())) }}
+            {{
+              formatarParaReal(
+                compraService.somaCategoria(
+                  compraService.codigo_categoria_compra()
+                )
+              )
+            }}
           </th>
           <td class="p-2 text-center" mat-cell *matCellDef="let element">
             {{ formatarStringParaReal(element.valor_compra) }}

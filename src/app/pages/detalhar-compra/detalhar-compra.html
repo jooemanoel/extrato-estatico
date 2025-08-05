@@ -1,31 +1,35 @@
 <div class="container p-2">
   <mat-card appearance="filled">
     <mat-card-content>
-      <div class="field-row"> 
-      <div class="field-label">DESCRIÇÃO</div>
-      <div class="field-value">{{ compra().descricao_compra }}</div>
-    </div>
-    <div class="field-row">
-      <div class="field-label">VALOR</div>
-      <div class="field-value">
-        {{ formatarParaReal(compra().valor_compra) }}
+      <div class="field-row">
+        <div class="field-label">DESCRIÇÃO</div>
+        <div class="field-value">
+          {{ compraService.compra().descricao_compra }}
+        </div>
       </div>
-    </div>
-    <div class="field-row">
-      <div class="field-label">DATA</div>
-      <div class="field-value">
-        {{ formatarParaData(compra().data_compra) }}
+      <div class="field-row">
+        <div class="field-label">VALOR</div>
+        <div class="field-value">
+          {{ formatarParaReal(compraService.compra().valor_compra) }}
+        </div>
       </div>
-    </div>
-    <div class="field-row">
-      <div class="field-label">CATEGORIA</div>
-      <div class="field-value">
-        <mat-icon>{{
-          categoriaCompra(compra().codigo_categoria_compra).icon
-        }}</mat-icon>
-        {{ categoriaCompra(compra().codigo_categoria_compra).nome }}
+      <div class="field-row">
+        <div class="field-label">DATA</div>
+        <div class="field-value">
+          {{ formatarParaData(compraService.compra().data_compra) }}
+        </div>
       </div>
-    </div>
+      <div class="field-row">
+        <div class="field-label">CATEGORIA</div>
+        <div class="field-value">
+          <mat-icon>{{
+            categoriaCompra(compraService.compra().codigo_categoria_compra).icon
+          }}</mat-icon>
+          {{
+            categoriaCompra(compraService.compra().codigo_categoria_compra).nome
+          }}
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions class="d-flex gap-2">
       <button class="w-50" matButton="filled" (click)="editarCompra()">

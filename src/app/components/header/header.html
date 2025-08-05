@@ -4,12 +4,16 @@
   </button>
   <span class="flex-fill text-center">{{ titulo }}</span>
   @if(pagina() === 'extrato' || pagina() === 'dashboard') {
-  <button matMiniFab (click)="novaCompra()">
+  <button matMiniFab routerLink="/inserir-compra">
     <mat-icon>add_shopping_cart</mat-icon>
   </button>
-  } @else {
+  } @else { @if(pagina() === 'painel-faturas'){
+  <button matMiniFab routerLink="/criar-fatura">
+    <mat-icon>note_add</mat-icon>
+  </button>
+  }@else {
   <button matMiniFab style="visibility: hidden">
     <mat-icon>logout</mat-icon>
   </button>
-  }
+  } }
 </mat-toolbar>

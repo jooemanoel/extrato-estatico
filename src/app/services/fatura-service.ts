@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 import { Fatura } from '../shared/models/interfaces/fatura';
 import { Mock } from '../shared/utils/mock';
 import { ControleService } from './controle-service';
+import { CompraService } from './compra-service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class FaturaService {
   ) {}
   validarFatura() {
     const stringFatura = localStorage.getItem('extrato-estatico-fatura');
-    if(stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
+    if (stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
   }
   listarFaturas() {
     this.http
@@ -43,6 +44,7 @@ export class FaturaService {
         headers: this.controleService.headers(),
       })
       .subscribe((res) => {
+        console.log('Inserir fatura', res);
         this.listarFaturas();
       });
   }

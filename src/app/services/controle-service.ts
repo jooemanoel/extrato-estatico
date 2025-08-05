@@ -9,7 +9,7 @@ import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 export class ControleService {
   // readonly API = 'http://localhost:8080';
   readonly API = 'https://extrato-api-express.vercel.app';
-  carregando = signal(true);
+  carregando = signal(false);
   usuario = signal<UsuarioResposta>({
     codigo_usuario: 0,
     nome_usuario: '',

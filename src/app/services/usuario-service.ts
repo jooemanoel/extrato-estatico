@@ -48,6 +48,7 @@ export class UsuarioService {
   validarToken() {
     const token = localStorage.getItem('extrato-estatico-token');
     if (token) {
+      console.log('validarToken');
       this.controleService.token.set(token);
       this.controleService.carregando.set(true);
       this.http

@@ -17,6 +17,7 @@ import { FaturaService } from '../../services/fatura-service';
 import { Fatura } from '../../shared/models/interfaces/fatura';
 import { formatarDateParaString } from '../../shared/utils/functions';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
+import { CompraService } from '../../services/compra-service';
 
 @Component({
   selector: 'app-editar-fatura',
@@ -50,6 +51,7 @@ export class EditarFatura {
   constructor(
     private controleService: ControleService,
     private faturaService: FaturaService,
+    private compraService: CompraService,
     private router: Router
   ) {}
   get carregando() {
@@ -87,6 +89,10 @@ export class EditarFatura {
       data_fechamento_fatura: formatarDateParaString(data_fechamento_fatura),
     };
     this.faturaService.editarFatura(fatura);
+    if (this.faturaService.faturaAtiva().codigo_fatura === fatura.codigo_fatura) {
+      this.faturaService.faturaAtiva.set(fatura);
+      this.compraService.listarCompras();
+    }
     this.router.navigateByUrl('painel-faturas');
   }
 }

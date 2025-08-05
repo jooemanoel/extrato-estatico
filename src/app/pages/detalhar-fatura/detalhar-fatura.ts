@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { FaturaService } from '../../services/fatura-service';
 import { CompraService } from '../../services/compra-service';
+import { Mock } from '../../shared/utils/mock';
 
 @Component({
   selector: 'app-detalhar-fatura',
@@ -32,12 +33,23 @@ export class DetalharFatura {
   }
   apagarFatura() {
     this.faturaService.apagarFatura(this.faturaService.fatura().codigo_fatura);
+    if (
+      this.faturaService.faturaAtiva().codigo_fatura ===
+      this.faturaService.fatura().codigo_fatura
+    ) {
+      this.faturaService.faturaAtiva.set(Mock.faturaVazia());
+      localStorage.removeItem('extrato-estatico-fatura');
+      this.compraService.listarCompras();
+    }
     this.location.back();
   }
   selecionarFatura() {
     this.faturaService.faturaAtiva.set(this.faturaService.fatura());
     this.compraService.listarCompras();
-    localStorage.setItem('extrato-estatico-fatura', JSON.stringify(this.faturaService.faturaAtiva()));
+    localStorage.setItem(
+      'extrato-estatico-fatura',
+      JSON.stringify(this.faturaService.faturaAtiva())
+    );
     this.router.navigateByUrl('dashboard');
   }
 }

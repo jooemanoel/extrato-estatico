@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
 import { Fatura } from '../../shared/models/interfaces/fatura';
@@ -18,6 +18,7 @@ import { formatarTimestampParaData } from '../../shared/utils/functions';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    RouterModule
   ],
   templateUrl: './painel-faturas.html',
   styleUrl: './painel-faturas.css',

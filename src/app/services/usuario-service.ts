@@ -1,29 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { RespostaLogin } from '../shared/models/interfaces/resposta-login';
 import { UsuarioEntrada } from '../shared/models/interfaces/usuario-entrada';
 import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 import { CompraService } from './compra-service';
 import { ControleService } from './controle-service';
 import { FaturaService } from './fatura-service';
-import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
+  private controleService = inject(ControleService);
+  private compraService = inject(CompraService);
+  private faturaService = inject(FaturaService);
+  private http = inject(HttpClient);
+  private router = inject(Router);
   usuario = signal<UsuarioResposta>({
     codigo_usuario: 0,
     nome_usuario: '',
   });
-  constructor(
-    private controleService: ControleService,
-    private compraService: CompraService,
-    private faturaService: FaturaService,
-    private http: HttpClient,
-    private router: Router
-  ) {}
   login(entrada: UsuarioEntrada) {
     this.controleService.load();
     this.http

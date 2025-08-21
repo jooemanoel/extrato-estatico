@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,11 +13,9 @@ import { CompraService } from '../../services/compra-service';
   styleUrl: './detalhar-compra.css',
 })
 export class DetalharCompra {
-  constructor(
-    public compraService: CompraService,
-    private router: Router,
-    private location: Location
-  ) {}
+  compraService = inject(CompraService);
+  private router = inject(Router);
+  private location = inject(Location);
   formatarParaReal(valor: string): string {
     return parseFloat(valor).toLocaleString('pt-BR', {
       style: 'currency',
@@ -35,9 +33,7 @@ export class DetalharCompra {
     this.router.navigateByUrl('editar-compra');
   }
   apagarCompra() {
-    this.compraService.apagarCompra(
-      this.compraService.compra().codigo_compra
-    );
+    this.compraService.apagarCompra(this.compraService.compra().codigo_compra);
     this.location.back();
   }
 }

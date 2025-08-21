@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,9 +7,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterModule } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
-import { Compra } from '../../shared/models/interfaces/compra';
-import { formatarTimestampParaData, formatarParaReal, formatarStringParaReal } from '../../shared/utils/functions';
 import { FaturaService } from '../../services/fatura-service';
+import { Compra } from '../../shared/models/interfaces/compra';
 
 @Component({
   selector: 'app-extrato',
@@ -24,7 +23,7 @@ import { FaturaService } from '../../services/fatura-service';
   templateUrl: './extrato.html',
   styleUrl: './extrato.css',
 })
-export class Extrato {
+export class Extrato implements OnInit, OnDestroy {
   titulo = '';
   displayedColumns: string[] = [
     'codigo_categoria_compra',
@@ -32,24 +31,22 @@ export class Extrato {
     'valor_compra',
   ];
   dataSource = new MatTableDataSource<Compra>([]);
-  constructor(
-    public controleService: ControleService,
-    public compraService: CompraService,
-    public faturaService: FaturaService,
-    private router: Router
-  ) {
+  controleService = inject(ControleService);
+  compraService = inject(CompraService);
+  faturaService = inject(FaturaService);
+  private router = inject(Router);
+  constructor() {
     effect(() => {
       const compras = this.compraService.compras();
-      const codigo_categoria_compra = compraService.codigo_categoria_compra();
-      this.dataSource.data = codigo_categoria_compra
-        ? compras.filter(
-            (x) => x.codigo_categoria_compra === codigo_categoria_compra
-          )
-        : compras;
+      const codigo_categoria_compra =
+        this.compraService.codigo_categoria_compra();
+      this.dataSource.data = compras.listarPorCategoria(
+        codigo_categoria_compra
+      );
     });
   }
   ngOnInit(): void {
-    if(!this.controleService.token()){
+    if (!this.controleService.token()) {
       this.router.navigateByUrl('');
     }
     this.titulo =
@@ -60,9 +57,6 @@ export class Extrato {
   ngOnDestroy() {
     this.compraService.codigo_categoria_compra.set(0);
   }
-  formatarParaReal = formatarParaReal.bind(this);
-  formatarStringParaReal = formatarStringParaReal.bind(this);
-  formatarParaData = formatarTimestampParaData.bind(this);
   detalhar(element: Compra) {
     this.compraService.compra.set(element);
     this.router.navigateByUrl('detalhar-compra');
@@ -75,5 +69,9 @@ export class Extrato {
   }
   navegarPainelFaturas() {
     this.router.navigateByUrl('painel-faturas');
+  }
+  formatarParaData(timestamp: string) {
+    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
+    return `${dia}/${mes}/${ano}`;
   }
 }

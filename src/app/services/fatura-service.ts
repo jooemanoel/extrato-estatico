@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs';
-import { Fatura } from '../shared/models/interfaces/fatura';
+import { IFatura } from '../shared/models/interfaces/fatura';
 import { Mock } from '../shared/utils/mock';
 import { ControleService } from './controle-service';
 
@@ -9,13 +9,11 @@ import { ControleService } from './controle-service';
   providedIn: 'root',
 })
 export class FaturaService {
-  faturas = signal<Fatura[]>([]);
-  fatura = signal<Fatura>(Mock.faturaVazia());
-  faturaAtiva = signal<Fatura>(Mock.faturaVazia());
-  constructor(
-    private http: HttpClient,
-    private controleService: ControleService
-  ) {}
+  private controleService = inject(ControleService);
+  private http = inject(HttpClient);
+  faturas = signal<IFatura[]>([]);
+  fatura = signal<IFatura>(Mock.faturaVazia());
+  faturaAtiva = signal<IFatura>(Mock.faturaVazia());
   validarFatura() {
     const stringFatura = localStorage.getItem('extrato-estatico-fatura');
     if (stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
@@ -23,7 +21,7 @@ export class FaturaService {
   listarFaturas() {
     this.controleService.load();
     this.http
-      .get<Fatura[]>(`${this.controleService.API}/faturas`, {
+      .get<IFatura[]>(`${this.controleService.API}/faturas`, {
         headers: this.controleService.headers(),
       })
       .pipe(finalize(() => this.controleService.unload()))
@@ -38,10 +36,10 @@ export class FaturaService {
         },
       });
   }
-  inserirFatura(fatura: Fatura) {
+  inserirFatura(fatura: IFatura) {
     this.controleService.load();
     this.http
-      .post<Fatura>(`${this.controleService.API}/faturas`, fatura, {
+      .post<IFatura>(`${this.controleService.API}/faturas`, fatura, {
         headers: this.controleService.headers(),
       })
       .pipe(finalize(() => this.controleService.unload()))
@@ -50,10 +48,10 @@ export class FaturaService {
         this.listarFaturas();
       });
   }
-  editarFatura(fatura: Fatura) {
+  editarFatura(fatura: IFatura) {
     this.controleService.load();
     this.http
-      .put<Fatura>(
+      .put<IFatura>(
         `${this.controleService.API}/faturas/${fatura.codigo_fatura}`,
         fatura,
         {

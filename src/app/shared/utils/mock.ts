@@ -1,17 +1,17 @@
-import { Compra } from '../models/interfaces/compra';
-import { Fatura } from '../models/interfaces/fatura';
+import { ICompra } from '../models/interfaces/compra';
+import { IFatura } from '../models/interfaces/fatura';
 
 export class Mock {
-  static compraVazia(): Compra {
+  static compraVazia(): ICompra {
     return {
       codigo_compra: 0,
       descricao_compra: '',
-      valor_compra: '',
+      valor_compra: 0,
       data_compra: '',
       codigo_categoria_compra: 0,
     };
   }
-  static faturaVazia(): Fatura {
+  static faturaVazia(): IFatura {
     return {
       codigo_fatura: 0,
       nome_fatura: '',

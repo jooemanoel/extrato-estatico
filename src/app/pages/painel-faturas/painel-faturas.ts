@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,8 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterModule } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
-import { Fatura } from '../../shared/models/interfaces/fatura';
-import { formatarTimestampParaData } from '../../shared/utils/functions';
+import { IFatura } from '../../shared/models/interfaces/fatura';
 
 @Component({
   selector: 'app-painel-faturas',
@@ -23,14 +22,13 @@ import { formatarTimestampParaData } from '../../shared/utils/functions';
   templateUrl: './painel-faturas.html',
   styleUrl: './painel-faturas.css',
 })
-export class PainelFaturas {
+export class PainelFaturas implements OnInit {
   displayedColumns: string[] = ['nome_fatura', 'chevron'];
-  dataSource = new MatTableDataSource<Fatura>([]);
-  constructor(
-    public faturaService: FaturaService,
-    public controleService: ControleService,
-    private router: Router
-  ) {
+  dataSource = new MatTableDataSource<IFatura>([]);
+  faturaService = inject(FaturaService);
+  controleService = inject(ControleService);
+  private router = inject(Router);
+  constructor() {
     effect(() => {
       this.dataSource.data = this.faturaService.faturas();
     });
@@ -40,9 +38,12 @@ export class PainelFaturas {
       this.router.navigateByUrl('');
     }
   }
-  detalhar(element: Fatura) {
+  detalhar(element: IFatura) {
     this.faturaService.fatura.set(element);
     this.router.navigateByUrl('detalhar-fatura');
   }
-  formatarParaData = formatarTimestampParaData.bind(this);
+  formatarParaData(timestamp: string) {
+    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
+    return `${dia}/${mes}/${ano}`;
+  }
 }

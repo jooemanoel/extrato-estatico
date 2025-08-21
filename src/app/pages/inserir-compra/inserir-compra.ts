@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
-import { Compra } from '../../shared/models/interfaces/compra';
-import { formatarDateParaString } from '../../shared/utils/functions';
+import { Timestamp } from '../../shared/models/classes/timestamp';
+import { ICompra } from '../../shared/models/interfaces/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -51,17 +51,18 @@ export class InserirCompra {
     data_compra: new FormControl(new Date()),
     codigo_categoria_compra: new FormControl(1),
   });
-  constructor(private compraService: CompraService, private router: Router) {}
+  private compraService = inject(CompraService);
+  private router = inject(Router);
   adicionar() {
-    const compra: Compra = {
+    const compra: ICompra = {
       codigo_compra: 0,
       descricao_compra: (
         this.formCompra.value.descricao_compra ?? ''
       ).toUpperCase(),
-      data_compra: formatarDateParaString(
+      data_compra: Timestamp.fromDate(
         moment(this.formCompra.value.data_compra).toDate()
-      ),
-      valor_compra: `${this.formCompra.value.valor_compra ?? 0}`,
+      ).toDateString(),
+      valor_compra: (this.formCompra.value.valor_compra ?? 0) * 100,
       codigo_categoria_compra:
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };

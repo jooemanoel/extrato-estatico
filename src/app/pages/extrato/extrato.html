@@ -84,7 +84,7 @@
             <b>{{ titulo }}</b>
           </th>
           <td class="p-0" mat-cell *matCellDef="let element">
-            <span>{{ formatarParaData(element.data_compra) }}</span>
+            <span>{{ element.data_compra.toBrazilianDateString() }}</span>
             <br />
             <b>{{ element.descricao_compra.toUpperCase() }}</b>
           </td>
@@ -92,15 +92,13 @@
         <ng-container matColumnDef="valor_compra">
           <th class="p-2 text-center" mat-header-cell *matHeaderCellDef>
             {{
-              formatarParaReal(
-                compraService.somaCategoria(
-                  compraService.codigo_categoria_compra()
-                )
+              compraService.somaCategoria(
+                compraService.codigo_categoria_compra()
               )
             }}
           </th>
           <td class="p-2 text-center" mat-cell *matCellDef="let element">
-            {{ formatarStringParaReal(element.valor_compra) }}
+            {{ element.valor_compra.toBrl() }}
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

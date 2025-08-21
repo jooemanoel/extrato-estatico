@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { Compra } from '../shared/models/interfaces/compra';
-import { formatarDateParaString } from '../shared/utils/functions';
-import { Mock } from '../shared/utils/mock';
+import { inject, Injectable, signal } from '@angular/core';
+import { finalize } from 'rxjs';
+import { ListaCompras } from '../shared/models/classes/lista-compras';
+import { Compra, ICompra } from '../shared/models/interfaces/compra';
 import { ControleService } from './controle-service';
 import { FaturaService } from './fatura-service';
-import { finalize } from 'rxjs';
+import { Timestamp } from '../shared/models/classes/timestamp';
 
 @Injectable({
   providedIn: 'root',
@@ -21,26 +21,24 @@ export class CompraService {
     7: { nome: 'INTERNET', icon: 'wifi_calling_bar_3' },
   };
   codigo_categoria_compra = signal(0);
-  compras = signal<Compra[]>([]);
-  compra = signal<Compra>(Mock.compraVazia());
-  constructor(
-    private http: HttpClient,
-    private controleService: ControleService,
-    private faturaService: FaturaService
-  ) {}
+  compras = signal<ListaCompras>(new ListaCompras());
+  compra = signal<Compra>(new Compra());
+  private http = inject(HttpClient);
+  private controleService = inject(ControleService);
+  private faturaService = inject(FaturaService);
   faturaAvulsa() {
     const dataAtual = new Date();
     const data30DiasAtras = new Date(dataAtual);
     data30DiasAtras.setDate(data30DiasAtras.getDate() - 30);
     return {
-      data_abertura_fatura: formatarDateParaString(data30DiasAtras),
-      data_fechamento_fatura: formatarDateParaString(dataAtual),
+      data_abertura_fatura: Timestamp.fromDate(data30DiasAtras).toDateString(),
+      data_fechamento_fatura: Timestamp.fromDate(dataAtual).toDateString(),
     };
   }
   listarCompras() {
     this.controleService.load();
     this.http
-      .post<Compra[]>(
+      .post<ICompra[]>(
         `${this.controleService.API}/compras/por-data`,
         this.faturaService.faturaAtiva().codigo_fatura
           ? this.faturaService.faturaAtiva()
@@ -52,7 +50,7 @@ export class CompraService {
       .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
         next: (compras) => {
-          this.compras.set(compras);
+          this.compras.set(new ListaCompras(compras));
         },
         error: (res) => {
           this.controleService.showErrorMessage(
@@ -61,10 +59,10 @@ export class CompraService {
         },
       });
   }
-  inserirCompra(compra: Compra) {
+  inserirCompra(compra: ICompra) {
     this.controleService.load();
     this.http
-      .post<Compra>(`${this.controleService.API}/compras`, compra, {
+      .post<ICompra>(`${this.controleService.API}/compras`, compra, {
         headers: this.controleService.headers(),
       })
       .pipe(finalize(() => this.controleService.unload()))
@@ -73,10 +71,10 @@ export class CompraService {
         this.listarCompras();
       });
   }
-  editarCompra(compra: Compra) {
+  editarCompra(compra: ICompra) {
     this.controleService.load();
     this.http
-      .put<Compra>(
+      .put<ICompra>(
         `${this.controleService.API}/compras/${compra.codigo_compra}`,
         compra,
         {
@@ -101,9 +99,7 @@ export class CompraService {
         this.listarCompras();
       });
   }
-  somaCategoria(categoria: number) {
-    return this.compras()
-      .filter((x) => !categoria || x.codigo_categoria_compra === categoria)
-      .reduce((acc, x) => acc + parseFloat(x.valor_compra), 0);
+  somaCategoria(codigo_categoria_compra: number) {
+    return this.compras().somaCategoria(codigo_categoria_compra);
   }
 }

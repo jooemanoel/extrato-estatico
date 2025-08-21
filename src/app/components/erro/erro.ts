@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,7 +11,7 @@ import { ControleService } from '../../services/controle-service';
   styleUrl: './erro.css',
 })
 export class Erro {
-  constructor(public controleService: ControleService) {}
+  controleService = inject(ControleService);
   recarregar() {
     document.location.reload();
   }

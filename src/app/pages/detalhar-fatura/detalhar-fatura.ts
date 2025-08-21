@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,12 +15,10 @@ import { Mock } from '../../shared/utils/mock';
   styleUrl: './detalhar-fatura.css',
 })
 export class DetalharFatura {
-  constructor(
-    public faturaService: FaturaService,
-    private compraService: CompraService,
-    private router: Router,
-    private location: Location
-  ) {}
+  faturaService = inject(FaturaService);
+  private compraService = inject(CompraService);
+  private router = inject(Router);
+  private location = inject(Location);
   formatarParaData(timestamp: string) {
     const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
     return `${dia}/${mes}/${ano}`;

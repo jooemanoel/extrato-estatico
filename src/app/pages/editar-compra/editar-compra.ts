@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
-import { Compra } from '../../shared/models/interfaces/compra';
-import { formatarDateParaString } from '../../shared/utils/functions';
+import { Timestamp } from '../../shared/models/classes/timestamp';
+import { ICompra } from '../../shared/models/interfaces/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -43,7 +43,7 @@ import { BR_DATE_FORMATS } from '../../shared/utils/mock';
   templateUrl: './editar-compra.html',
   styleUrl: './editar-compra.css',
 })
-export class EditarCompra {
+export class EditarCompra implements OnInit {
   formCompra = new FormGroup({
     codigo_compra: new FormControl(0),
     descricao_compra: new FormControl(''),
@@ -51,15 +51,14 @@ export class EditarCompra {
     data_compra: new FormControl(new Date()),
     codigo_categoria_compra: new FormControl(1),
   });
-  constructor(private compraService: CompraService, private router: Router) {}
+  private compraService = inject(CompraService);
+  private router = inject(Router);
   ngOnInit() {
     this.formCompra.setValue({
       codigo_compra: this.compraService.compra().codigo_compra ?? 0,
       descricao_compra: this.compraService.compra().descricao_compra,
       valor_compra: this.compraService.compra().valor_compra,
-      data_compra: new Date(
-        this.compraService.compra().data_compra.slice(0, 19)
-      ),
+      data_compra: this.compraService.compra().data_compra.toDate(),
       codigo_categoria_compra:
         this.compraService.compra().codigo_categoria_compra,
     });
@@ -73,15 +72,15 @@ export class EditarCompra {
     return this.compraService.categoriaCompra[codigo];
   }
   atualizar() {
-    const compra: Compra = {
+    const compra: ICompra = {
       codigo_compra: this.formCompra.value.codigo_compra ?? 0,
       descricao_compra: (
         this.formCompra.value.descricao_compra ?? ''
       ).toUpperCase(),
-      data_compra: formatarDateParaString(
+      data_compra: Timestamp.fromDate(
         moment(this.formCompra.value.data_compra).toDate()
-      ),
-      valor_compra: `${this.formCompra.value.valor_compra ?? 0}`,
+      ).toDateString(),
+      valor_compra: (this.formCompra.value.valor_compra ?? 0) * 100,
       codigo_categoria_compra:
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };

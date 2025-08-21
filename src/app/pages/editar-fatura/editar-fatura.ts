@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -15,8 +15,8 @@ import moment from 'moment';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
-import { Fatura } from '../../shared/models/interfaces/fatura';
-import { formatarDateParaString } from '../../shared/utils/functions';
+import { Timestamp } from '../../shared/models/classes/timestamp';
+import { IFatura } from '../../shared/models/interfaces/fatura';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -41,19 +41,17 @@ import { BR_DATE_FORMATS } from '../../shared/utils/mock';
   templateUrl: './editar-fatura.html',
   styleUrl: './editar-fatura.css',
 })
-export class EditarFatura {
+export class EditarFatura implements OnInit {
   formFatura = new FormGroup({
     codigo_fatura: new FormControl(0),
     nome_fatura: new FormControl(''),
     data_abertura_fatura: new FormControl(),
     data_fechamento_fatura: new FormControl(),
   });
-  constructor(
-    private controleService: ControleService,
-    private faturaService: FaturaService,
-    private compraService: CompraService,
-    private router: Router
-  ) {}
+  private controleService = inject(ControleService);
+  private faturaService = inject(FaturaService);
+  private compraService = inject(CompraService);
+  private router = inject(Router);
   ngOnInit() {
     this.formFatura.setValue({
       codigo_fatura: this.faturaService.fatura().codigo_fatura,
@@ -79,11 +77,14 @@ export class EditarFatura {
       );
       return;
     }
-    const fatura: Fatura = {
+    const fatura: IFatura = {
       codigo_fatura: this.formFatura.value.codigo_fatura ?? 0,
       nome_fatura: (this.formFatura.value.nome_fatura ?? '').toUpperCase(),
-      data_abertura_fatura: formatarDateParaString(data_abertura_fatura),
-      data_fechamento_fatura: formatarDateParaString(data_fechamento_fatura),
+      data_abertura_fatura:
+        Timestamp.fromDate(data_abertura_fatura).toDateString(),
+      data_fechamento_fatura: Timestamp.fromDate(
+        data_fechamento_fatura
+      ).toDateString(),
     };
     this.faturaService.editarFatura(fatura);
     if (

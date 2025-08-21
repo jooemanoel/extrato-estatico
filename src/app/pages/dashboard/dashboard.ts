@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,10 +7,6 @@ import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
-import {
-  formatarTimestampParaData,
-  formatarParaReal,
-} from '../../shared/utils/functions';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,21 +19,17 @@ import {
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
-  constructor(
-    public controleService: ControleService,
-    private compraService: CompraService,
-    public faturaService: FaturaService,
-    private router: Router
-  ) {}
+export class Dashboard implements OnInit {
+  controleService = inject(ControleService);
+  private compraService = inject(CompraService);
+  faturaService = inject(FaturaService);
+  private router = inject(Router);
   ngOnInit(): void {
     if (!this.controleService.token()) {
       this.router.navigateByUrl('');
     }
     this.compraService.codigo_categoria_compra.set(0);
   }
-  formatarParaReal = formatarParaReal.bind(this);
-  formatarParaData = formatarTimestampParaData.bind(this);
   codigosCategoriaCompra() {
     return Object.keys(this.compraService.categoriaCompra).map((x) =>
       parseInt(x)
@@ -55,5 +47,9 @@ export class Dashboard {
   }
   navegarPainelFaturas() {
     this.router.navigateByUrl('painel-faturas');
+  }
+  formatarTimestampParaData(timestamp: string) {
+    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
+    return `${dia}/${mes}/${ano}`;
   }
 }

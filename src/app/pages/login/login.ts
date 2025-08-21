@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -32,11 +32,9 @@ export class Login {
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
   });
-  constructor(
-    public controleService: ControleService,
-    private usuarioService: UsuarioService,
-    private router: Router
-  ) {}
+  controleService = inject(ControleService);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
   login() {
     this.formLogin.controls.nome_usuario.setValue(
       normalizar(this.formLogin.value.nome_usuario ?? '')

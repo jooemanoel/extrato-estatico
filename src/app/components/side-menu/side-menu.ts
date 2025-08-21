@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
@@ -15,11 +15,9 @@ import { FaturaService } from '../../services/fatura-service';
 })
 export class SideMenu {
   @Output() closeMenu = new EventEmitter();
-  constructor(
-    private router: Router,
-    private controleService: ControleService,
-    private faturaService: FaturaService
-  ) {}
+  private router = inject(Router);
+  private controleService = inject(ControleService);
+  private faturaService = inject(FaturaService);
   get usuarioLogado() {
     return !!this.controleService.token();
   }

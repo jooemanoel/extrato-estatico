@@ -1,5 +1,12 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -13,13 +20,11 @@ import { ControleService } from '../../services/controle-service';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header {
+export class Header implements OnInit {
   @Output() alternarMenu = new EventEmitter();
-  constructor(
-    private controleService: ControleService,
-    private router: Router,
-    private location: Location
-  ) {}
+  private controleService = inject(ControleService);
+  private router = inject(Router);
+  private location = inject(Location);
   pagina = signal('');
   get titulo() {
     return this.controleService.titulosPorPagina[this.pagina()];

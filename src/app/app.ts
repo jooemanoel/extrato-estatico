@@ -1,5 +1,5 @@
 // app.ts
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
@@ -27,13 +27,11 @@ import { UsuarioService } from './services/usuario-service';
 })
 export class App implements OnInit {
   @ViewChild(MatSidenav) drawer!: MatSidenav;
-  constructor(
-    private swUpdate: SwUpdate,
-    private snackBar: MatSnackBar,
-    private usuarioService: UsuarioService,
-    private faturaService: FaturaService,
-    private controleService: ControleService
-  ) {}
+  private swUpdate = inject(SwUpdate);
+  private snackBar = inject(MatSnackBar);
+  private usuarioService = inject(UsuarioService);
+  private faturaService = inject(FaturaService);
+  private controleService = inject(ControleService);
   get erro() {
     return this.controleService.erro;
   }

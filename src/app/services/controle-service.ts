@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 
@@ -29,24 +29,24 @@ export class ControleService {
     'detalhar-fatura': 'Detalhar Fatura',
     'editar-fatura': 'Editar Fatura',
   };
-  constructor(private snackBar: MatSnackBar) {}
+  private snackBar = inject(MatSnackBar);
   headers() {
     return new HttpHeaders({
       Authorization: `Bearer ${this.token()}`,
     });
   }
-  showMessage(message: string, action: string = '') {
+  showMessage(message: string, action = '') {
     return this.snackBar.open(message, action, { duration: 3000 });
   }
-  showErrorMessage(message: string, action: string = '') {
+  showErrorMessage(message: string, action = '') {
     this.erro.set(message);
     return this.showMessage(message, action);
   }
   load() {
-    this.carregando.update(x => x + 1);
+    this.carregando.update((x) => x + 1);
   }
   unload() {
-    this.carregando.update(x => x - 1);
+    this.carregando.update((x) => x - 1);
   }
   limparToken() {
     this.token.set('');

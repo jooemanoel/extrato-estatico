@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
-import { Fatura } from '../../shared/models/interfaces/fatura';
-import { formatarDateParaString } from '../../shared/utils/functions';
+import { Timestamp } from '../../shared/models/classes/timestamp';
+import { IFatura } from '../../shared/models/interfaces/fatura';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -49,11 +49,9 @@ export class CriarFatura {
     data_abertura_fatura: new FormControl(),
     data_fechamento_fatura: new FormControl(),
   });
-  constructor(
-    private controleService: ControleService,
-    private faturaService: FaturaService,
-    private router: Router
-  ) {}
+  private controleService = inject(ControleService);
+  private faturaService = inject(FaturaService);
+  private router = inject(Router);
   adicionar() {
     const data_abertura_fatura = moment(
       this.formFatura.value.data_abertura_fatura
@@ -67,11 +65,14 @@ export class CriarFatura {
       );
       return;
     }
-    const fatura: Fatura = {
+    const fatura: IFatura = {
       codigo_fatura: 0,
       nome_fatura: (this.formFatura.value.nome_fatura ?? '').toUpperCase(),
-      data_abertura_fatura: formatarDateParaString(data_abertura_fatura),
-      data_fechamento_fatura: formatarDateParaString(data_fechamento_fatura),
+      data_abertura_fatura:
+        Timestamp.fromDate(data_abertura_fatura).toDateString(),
+      data_fechamento_fatura: Timestamp.fromDate(
+        data_fechamento_fatura
+      ).toDateString(),
     };
     this.faturaService.inserirFatura(fatura);
     this.router.navigateByUrl('painel-faturas');

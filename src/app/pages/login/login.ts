@@ -27,14 +27,16 @@ import { normalizar } from '../../shared/utils/functions';
   styleUrl: './login.css',
 })
 export class Login {
+  controleService = inject(ControleService);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
+
   hide = true;
   formLogin = new FormGroup({
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
   });
-  controleService = inject(ControleService);
-  private usuarioService = inject(UsuarioService);
-  private router = inject(Router);
+
   login() {
     this.formLogin.controls.nome_usuario.setValue(
       normalizar(this.formLogin.value.nome_usuario ?? '')

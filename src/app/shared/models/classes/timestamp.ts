@@ -2,7 +2,7 @@ export class Timestamp {
   private _value = '';
   private _time = 0;
   constructor(value = '') {
-    this._value = value.slice(0, 19);
+    this._value = value.slice(0, 23);
     this._time = new Date(value).getTime();
   }
   getTime() {

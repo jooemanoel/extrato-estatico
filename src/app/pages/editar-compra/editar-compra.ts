@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
+import { Currency } from '../../shared/models/classes/currency';
 import { Timestamp } from '../../shared/models/classes/timestamp';
 import { ICompra } from '../../shared/models/interfaces/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
@@ -44,6 +45,9 @@ import { BR_DATE_FORMATS } from '../../shared/utils/mock';
   styleUrl: './editar-compra.css',
 })
 export class EditarCompra implements OnInit {
+  private compraService = inject(CompraService);
+  private router = inject(Router);
+
   formCompra = new FormGroup({
     codigo_compra: new FormControl(0),
     descricao_compra: new FormControl(''),
@@ -51,26 +55,28 @@ export class EditarCompra implements OnInit {
     data_compra: new FormControl(new Date()),
     codigo_categoria_compra: new FormControl(1),
   });
-  private compraService = inject(CompraService);
-  private router = inject(Router);
+
   ngOnInit() {
     this.formCompra.setValue({
       codigo_compra: this.compraService.compra().codigo_compra ?? 0,
       descricao_compra: this.compraService.compra().descricao_compra,
-      valor_compra: this.compraService.compra().valor_compra,
+      valor_compra: this.compraService.compra().valor_compra.value / 100,
       data_compra: this.compraService.compra().data_compra.toDate(),
       codigo_categoria_compra:
         this.compraService.compra().codigo_categoria_compra,
     });
   }
+
   codigosCategoriaCompra() {
     return Object.keys(this.compraService.categoriaCompra).map((x) =>
       parseInt(x)
     );
   }
+
   categoriaCompra(codigo: number) {
     return this.compraService.categoriaCompra[codigo];
   }
+
   atualizar() {
     const compra: ICompra = {
       codigo_compra: this.formCompra.value.codigo_compra ?? 0,
@@ -80,7 +86,7 @@ export class EditarCompra implements OnInit {
       data_compra: Timestamp.fromDate(
         moment(this.formCompra.value.data_compra).toDate()
       ).toDateString(),
-      valor_compra: (this.formCompra.value.valor_compra ?? 0) * 100,
+      valor_compra: Currency.formatValue(this.formCompra.value.valor_compra),
       codigo_categoria_compra:
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };

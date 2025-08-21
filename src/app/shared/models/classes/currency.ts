@@ -1,7 +1,7 @@
 export class Currency {
     private _value = 0;
     constructor(value: number) {
-        this.setValue(value);
+        this.setValue(Math.floor(value));
     }
     get value() {
         return this._value;
@@ -14,5 +14,8 @@ export class Currency {
             style: 'currency',
             currency: 'BRL',
         })
+    }
+    static formatValue(value = 0) {
+        return Math.floor(value * 100);
     }
 }

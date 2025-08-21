@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
+import { Currency } from '../../shared/models/classes/currency';
 import { Timestamp } from '../../shared/models/classes/timestamp';
 import { ICompra } from '../../shared/models/interfaces/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
@@ -44,6 +45,9 @@ import { BR_DATE_FORMATS } from '../../shared/utils/mock';
   styleUrl: './inserir-compra.css',
 })
 export class InserirCompra {
+  private compraService = inject(CompraService);
+  private router = inject(Router);
+
   formCompra = new FormGroup({
     codigo_compra: new FormControl(0),
     descricao_compra: new FormControl(''),
@@ -51,8 +55,7 @@ export class InserirCompra {
     data_compra: new FormControl(new Date()),
     codigo_categoria_compra: new FormControl(1),
   });
-  private compraService = inject(CompraService);
-  private router = inject(Router);
+
   adicionar() {
     const compra: ICompra = {
       codigo_compra: 0,
@@ -62,7 +65,7 @@ export class InserirCompra {
       data_compra: Timestamp.fromDate(
         moment(this.formCompra.value.data_compra).toDate()
       ).toDateString(),
-      valor_compra: (this.formCompra.value.valor_compra ?? 0) * 100,
+      valor_compra: Currency.formatValue(this.formCompra.value.valor_compra),
       codigo_categoria_compra:
         this.formCompra.value.codigo_categoria_compra ?? 1,
     };

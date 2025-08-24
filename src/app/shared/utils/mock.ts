@@ -1,5 +1,5 @@
-import { ICompra } from '../models/interfaces/compra';
-import { IFatura } from '../models/interfaces/fatura';
+import { ICompra } from '../models/classes/compra';
+import { IFatura } from '../models/classes/fatura';
 
 export class Mock {
   static compraVazia(): ICompra {

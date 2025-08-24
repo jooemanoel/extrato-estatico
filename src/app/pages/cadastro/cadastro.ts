@@ -26,14 +26,15 @@ import { normalizar } from '../../shared/utils/functions';
   styleUrl: './cadastro.css',
 })
 export class Cadastro {
+  controleService = inject(ControleService);
+  private usuarioService = inject(UsuarioService);
+
   hide = true;
   formCadastro = new FormGroup({
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
   });
   confirmar_senha_usuario = new FormControl('');
-  controleService = inject(ControleService);
-  private usuarioService = inject(UsuarioService);
   compararSenhas() {
     return (
       this.formCadastro.value.senha_usuario ===

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
+import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,32 +25,23 @@ export class Dashboard implements OnInit {
   private compraService = inject(CompraService);
   faturaService = inject(FaturaService);
   private router = inject(Router);
+
+  CategoriaCompra = CategoriaCompra;
+
   ngOnInit(): void {
     if (!this.controleService.token()) {
       this.router.navigateByUrl('');
     }
-    this.compraService.codigo_categoria_compra.set(0);
-  }
-  codigosCategoriaCompra() {
-    return Object.keys(this.compraService.categoriaCompra).map((x) =>
-      parseInt(x)
-    );
-  }
-  categoriaCompra(codigo: number) {
-    return this.compraService.categoriaCompra[codigo];
+    this.compraService.limparCategoria();
   }
   somaCategoria(categoria: number) {
     return this.compraService.somaCategoria(categoria);
   }
-  navegarExtrato(codigo_categoria_compra: number) {
-    this.compraService.codigo_categoria_compra.set(codigo_categoria_compra);
+  navegarExtrato(categoria: CategoriaCompra = CategoriaCompra.fromCodigo(0)) {
+    this.compraService.categoria_compra.set(categoria);
     this.router.navigateByUrl('extrato');
   }
   navegarPainelFaturas() {
     this.router.navigateByUrl('painel-faturas');
-  }
-  formatarTimestampParaData(timestamp: string) {
-    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
-    return `${dia}/${mes}/${ano}`;
   }
 }

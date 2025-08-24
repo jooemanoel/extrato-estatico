@@ -8,13 +8,19 @@
       <div class="field-row">
         <div class="field-label">DATA DE ABERTURA</div>
         <div class="field-value">
-          {{ formatarParaData(faturaService.fatura().data_abertura_fatura) }}
+          {{
+            faturaService.fatura().data_abertura_fatura.toBrazilianDateString()
+          }}
         </div>
       </div>
       <div class="field-row">
         <div class="field-label">DATA DE FECHAMENTO</div>
         <div class="field-value">
-          {{ formatarParaData(faturaService.fatura().data_fechamento_fatura) }}
+          {{
+            faturaService
+              .fatura()
+              .data_fechamento_fatura.toBrazilianDateString()
+          }}
         </div>
       </div>
     </mat-card-content>

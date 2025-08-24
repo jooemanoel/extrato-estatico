@@ -95,7 +95,6 @@ export class UsuarioService {
       });
   }
   carregarUsuario() {
-    this.compraService.listarCompras();
     this.faturaService.listarFaturas();
     this.controleService.showMessage(
       `Bem vindo(a), ${this.usuario().nome_usuario}!`,

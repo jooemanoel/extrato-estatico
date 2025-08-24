@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { FaturaService } from '../../services/fatura-service';
-import { Mock } from '../../shared/utils/mock';
+import { Fatura } from '../../shared/models/classes/fatura';
 
 @Component({
   selector: 'app-detalhar-fatura',
@@ -19,10 +19,7 @@ export class DetalharFatura {
   private compraService = inject(CompraService);
   private router = inject(Router);
   private location = inject(Location);
-  formatarParaData(timestamp: string) {
-    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
-    return `${dia}/${mes}/${ano}`;
-  }
+
   editarFatura() {
     this.router.navigateByUrl('editar-fatura');
   }
@@ -32,7 +29,7 @@ export class DetalharFatura {
       this.faturaService.faturaAtiva().codigo_fatura ===
       this.faturaService.fatura().codigo_fatura
     ) {
-      this.faturaService.faturaAtiva.set(Mock.faturaVazia());
+      this.faturaService.faturaAtiva.set(Fatura.fromDTO());
       localStorage.removeItem('extrato-estatico-fatura');
       this.compraService.listarCompras();
     }
@@ -43,7 +40,7 @@ export class DetalharFatura {
     this.compraService.listarCompras();
     localStorage.setItem(
       'extrato-estatico-fatura',
-      JSON.stringify(this.faturaService.faturaAtiva())
+      JSON.stringify(this.faturaService.faturaAtiva().toDTO())
     );
     this.router.navigateByUrl('dashboard');
   }

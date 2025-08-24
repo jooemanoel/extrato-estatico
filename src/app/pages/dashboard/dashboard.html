@@ -1,50 +1,81 @@
-<div class="container p-1 d-flex flex-wrap" [class.visually-hidden]="controleService.carregando()">
+<div
+  class="container p-1 d-flex flex-wrap"
+  [class.visually-hidden]="controleService.carregando()"
+>
   <div class="w-100 p-1">
-    <mat-card class="p-2" appearance="filled" (click)="navegarPainelFaturas()" role="button" tabindex="0"
-      (keydown.enter)="navegarPainelFaturas()" (keydown.space)="navegarPainelFaturas()"
-      aria-label="Ver painel de faturas">
+    <mat-card
+      class="p-2"
+      appearance="filled"
+      (click)="navegarPainelFaturas()"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="navegarPainelFaturas()"
+      (keydown.space)="navegarPainelFaturas()"
+      aria-label="Ver painel de faturas"
+    >
       <mat-card-header class="p-0 d-flex justify-content-center">
         <mat-card-title>{{
           faturaService.faturaAtiva().nome_fatura ||
-          "Nenhuma fatura selecionada"
-          }}</mat-card-title>
+            "Nenhuma fatura selecionada"
+        }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="p-0 text-center">
         @if(faturaService.faturaAtiva().codigo_fatura) {
-        {{ formatarTimestampParaData(faturaService.faturaAtiva().data_abertura_fatura) }}
+        {{
+          faturaService
+            .faturaAtiva()
+            .data_abertura_fatura.toBrazilianDateString()
+        }}
         -
         {{
-        formatarTimestampParaData(faturaService.faturaAtiva().data_fechamento_fatura)
+          faturaService
+            .faturaAtiva()
+            .data_fechamento_fatura.toBrazilianDateString()
         }}
         } @else { Mostrando compras dos últimos 30 dias }
       </mat-card-content>
     </mat-card>
   </div>
   <div class="w-50 p-1">
-    <mat-card class="h-100" appearance="filled" (click)="navegarExtrato(0)" role="button" tabindex="0"
-      (keydown.enter)="navegarExtrato(0)" (keydown.space)="navegarExtrato(0)" aria-label="Ver extrato total de compras">
+    <mat-card
+      class="h-100"
+      appearance="filled"
+      (click)="navegarExtrato()"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="navegarExtrato()"
+      (keydown.space)="navegarExtrato()"
+      aria-label="Ver extrato total de compras"
+    >
       <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{
-          somaCategoria(0)
-          }}</mat-card-title>
+        <mat-card-title>{{ somaCategoria(0) }}</mat-card-title>
       </mat-card-header>
-      <mat-card-content class="h-100 d-flex align-items-end justify-content-center">
+      <mat-card-content
+        class="h-100 d-flex align-items-end justify-content-center"
+      >
         <span>TOTAL DE COMPRAS</span>
       </mat-card-content>
     </mat-card>
   </div>
-  @for(codigo of codigosCategoriaCompra(); track codigo){
+  @for(categoria of CategoriaCompra.values; track categoria.codigo){
   <div class="w-50 p-1">
-    <mat-card appearance="filled" (click)="navegarExtrato(codigo)" role="button" tabindex="0"
-      (keydown.enter)="navegarExtrato(codigo)" (keydown.space)="navegarExtrato(codigo)" [attr.aria-label]="
-        'Ver extrato da categoria ' + categoriaCompra(codigo).nome
-      ">
+    <mat-card
+      appearance="filled"
+      (click)="navegarExtrato(categoria)"
+      role="button"
+      tabindex="0"
+      (keydown.enter)="navegarExtrato(categoria)"
+      (keydown.space)="navegarExtrato(categoria)"
+      [attr.aria-label]="'Ver extrato da categoria ' + categoria.nome"
+    >
       <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>{{somaCategoria(codigo)}}</mat-card-title>
+        <mat-card-title>{{ somaCategoria(categoria.codigo) }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="d-flex flex-column align-items-center">
-        <span><mat-icon>{{ categoriaCompra(codigo).icon }}</mat-icon></span>
-        <span>{{ categoriaCompra(codigo).nome }}</span>
+        <span
+          ><mat-icon>{{ categoria.icon }}</mat-icon></span
+        >
+        <span>{{ categoria.nome }}</span>
       </mat-card-content>
     </mat-card>
   </div>

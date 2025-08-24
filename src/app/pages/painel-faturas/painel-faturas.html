@@ -54,8 +54,8 @@
           <td class="p-2" mat-cell *matCellDef="let element">
             <b>{{ element.nome_fatura }}</b>
             <br />
-            {{ formatarParaData(element.data_abertura_fatura) }} -
-            {{ formatarParaData(element.data_fechamento_fatura) }}
+            {{ element.data_abertura_fatura.toBrazilianDateString() }} -
+            {{ element.data_fechamento_fatura.toBrazilianDateString() }}
           </td>
         </ng-container>
         <ng-container matColumnDef="chevron">

@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
+import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
+import { ICompra } from '../../shared/models/classes/compra';
 import { Currency } from '../../shared/models/classes/currency';
 import { Timestamp } from '../../shared/models/classes/timestamp';
-import { ICompra } from '../../shared/models/interfaces/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -48,6 +49,8 @@ export class InserirCompra {
   private compraService = inject(CompraService);
   private router = inject(Router);
 
+  CategoriaCompra = CategoriaCompra;
+
   formCompra = new FormGroup({
     codigo_compra: new FormControl(0),
     descricao_compra: new FormControl(''),
@@ -71,13 +74,5 @@ export class InserirCompra {
     };
     this.compraService.inserirCompra(compra);
     this.router.navigateByUrl('extrato');
-  }
-  codigosCategoriaCompra() {
-    return Object.keys(this.compraService.categoriaCompra).map((x) =>
-      parseInt(x)
-    );
-  }
-  categoriaCompra(codigo: number) {
-    return this.compraService.categoriaCompra[codigo];
   }
 }

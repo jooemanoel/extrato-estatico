@@ -16,7 +16,7 @@ import moment from 'moment';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
 import { Timestamp } from '../../shared/models/classes/timestamp';
-import { IFatura } from '../../shared/models/interfaces/fatura';
+import { IFatura } from '../../shared/models/classes/fatura';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -43,15 +43,17 @@ import { BR_DATE_FORMATS } from '../../shared/utils/mock';
   styleUrl: './criar-fatura.css',
 })
 export class CriarFatura {
+  private controleService = inject(ControleService);
+  private faturaService = inject(FaturaService);
+  private router = inject(Router);
+
   formFatura = new FormGroup({
     codigo_fatura: new FormControl(0),
     nome_fatura: new FormControl(''),
     data_abertura_fatura: new FormControl(),
     data_fechamento_fatura: new FormControl(),
   });
-  private controleService = inject(ControleService);
-  private faturaService = inject(FaturaService);
-  private router = inject(Router);
+
   adicionar() {
     const data_abertura_fatura = moment(
       this.formFatura.value.data_abertura_fatura

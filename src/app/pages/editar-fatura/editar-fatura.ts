@@ -16,7 +16,7 @@ import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
 import { FaturaService } from '../../services/fatura-service';
 import { Timestamp } from '../../shared/models/classes/timestamp';
-import { IFatura } from '../../shared/models/interfaces/fatura';
+import { Fatura, IFatura } from '../../shared/models/classes/fatura';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
 
 @Component({
@@ -56,12 +56,12 @@ export class EditarFatura implements OnInit {
     this.formFatura.setValue({
       codigo_fatura: this.faturaService.fatura().codigo_fatura,
       nome_fatura: this.faturaService.fatura().nome_fatura,
-      data_abertura_fatura: new Date(
-        this.faturaService.fatura().data_abertura_fatura.slice(0, 19)
-      ),
-      data_fechamento_fatura: new Date(
-        this.faturaService.fatura().data_fechamento_fatura.slice(0, 19)
-      ),
+      data_abertura_fatura: this.faturaService
+        .fatura()
+        .data_abertura_fatura.toDate(),
+      data_fechamento_fatura: this.faturaService
+        .fatura()
+        .data_fechamento_fatura.toDate(),
     });
   }
   atualizar() {
@@ -90,7 +90,7 @@ export class EditarFatura implements OnInit {
     if (
       this.faturaService.faturaAtiva().codigo_fatura === fatura.codigo_fatura
     ) {
-      this.faturaService.faturaAtiva.set(fatura);
+      this.faturaService.faturaAtiva.set(Fatura.fromDTO(fatura));
       this.compraService.listarCompras();
     }
     this.router.navigateByUrl('painel-faturas');

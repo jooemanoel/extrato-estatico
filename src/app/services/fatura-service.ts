@@ -1,23 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs';
-import { IFatura } from '../shared/models/interfaces/fatura';
-import { Mock } from '../shared/utils/mock';
+import { Fatura, IFatura } from '../shared/models/classes/fatura';
 import { ControleService } from './controle-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FaturaService {
+  // Dependências
   private controleService = inject(ControleService);
   private http = inject(HttpClient);
-  faturas = signal<IFatura[]>([]);
-  fatura = signal<IFatura>(Mock.faturaVazia());
-  faturaAtiva = signal<IFatura>(Mock.faturaVazia());
-  validarFatura() {
-    const stringFatura = localStorage.getItem('extrato-estatico-fatura');
-    if (stringFatura) this.faturaAtiva.set(JSON.parse(stringFatura));
-  }
+  // Atributos
+  listaFaturas = signal<Fatura[]>([]);
+  fatura = signal<Fatura>(Fatura.fromDTO());
+  faturaAtiva = signal<Fatura>(Fatura.fromDTO());
+  // Métodos
   listarFaturas() {
     this.controleService.load();
     this.http
@@ -27,7 +25,8 @@ export class FaturaService {
       .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
         next: (faturas) => {
-          this.faturas.set(faturas);
+          this.listaFaturas.set(faturas.map((x) => Fatura.fromDTO(x)));
+          this.detectarFaturaMaisProximaDataAtual();
         },
         error: (res) => {
           this.controleService.showErrorMessage(
@@ -35,6 +34,24 @@ export class FaturaService {
           );
         },
       });
+  }
+  detectarFaturaMaisProximaDataAtual() {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    const faturaAtiva = this.listaFaturas().find((fatura) => {
+      const inicio = fatura.data_abertura_fatura.toDate();
+      const fim = fatura.data_fechamento_fatura.toDate();
+      if (!inicio || !fim) return false; // evita faturas inválidas
+      return hoje >= inicio && hoje <= fim;
+    });
+
+    if (faturaAtiva) {
+      this.faturaAtiva.set(faturaAtiva);
+    } else {
+      // se nenhuma fatura encontrada, pode definir como avulsa
+      this.faturaAtiva.set(Fatura.faturaAvulsa());
+    }
   }
   inserirFatura(fatura: IFatura) {
     this.controleService.load();
@@ -77,7 +94,7 @@ export class FaturaService {
       });
   }
   limparFaturaAtiva() {
-    this.faturaAtiva.set(Mock.faturaVazia());
+    this.faturaAtiva.set(Fatura.fromDTO());
     localStorage.removeItem('extrato-estatico-fatura');
   }
 }

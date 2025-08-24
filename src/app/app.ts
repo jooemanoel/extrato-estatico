@@ -38,7 +38,6 @@ export class App implements OnInit {
   ngOnInit(): void {
     this.checkForUpdates();
     this.usuarioService.validarToken();
-    this.faturaService.validarFatura();
   }
   checkForUpdates() {
     if (this.swUpdate.isEnabled) {

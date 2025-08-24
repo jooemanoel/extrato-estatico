@@ -1,11 +1,11 @@
-import { Compra, ICompra } from '../interfaces/compra';
+import { Compra, ICompra } from './compra';
 import { Currency } from './currency';
 
 export class ListaCompras {
   compras: Compra[] = [];
   valorTotal = new Currency(0);
   constructor(compras: ICompra[] = []) {
-    this.compras = compras.map((compra) => new Compra(compra));
+    this.compras = compras.map((compra) => Compra.fromDTO(compra));
   }
   calcularValorTotal() {
     this.valorTotal.setValue(
@@ -19,7 +19,7 @@ export class ListaCompras {
         .filter(
           (compra) =>
             !codigo_categoria_compra ||
-            compra.codigo_categoria_compra === codigo_categoria_compra
+            compra.categoria_compra.codigo === codigo_categoria_compra
         )
         .reduce((acc, compra) => acc + compra.valor_compra.value, 0)
     ).toBrl();
@@ -28,7 +28,7 @@ export class ListaCompras {
     return this.compras.filter(
       (compra) =>
         !codigo_categoria_compra ||
-        compra.codigo_categoria_compra === codigo_categoria_compra
+        compra.categoria_compra.codigo === codigo_categoria_compra
     );
   }
 }

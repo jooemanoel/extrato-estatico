@@ -32,9 +32,9 @@
         <mat-form-field>
           <mat-label>Categoria da compra</mat-label>
           <mat-select formControlName="codigo_categoria_compra">
-            @for (codigo of codigosCategoriaCompra(); track codigo) {
-            <mat-option [value]="codigo">{{
-              categoriaCompra(codigo).nome
+            @for (categoria of CategoriaCompra.values; track categoria.codigo) {
+            <mat-option [value]="categoria.codigo">{{
+              categoria.nome
             }}</mat-option>
             }
           </mat-select>

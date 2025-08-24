@@ -16,19 +16,6 @@ export class DetalharCompra {
   compraService = inject(CompraService);
   private router = inject(Router);
   private location = inject(Location);
-  formatarParaReal(valor: string): string {
-    return parseFloat(valor).toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  }
-  formatarParaData(timestamp: string) {
-    const [ano, mes, dia] = timestamp.slice(0, 10).split('-');
-    return `${dia}/${mes}/${ano}`;
-  }
-  categoriaCompra(codigo: number) {
-    return this.compraService.categoriaCompra[codigo];
-  }
   editarCompra() {
     this.router.navigateByUrl('editar-compra');
   }

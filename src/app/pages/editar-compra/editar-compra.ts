@@ -17,8 +17,9 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
 import { Currency } from '../../shared/models/classes/currency';
 import { Timestamp } from '../../shared/models/classes/timestamp';
-import { ICompra } from '../../shared/models/interfaces/compra';
+import { ICompra } from '../../shared/models/classes/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
+import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 
 @Component({
   selector: 'app-editar-compra',
@@ -48,6 +49,8 @@ export class EditarCompra implements OnInit {
   private compraService = inject(CompraService);
   private router = inject(Router);
 
+  CategoriaCompra = CategoriaCompra;
+
   formCompra = new FormGroup({
     codigo_compra: new FormControl(0),
     descricao_compra: new FormControl(''),
@@ -63,18 +66,8 @@ export class EditarCompra implements OnInit {
       valor_compra: this.compraService.compra().valor_compra.value / 100,
       data_compra: this.compraService.compra().data_compra.toDate(),
       codigo_categoria_compra:
-        this.compraService.compra().codigo_categoria_compra,
+        this.compraService.compra().categoria_compra.codigo,
     });
-  }
-
-  codigosCategoriaCompra() {
-    return Object.keys(this.compraService.categoriaCompra).map((x) =>
-      parseInt(x)
-    );
-  }
-
-  categoriaCompra(codigo: number) {
-    return this.compraService.categoriaCompra[codigo];
   }
 
   atualizar() {

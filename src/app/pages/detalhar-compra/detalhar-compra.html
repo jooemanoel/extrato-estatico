@@ -23,11 +23,9 @@
         <div class="field-label">CATEGORIA</div>
         <div class="field-value">
           <mat-icon>{{
-            categoriaCompra(compraService.compra().codigo_categoria_compra).icon
+            compraService.compra().categoria_compra.icon
           }}</mat-icon>
-          {{
-            categoriaCompra(compraService.compra().codigo_categoria_compra).nome
-          }}
+          {{ compraService.compra().categoria_compra.nome }}
         </div>
       </div>
     </mat-card-content>

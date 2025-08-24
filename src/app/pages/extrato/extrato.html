@@ -19,8 +19,15 @@
     </mat-card-header>
     <mat-card-content class="p-0 text-center">
       @if(faturaService.faturaAtiva().codigo_fatura) {
-      {{ formatarParaData(faturaService.faturaAtiva().data_abertura_fatura) }} -
-      {{ formatarParaData(faturaService.faturaAtiva().data_fechamento_fatura) }}
+      {{
+        faturaService.faturaAtiva().data_abertura_fatura.toBrazilianDateString()
+      }}
+      -
+      {{
+        faturaService
+          .faturaAtiva()
+          .data_fechamento_fatura.toBrazilianDateString()
+      }}
       } @else { Mostrando compras dos últimos 30 dias }
     </mat-card-content>
   </mat-card>
@@ -74,9 +81,7 @@
             style="width: 40px"
           ></th>
           <td class="p-2" mat-cell *matCellDef="let element">
-            <mat-icon>{{
-              categoriaCompra(element.codigo_categoria_compra).icon
-            }}</mat-icon>
+            <mat-icon>{{ element.categoria_compra.icon }}</mat-icon>
           </td>
         </ng-container>
         <ng-container matColumnDef="descricao_compra">
@@ -93,7 +98,7 @@
           <th class="p-2 text-center" mat-header-cell *matHeaderCellDef>
             {{
               compraService.somaCategoria(
-                compraService.codigo_categoria_compra()
+                compraService.categoria_compra().codigo
               )
             }}
           </th>
@@ -101,11 +106,11 @@
             {{ element.valor_compra.toBrl() }}
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
         <tr
           mat-row
           (click)="detalhar(element)"
-          *matRowDef="let element; columns: displayedColumns"
+          *matRowDef="let element; columns: columns"
         ></tr>
       </table>
     </mat-card-content>

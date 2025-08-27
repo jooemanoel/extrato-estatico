@@ -1,44 +1,27 @@
 import { HttpHeaders } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UsuarioResposta } from '../shared/models/interfaces/usuario-resposta';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ControleService {
+  private snackBar = inject(MatSnackBar);
   // readonly API = 'http://localhost:8080';
   readonly API = 'https://extrato-api-express.vercel.app';
   carregando = signal(0);
   erro = signal('');
-  usuario = signal<UsuarioResposta>({
-    codigo_usuario: 0,
-    nome_usuario: '',
-  });
   token = signal('');
-  titulosPorPagina: Record<string, string> = {
-    dashboard: 'Painel',
-    'inserir-compra': 'Nova Compra',
-    'detalhar-compra': 'Detalhar Compra',
-    'editar-compra': 'Editar Compra',
-    extrato: 'Extrato',
-    '': 'Bem vindo ao Extrato!',
-    cadastro: 'Cadastro',
-    'painel-faturas': 'Minhas Faturas',
-    'criar-fatura': 'Criar Fatura',
-    'detalhar-fatura': 'Detalhar Fatura',
-    'editar-fatura': 'Editar Fatura',
-  };
-  private snackBar = inject(MatSnackBar);
-  headers() {
-    return new HttpHeaders({
-      Authorization: `Bearer ${this.token()}`,
-    });
-  }
-  showMessage(message: string, action = '') {
+  headers = computed(
+    () =>
+      new HttpHeaders({
+        Authorization: `Bearer ${this.token()}`,
+      })
+  );
+  showMessage(message = '', action = '') {
     return this.snackBar.open(message, action, { duration: 3000 });
   }
-  showErrorMessage(message: string, action = '') {
+  showErrorMessage(message = 'Erro desconhecido', action = '') {
     this.erro.set(message);
     return this.showMessage(message, action);
   }

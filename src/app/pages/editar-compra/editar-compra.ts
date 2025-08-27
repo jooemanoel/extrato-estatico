@@ -64,13 +64,14 @@ export class EditarCompra implements OnInit {
       codigo_compra: this.compraService.compra().codigo_compra ?? 0,
       descricao_compra: this.compraService.compra().descricao_compra,
       valor_compra: this.compraService.compra().valor_compra.value / 100,
-      data_compra: this.compraService.compra().data_compra.toDate(),
+      data_compra: this.compraService.compra().data_compra,
       codigo_categoria_compra:
         this.compraService.compra().categoria_compra.codigo,
     });
   }
 
   atualizar() {
+    console.log(this.formCompra.value);
     const compra: ICompra = {
       codigo_compra: this.formCompra.value.codigo_compra ?? 0,
       descricao_compra: (

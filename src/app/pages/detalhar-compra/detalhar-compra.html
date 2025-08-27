@@ -16,7 +16,7 @@
       <div class="field-row">
         <div class="field-label">DATA</div>
         <div class="field-value">
-          {{ compraService.compra().data_compra.toBrazilianDateString() }}
+          {{ compraService.compra().data_compra.toLocaleDateString("pt-br") }}
         </div>
       </div>
       <div class="field-row">

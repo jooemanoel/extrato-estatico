@@ -6,13 +6,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ControleService } from '../../services/controle-service';
-import { UsuarioService } from '../../services/usuario-service';
-import { UsuarioEntrada } from '../../shared/models/interfaces/usuario-entrada';
-import { normalizar } from '../../shared/utils/functions';
+import { Router } from '@angular/router';
+import { ControleService } from '../../../services/controle-service';
+import { UsuarioEntrada } from '../../../shared/models/interfaces/usuario-entrada';
+import { normalizar } from '../../../shared/utils/functions';
+import { UsuarioService } from '../usuario-service';
 
 @Component({
-  selector: 'app-cadastro',
+  selector: 'app-login',
   imports: [
     ReactiveFormsModule,
     MatCardModule,
@@ -22,33 +23,27 @@ import { normalizar } from '../../shared/utils/functions';
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  templateUrl: './cadastro.html',
-  styleUrl: './cadastro.css',
+  templateUrl: './login.html',
+  styleUrl: './login.css',
 })
-export class Cadastro {
+export class Login {
   controleService = inject(ControleService);
   private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
   hide = true;
-  formCadastro = new FormGroup({
+  formLogin = new FormGroup({
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
   });
-  confirmar_senha_usuario = new FormControl('');
-  compararSenhas() {
-    return (
-      this.formCadastro.value.senha_usuario ===
-      this.confirmar_senha_usuario.value
+
+  login() {
+    this.formLogin.controls.nome_usuario.setValue(
+      normalizar(this.formLogin.value.nome_usuario ?? '')
     );
+    this.usuarioService.login(this.formLogin.value as UsuarioEntrada);
   }
   cadastrar() {
-    if (!this.compararSenhas()) {
-      this.controleService.showMessage('As senhas não são iguais');
-      return;
-    }
-    this.formCadastro.controls.nome_usuario.setValue(
-      normalizar(this.formCadastro.value.nome_usuario ?? '')
-    );
-    this.usuarioService.cadastrar(this.formCadastro.value as UsuarioEntrada);
+    this.router.navigateByUrl('cadastro');
   }
 }

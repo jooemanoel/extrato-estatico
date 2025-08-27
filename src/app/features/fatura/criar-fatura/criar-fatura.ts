@@ -13,11 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import moment from 'moment';
-import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../services/fatura-service';
-import { Timestamp } from '../../shared/models/classes/timestamp';
-import { IFatura } from '../../shared/models/classes/fatura';
-import { BR_DATE_FORMATS } from '../../shared/utils/mock';
+import { ControleService } from '../../../services/controle-service';
+import { FaturaService } from '../fatura-service';
+import { Timestamp } from '../../../shared/models/classes/timestamp';
+import { IFatura } from '../../../shared/models/classes/fatura';
+import { BR_DATE_FORMATS } from '../../../shared/utils/mock';
 
 @Component({
   selector: 'app-criar-fatura',

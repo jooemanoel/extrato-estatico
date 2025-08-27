@@ -24,14 +24,10 @@ export class Fatura {
   }
   static fromDTO(fatura: Partial<IFatura> = {}) {
     return new Fatura(
-      fatura.codigo_fatura ?? 0,
-      fatura.nome_fatura ?? '',
-      fatura.data_abertura_fatura
-        ? new Timestamp(fatura.data_abertura_fatura)
-        : new Timestamp(),
-      fatura.data_fechamento_fatura
-        ? new Timestamp(fatura.data_fechamento_fatura)
-        : new Timestamp()
+      fatura.codigo_fatura,
+      fatura.nome_fatura,
+      new Timestamp(fatura.data_abertura_fatura),
+      new Timestamp(fatura.data_fechamento_fatura)
     );
   }
   static faturaAvulsa(): Fatura {

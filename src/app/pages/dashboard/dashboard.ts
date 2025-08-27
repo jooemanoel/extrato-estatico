@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../services/fatura-service';
+import { FaturaService } from '../../features/fatura/fatura-service';
 import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 
 @Component({
@@ -26,7 +26,7 @@ export class Dashboard implements OnInit {
   faturaService = inject(FaturaService);
   private router = inject(Router);
 
-  CategoriaCompra = CategoriaCompra;
+  categoriasCompra = CategoriaCompra.values;
 
   ngOnInit(): void {
     if (!this.controleService.token()) {

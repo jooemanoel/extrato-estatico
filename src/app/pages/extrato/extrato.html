@@ -89,7 +89,7 @@
             <b>{{ titulo }}</b>
           </th>
           <td class="p-0" mat-cell *matCellDef="let element">
-            <span>{{ element.data_compra.toBrazilianDateString() }}</span>
+            <span>{{ element.data_compra.toLocaleDateString("pt-br") }}</span>
             <br />
             <b>{{ element.descricao_compra.toUpperCase() }}</b>
           </td>

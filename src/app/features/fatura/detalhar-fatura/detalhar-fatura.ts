@@ -4,9 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { CompraService } from '../../services/compra-service';
-import { FaturaService } from '../../services/fatura-service';
-import { Fatura } from '../../shared/models/classes/fatura';
+import { CompraService } from '../../../services/compra-service';
+import { Fatura } from '../../../shared/models/classes/fatura';
+import { FaturaService } from '../fatura-service';
 
 @Component({
   selector: 'app-detalhar-fatura',
@@ -30,7 +30,6 @@ export class DetalharFatura {
       this.faturaService.fatura().codigo_fatura
     ) {
       this.faturaService.faturaAtiva.set(Fatura.fromDTO());
-      localStorage.removeItem('extrato-estatico-fatura');
       this.compraService.listarCompras();
     }
     this.location.back();
@@ -38,10 +37,6 @@ export class DetalharFatura {
   selecionarFatura() {
     this.faturaService.faturaAtiva.set(this.faturaService.fatura());
     this.compraService.listarCompras();
-    localStorage.setItem(
-      'extrato-estatico-fatura',
-      JSON.stringify(this.faturaService.faturaAtiva().toDTO())
-    );
     this.router.navigateByUrl('dashboard');
   }
 }

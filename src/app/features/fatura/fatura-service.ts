@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs';
-import { Fatura, IFatura } from '../shared/models/classes/fatura';
-import { ControleService } from './controle-service';
+import { Fatura, IFatura } from '../../shared/models/classes/fatura';
+import { ControleService } from '../../services/controle-service';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,6 @@ export class FaturaService {
   detectarFaturaMaisProximaDataAtual() {
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
-
     const faturaAtiva = this.listaFaturas().find((fatura) => {
       const inicio = fatura.data_abertura_fatura.toDate();
       const fim = fatura.data_fechamento_fatura.toDate();
@@ -95,6 +94,5 @@ export class FaturaService {
   }
   limparFaturaAtiva() {
     this.faturaAtiva.set(Fatura.fromDTO());
-    localStorage.removeItem('extrato-estatico-fatura');
   }
 }

@@ -8,9 +8,7 @@ import { filter } from 'rxjs';
 import { Erro } from './components/erro/erro';
 import { Header } from './components/header/header';
 import { SideMenu } from './components/side-menu/side-menu';
-import { ControleService } from './services/controle-service';
-import { FaturaService } from './services/fatura-service';
-import { UsuarioService } from './services/usuario-service';
+import { UsuarioService } from './features/usuario/usuario-service';
 
 @Component({
   selector: 'app-root',
@@ -26,15 +24,10 @@ import { UsuarioService } from './services/usuario-service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  @ViewChild(MatSidenav) drawer!: MatSidenav;
   private swUpdate = inject(SwUpdate);
   private snackBar = inject(MatSnackBar);
   private usuarioService = inject(UsuarioService);
-  private faturaService = inject(FaturaService);
-  private controleService = inject(ControleService);
-  get erro() {
-    return this.controleService.erro;
-  }
+  @ViewChild(MatSidenav) drawer!: MatSidenav;
   ngOnInit(): void {
     this.checkForUpdates();
     this.usuarioService.validarToken();

@@ -5,9 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterModule } from '@angular/router';
-import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../services/fatura-service';
-import { Fatura } from '../../shared/models/classes/fatura';
+import { ControleService } from '../../../services/controle-service';
+import { Fatura } from '../../../shared/models/classes/fatura';
+import { FaturaService } from '../fatura-service';
 
 @Component({
   selector: 'app-painel-faturas',

@@ -2,7 +2,7 @@
   <button matMiniFab (click)="alternar()" aria-label="Abrir menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="flex-fill text-center">{{ titulo }}</span>
+  <span class="flex-fill text-center">{{ titulo() }}</span>
   @if(pagina() === 'extrato' || pagina() === 'dashboard') {
   <button matMiniFab routerLink="/inserir-compra">
     <mat-icon>add_shopping_cart</mat-icon>

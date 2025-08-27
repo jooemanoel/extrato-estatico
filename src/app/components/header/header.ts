@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import {
   Component,
+  computed,
   EventEmitter,
   inject,
   OnInit,
@@ -12,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
-import { ControleService } from '../../services/controle-service';
 
 @Component({
   selector: 'app-header',
@@ -22,13 +22,23 @@ import { ControleService } from '../../services/controle-service';
 })
 export class Header implements OnInit {
   @Output() alternarMenu = new EventEmitter();
-  private controleService = inject(ControleService);
   private router = inject(Router);
   private location = inject(Location);
   pagina = signal('');
-  get titulo() {
-    return this.controleService.titulosPorPagina[this.pagina()];
-  }
+  titulosPorPagina: Record<string, string> = {
+    dashboard: 'Painel',
+    'inserir-compra': 'Nova Compra',
+    'detalhar-compra': 'Detalhar Compra',
+    'editar-compra': 'Editar Compra',
+    extrato: 'Extrato',
+    '': 'Bem vindo ao Extrato!',
+    cadastro: 'Cadastro',
+    'painel-faturas': 'Minhas Faturas',
+    'criar-fatura': 'Criar Fatura',
+    'detalhar-fatura': 'Detalhar Fatura',
+    'editar-fatura': 'Editar Fatura',
+  };
+  titulo = computed(() => this.titulosPorPagina[this.pagina()]);
   ngOnInit() {
     this.router.events
       .pipe(filter((x) => x instanceof NavigationEnd))

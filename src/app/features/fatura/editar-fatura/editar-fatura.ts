@@ -12,12 +12,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import moment from 'moment';
-import { CompraService } from '../../services/compra-service';
-import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../services/fatura-service';
-import { Timestamp } from '../../shared/models/classes/timestamp';
-import { Fatura, IFatura } from '../../shared/models/classes/fatura';
-import { BR_DATE_FORMATS } from '../../shared/utils/mock';
+import { CompraService } from '../../../services/compra-service';
+import { ControleService } from '../../../services/controle-service';
+import { Fatura, IFatura } from '../../../shared/models/classes/fatura';
+import { Timestamp } from '../../../shared/models/classes/timestamp';
+import { BR_DATE_FORMATS } from '../../../shared/utils/mock';
+import { FaturaService } from '../fatura-service';
 
 @Component({
   selector: 'app-editar-fatura',

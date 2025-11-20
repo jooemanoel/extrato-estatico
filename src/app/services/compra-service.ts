@@ -11,9 +11,9 @@ import { FaturaService } from '../features/fatura/fatura-service';
   providedIn: 'root',
 })
 export class CompraService {
-  private http = inject(HttpClient);
-  private controleService = inject(ControleService);
-  private faturaService = inject(FaturaService);
+  http = inject(HttpClient);
+  controleService = inject(ControleService);
+  faturaService = inject(FaturaService);
 
   categoria_compra = signal(CategoriaCompra.fromCodigo(0));
   listaCompras = signal<ListaCompras>(new ListaCompras());
@@ -65,7 +65,7 @@ export class CompraService {
     this.controleService.load();
     this.http
       .put<ICompra>(
-        `${this.controleService.API}/compras/${compra.codigo_compra}`,
+        `${this.controleService.API}/compras/${compra.fitid}`,
         compra,
         {
           headers: this.controleService.headers(),
@@ -77,10 +77,10 @@ export class CompraService {
         this.listarCompras();
       });
   }
-  apagarCompra(codigo_compra: number) {
+  apagarCompra(fitid: string) {
     this.controleService.load();
     this.http
-      .delete(`${this.controleService.API}/compras/${codigo_compra}`, {
+      .delete(`${this.controleService.API}/compras/${fitid}`, {
         headers: this.controleService.headers(),
       })
       .pipe(finalize(() => this.controleService.unload()))

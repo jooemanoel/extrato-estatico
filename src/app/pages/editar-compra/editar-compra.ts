@@ -52,7 +52,7 @@ export class EditarCompra implements OnInit {
   CategoriaCompra = CategoriaCompra;
 
   formCompra = new FormGroup({
-    codigo_compra: new FormControl(0),
+    fitid: new FormControl(''),
     descricao_compra: new FormControl(''),
     valor_compra: new FormControl(),
     data_compra: new FormControl(new Date()),
@@ -61,7 +61,7 @@ export class EditarCompra implements OnInit {
 
   ngOnInit() {
     this.formCompra.setValue({
-      codigo_compra: this.compraService.compra().codigo_compra ?? 0,
+      fitid: this.compraService.compra().fitid ?? '',
       descricao_compra: this.compraService.compra().descricao_compra,
       valor_compra: this.compraService.compra().valor_compra.value / 100,
       data_compra: this.compraService.compra().data_compra,
@@ -73,7 +73,8 @@ export class EditarCompra implements OnInit {
   atualizar() {
     console.log(this.formCompra.value);
     const compra: ICompra = {
-      codigo_compra: this.formCompra.value.codigo_compra ?? 0,
+      fitid: this.formCompra.value.fitid ?? '',
+      trntype: 'PAYMENT',
       descricao_compra: (
         this.formCompra.value.descricao_compra ?? ''
       ).toUpperCase(),

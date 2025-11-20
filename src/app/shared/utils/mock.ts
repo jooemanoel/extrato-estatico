@@ -4,7 +4,8 @@ import { IFatura } from '../models/classes/fatura';
 export class Mock {
   static compraVazia(): ICompra {
     return {
-      codigo_compra: 0,
+      fitid: '',
+      trntype: '',
       descricao_compra: '',
       valor_compra: 0,
       data_compra: '',

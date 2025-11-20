@@ -20,7 +20,7 @@ export class DetalharCompra {
     this.router.navigateByUrl('editar-compra');
   }
   apagarCompra() {
-    this.compraService.apagarCompra(this.compraService.compra().codigo_compra);
+    this.compraService.apagarCompra(this.compraService.compra().fitid);
     this.location.back();
   }
 }

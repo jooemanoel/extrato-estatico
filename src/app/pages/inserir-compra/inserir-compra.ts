@@ -52,7 +52,7 @@ export class InserirCompra {
   CategoriaCompra = CategoriaCompra;
 
   formCompra = new FormGroup({
-    codigo_compra: new FormControl(0),
+    fitid: new FormControl(''),
     descricao_compra: new FormControl(''),
     valor_compra: new FormControl(),
     data_compra: new FormControl(new Date()),
@@ -61,7 +61,8 @@ export class InserirCompra {
 
   adicionar() {
     const compra: ICompra = {
-      codigo_compra: 0,
+      fitid: '',
+      trntype: 'PAYMENT',
       descricao_compra: (
         this.formCompra.value.descricao_compra ?? ''
       ).toUpperCase(),

@@ -16,6 +16,6 @@ export class Currency {
         })
     }
     static formatValue(value = 0) {
-        return Math.floor(value * 100);
+        return Math.round(value * 100);
     }
 }

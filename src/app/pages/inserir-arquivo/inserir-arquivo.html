@@ -1,0 +1,19 @@
+<div class="container p-2">
+  <mat-card appearance="filled">
+    <mat-card-content class="d-flex flex-column p-2 gap-2">
+      <input type="file" accept=".ofx" (change)="lerArquivo($event)" />
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="w-100" matButton="filled">Adicionar</button>
+    </mat-card-actions>
+  </mat-card>
+  @if(tabela.length > 0){
+  <mat-card appearance="filled" class="pt-2">
+    <mat-card-content class="d-flex flex-column p-2 gap-2">
+      @for(t of tabela; track t) {
+      <div>{{ t.DTPOSTED }} - {{ t.MEMO }} - {{ t.TRNAMT }}</div>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+</div>

@@ -10,6 +10,7 @@ import { DetalharCompra } from './pages/detalhar-compra/detalhar-compra';
 import { EditarCompra } from './pages/editar-compra/editar-compra';
 import { Extrato } from './pages/extrato/extrato';
 import { InserirCompra } from './pages/inserir-compra/inserir-compra';
+import { InserirArquivo } from './pages/inserir-arquivo/inserir-arquivo';
 
 export const routes: Routes = [
   { path: '', component: Login },
@@ -23,4 +24,5 @@ export const routes: Routes = [
   { path: 'criar-fatura', component: CriarFatura },
   { path: 'detalhar-fatura', component: DetalharFatura },
   { path: 'editar-fatura', component: EditarFatura },
+  { path: 'inserir-arquivo', component: InserirArquivo },
 ];

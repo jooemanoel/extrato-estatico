@@ -7,12 +7,10 @@
       <button class="w-100" matButton="filled">Adicionar</button>
     </mat-card-actions>
   </mat-card>
-  @if(tabela.length > 0){
+  @if(resposta){
   <mat-card appearance="filled" class="pt-2">
     <mat-card-content class="d-flex flex-column p-2 gap-2">
-      @for(t of tabela; track t) {
-      <div>{{ t.DTPOSTED }} - {{ t.MEMO }} - {{ t.TRNAMT }}</div>
-      }
+      <pre>{{ resposta }}</pre>
     </mat-card-content>
   </mat-card>
   }

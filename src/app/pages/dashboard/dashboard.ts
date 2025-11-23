@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../features/fatura/fatura-service';
+import { FaturaService } from '../fatura/fatura-service';
 import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 
 @Component({

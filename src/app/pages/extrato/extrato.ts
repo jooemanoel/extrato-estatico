@@ -7,7 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterModule } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
 import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../features/fatura/fatura-service';
+import { FaturaService } from '../fatura/fatura-service';
 import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 import { Compra } from '../../shared/models/classes/compra';
 

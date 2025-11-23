@@ -8,7 +8,7 @@ import { filter } from 'rxjs';
 import { Erro } from './components/erro/erro';
 import { Header } from './components/header/header';
 import { SideMenu } from './components/side-menu/side-menu';
-import { UsuarioService } from './features/usuario/usuario-service';
+import { UsuarioService } from './pages/usuario/usuario-service';
 
 @Component({
   selector: 'app-root',

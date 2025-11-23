@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { ControleService } from '../../services/controle-service';
-import { FaturaService } from '../../features/fatura/fatura-service';
+import { FaturaService } from '../../pages/fatura/fatura-service';
 
 @Component({
   selector: 'app-side-menu',

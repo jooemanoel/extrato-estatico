@@ -5,7 +5,7 @@ import { CategoriaCompra } from '../shared/models/classes/categoria-compra';
 import { Compra, ICompra } from '../shared/models/classes/compra';
 import { ListaCompras } from '../shared/models/classes/lista-compras';
 import { ControleService } from './controle-service';
-import { FaturaService } from '../features/fatura/fatura-service';
+import { FaturaService } from '../pages/fatura/fatura-service';
 
 @Injectable({
   providedIn: 'root',

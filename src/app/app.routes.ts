@@ -1,16 +1,16 @@
 import { Routes } from '@angular/router';
-import { CriarFatura } from './features/fatura/criar-fatura/criar-fatura';
-import { DetalharFatura } from './features/fatura/detalhar-fatura/detalhar-fatura';
-import { EditarFatura } from './features/fatura/editar-fatura/editar-fatura';
-import { PainelFaturas } from './features/fatura/painel-faturas/painel-faturas';
-import { Cadastro } from './features/usuario/cadastro/cadastro';
-import { Login } from './features/usuario/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { DetalharCompra } from './pages/detalhar-compra/detalhar-compra';
 import { EditarCompra } from './pages/editar-compra/editar-compra';
 import { Extrato } from './pages/extrato/extrato';
-import { InserirCompra } from './pages/inserir-compra/inserir-compra';
+import { CriarFatura } from './pages/fatura/criar-fatura/criar-fatura';
+import { DetalharFatura } from './pages/fatura/detalhar-fatura/detalhar-fatura';
+import { EditarFatura } from './pages/fatura/editar-fatura/editar-fatura';
+import { PainelFaturas } from './pages/fatura/painel-faturas/painel-faturas';
 import { InserirArquivo } from './pages/inserir-arquivo/inserir-arquivo';
+import { InserirCompra } from './pages/inserir-compra/inserir-compra';
+import { Cadastro } from './pages/usuario/cadastro/cadastro';
+import { Login } from './pages/usuario/login/login';
 
 export const routes: Routes = [
   { path: '', component: Login },

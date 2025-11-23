@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ControleService } from '../../services/controle-service';
-import { OfxResponse, OfxTransacao } from '../../shared/models/interfaces/dados.ofx';
+import { OfxResponse } from '../../shared/models/interfaces/dados.ofx';
 
 @Component({
   selector: 'app-inserir-arquivo',
@@ -14,9 +14,7 @@ import { OfxResponse, OfxTransacao } from '../../shared/models/interfaces/dados.
 export class InserirArquivo {
   http = inject(HttpClient);
   controleService = inject(ControleService);
-
-  dadosOfx: OfxResponse | null = null;
-  tabela: OfxTransacao[] = [];
+  resposta: string | null = null;
 
   lerArquivo(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -33,13 +31,8 @@ export class InserirArquivo {
       })
       .subscribe({
         next: (data) => {
-          this.dadosOfx = data;
-          this.tabela =
-            data.dados.OFX.CREDITCARDMSGSRSV1?.CCSTMTTRNRS?.CCSTMTRS
-              ?.BANKTRANLIST?.STMTTRN || [];
-
-          console.log('JSON do OFX:', data);
-          console.log('Tabela:', this.tabela);
+          this.resposta = JSON.stringify(data, null, 2);
+          console.log(data);
         },
         error: (err) => console.error(err),
       });

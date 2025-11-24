@@ -28,10 +28,11 @@ import { UsuarioService } from '../usuario-service';
 })
 export class Login {
   controleService = inject(ControleService);
-  private usuarioService = inject(UsuarioService);
-  private router = inject(Router);
+  usuarioService = inject(UsuarioService);
+  router = inject(Router);
 
   hide = true;
+
   formLogin = new FormGroup({
     nome_usuario: new FormControl(''),
     senha_usuario: new FormControl(''),
@@ -43,6 +44,7 @@ export class Login {
     );
     this.usuarioService.login(this.formLogin.value as UsuarioEntrada);
   }
+
   cadastrar() {
     this.router.navigateByUrl('cadastro');
   }

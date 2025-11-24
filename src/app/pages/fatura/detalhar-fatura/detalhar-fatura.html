@@ -1,5 +1,6 @@
 <div class="container p-2 d-flex flex-column gap-2">
   <mat-card appearance="filled">
+    @if(faturaService.fatura().codigo_fatura) {
     <mat-card-content>
       <div class="field-row">
         <div class="field-label">NOME</div>
@@ -32,6 +33,7 @@
         Apagar
       </button>
     </mat-card-actions>
+    }
   </mat-card>
   <mat-card appearance="filled">
     <mat-card-actions>

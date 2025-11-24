@@ -25,7 +25,7 @@ import { FaturaService } from '../fatura-service';
 export class PainelFaturas implements OnInit {
   faturaService = inject(FaturaService);
   controleService = inject(ControleService);
-  private router = inject(Router);
+  router = inject(Router);
 
   displayedColumns: string[] = ['nome_fatura', 'chevron'];
   dataSource = new MatTableDataSource<Fatura>([]);
@@ -39,6 +39,7 @@ export class PainelFaturas implements OnInit {
       this.router.navigateByUrl('');
     }
   }
+
   detalhar(element: Fatura) {
     this.faturaService.fatura.set(element);
     this.router.navigateByUrl('detalhar-fatura');

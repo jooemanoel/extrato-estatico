@@ -22,9 +22,9 @@ import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
 })
 export class Dashboard implements OnInit {
   controleService = inject(ControleService);
-  private compraService = inject(CompraService);
+  compraService = inject(CompraService);
   faturaService = inject(FaturaService);
-  private router = inject(Router);
+  router = inject(Router);
 
   categoriasCompra = CategoriaCompra.values;
 

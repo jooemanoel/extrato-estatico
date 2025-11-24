@@ -9,6 +9,7 @@ export interface ICompra {
   valor_compra: number;
   data_compra: string;
   codigo_categoria_compra: number;
+  codigo_fatura: number;
 }
 
 export class Compra {
@@ -18,7 +19,8 @@ export class Compra {
     readonly descricao_compra = '',
     readonly valor_compra = new Currency(0),
     readonly data_compra = new Data(),
-    readonly categoria_compra = CategoriaCompra.fromCodigo(0)
+    readonly categoria_compra = CategoriaCompra.fromCodigo(0),
+    readonly codigo_fatura = 0
   ) {}
   static fromDTO(compra: Partial<ICompra> = {}) {
     return new Compra(
@@ -27,7 +29,8 @@ export class Compra {
       compra.descricao_compra ?? '',
       new Currency(compra.valor_compra ?? 0),
       new Data(compra.data_compra),
-      CategoriaCompra.fromCodigo(compra.codigo_categoria_compra ?? 0)
+      CategoriaCompra.fromCodigo(compra.codigo_categoria_compra ?? 0),
+      compra.codigo_fatura ?? 0
     );
   }
 }

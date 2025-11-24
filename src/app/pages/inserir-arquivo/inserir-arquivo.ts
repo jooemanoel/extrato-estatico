@@ -4,10 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ControleService } from '../../services/controle-service';
 import { OfxResponse } from '../../shared/models/interfaces/dados.ofx';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-inserir-arquivo',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './inserir-arquivo.html',
   styleUrl: './inserir-arquivo.css',
 })

@@ -51,27 +51,27 @@ export class InserirCompra {
 
   CategoriaCompra = CategoriaCompra;
 
-  formCompra = new FormGroup({
+  form = new FormGroup({
     fitid: new FormControl(''),
+    trntype: new FormControl('PAYMENT'),
     descricao_compra: new FormControl(''),
     valor_compra: new FormControl(),
     data_compra: new FormControl(new Date()),
-    codigo_categoria_compra: new FormControl(1),
+    codigo_categoria_compra: new FormControl(0),
+    codigo_fatura: new FormControl(0),
   });
 
   adicionar() {
     const compra: ICompra = {
       fitid: '',
       trntype: 'PAYMENT',
-      descricao_compra: (
-        this.formCompra.value.descricao_compra ?? ''
-      ).toUpperCase(),
+      descricao_compra: (this.form.value.descricao_compra ?? '').toUpperCase(),
       data_compra: Timestamp.fromDate(
-        moment(this.formCompra.value.data_compra).toDate()
+        moment(this.form.value.data_compra).toDate()
       ).toDateString(),
-      valor_compra: Currency.formatValue(this.formCompra.value.valor_compra),
-      codigo_categoria_compra:
-        this.formCompra.value.codigo_categoria_compra ?? 1,
+      valor_compra: Currency.formatValue(this.form.value.valor_compra),
+      codigo_categoria_compra: Number(this.form.value.codigo_categoria_compra),
+      codigo_fatura: Number(this.form.value.codigo_fatura),
     };
     this.compraService.inserirCompra(compra);
     this.router.navigateByUrl('extrato');

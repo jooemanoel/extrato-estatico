@@ -1,5 +1,5 @@
 <div class="container p-2">
-  <form [formGroup]="formCompra">
+  <form [formGroup]="form">
     <mat-card appearance="filled">
       <mat-card-content class="d-flex flex-column p-2 gap-2">
         <mat-form-field class="w-100">
@@ -49,7 +49,7 @@
           matButton="filled"
           (click)="adicionar()"
           [disabled]="
-            !formCompra.value.valor_compra || !formCompra.value.descricao_compra
+            !form.value.valor_compra || !form.value.descricao_compra
           "
         >
           Adicionar

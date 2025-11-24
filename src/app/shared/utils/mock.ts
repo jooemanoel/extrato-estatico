@@ -10,6 +10,7 @@ export class Mock {
       valor_compra: 0,
       data_compra: '',
       codigo_categoria_compra: 0,
+      codigo_fatura: 0,
     };
   }
   static faturaVazia(): IFatura {

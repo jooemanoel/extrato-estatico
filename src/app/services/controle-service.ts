@@ -6,9 +6,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class ControleService {
-  private snackBar = inject(MatSnackBar);
-  // readonly API = 'http://localhost:8080';
-  readonly API = 'https://extrato-api-express.vercel.app';
+  snackBar = inject(MatSnackBar);
+
+  readonly API = 'http://localhost:8080';
+  // readonly API = 'https://extrato-api-express.vercel.app';
+
   carregando = signal(0);
   erro = signal('');
   token = signal('');
@@ -18,19 +20,24 @@ export class ControleService {
         Authorization: `Bearer ${this.token()}`,
       })
   );
+
   showMessage(message = '', action = '') {
     return this.snackBar.open(message, action, { duration: 3000 });
   }
+
   showErrorMessage(message = 'Erro desconhecido', action = '') {
     this.erro.set(message);
     return this.showMessage(message, action);
   }
+
   load() {
     this.carregando.update((x) => x + 1);
   }
+
   unload() {
     this.carregando.update((x) => x - 1);
   }
+
   limparToken() {
     this.token.set('');
     localStorage.removeItem('extrato-estatico-token');

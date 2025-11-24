@@ -65,9 +65,11 @@
             *matCellDef="let element"
             style="width: 40px"
           >
+            @if(element.codigo_fatura) {
             <button matIconButton [attr.aria-label]="'Detalhar'">
               <mat-icon>chevron_right</mat-icon>
             </button>
+            }
           </td>
         </ng-container>
         <tr

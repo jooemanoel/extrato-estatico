@@ -1,10 +1,22 @@
 <div class="container p-2">
   <mat-card appearance="filled">
     <mat-card-content class="d-flex flex-column p-2 gap-2">
-      <input type="file" accept=".ofx" (change)="lerArquivo($event)" />
+      <input
+        class="visually-hidden"
+        #fileInput
+        type="file"
+        accept=".ofx"
+        (change)="lerArquivo($event)"
+      />
     </mat-card-content>
     <mat-card-actions>
-      <button class="w-100" matButton="filled">Adicionar</button>
+      <button
+        class="w-100"
+        matButton="filled"
+        (click)="fileInput.value = ''; fileInput.click()"
+      >
+        Adicionar
+      </button>
     </mat-card-actions>
   </mat-card>
   @if(resposta){

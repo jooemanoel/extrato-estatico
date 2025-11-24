@@ -37,6 +37,7 @@ export class Header implements OnInit {
     'criar-fatura': 'Criar Fatura',
     'detalhar-fatura': 'Detalhar Fatura',
     'editar-fatura': 'Editar Fatura',
+    'inserir-arquivo': 'Inserir Arquivo',
   };
   titulo = computed(() => this.titulosPorPagina[this.pagina()]);
   ngOnInit() {

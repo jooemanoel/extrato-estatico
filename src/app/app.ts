@@ -24,14 +24,17 @@ import { UsuarioService } from './pages/usuario/usuario-service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  private swUpdate = inject(SwUpdate);
-  private snackBar = inject(MatSnackBar);
-  private usuarioService = inject(UsuarioService);
+  swUpdate = inject(SwUpdate);
+  snackBar = inject(MatSnackBar);
+  usuarioService = inject(UsuarioService);
+
   @ViewChild(MatSidenav) drawer!: MatSidenav;
+
   ngOnInit(): void {
     this.checkForUpdates();
     this.usuarioService.validarToken();
   }
+
   checkForUpdates() {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates
@@ -48,9 +51,11 @@ export class App implements OnInit {
         });
     }
   }
+
   alternarMenu() {
     this.drawer?.toggle();
   }
+
   closeMenu() {
     this.drawer?.close();
   }

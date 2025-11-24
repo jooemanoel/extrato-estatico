@@ -15,11 +15,12 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CompraService } from '../../services/compra-service';
+import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
+import { ICompra } from '../../shared/models/classes/compra';
 import { Currency } from '../../shared/models/classes/currency';
 import { Timestamp } from '../../shared/models/classes/timestamp';
-import { ICompra } from '../../shared/models/classes/compra';
 import { BR_DATE_FORMATS } from '../../shared/utils/mock';
-import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
+import { FaturaService } from '../fatura/fatura-service';
 
 @Component({
   selector: 'app-editar-compra',
@@ -46,44 +47,47 @@ import { CategoriaCompra } from '../../shared/models/classes/categoria-compra';
   styleUrl: './editar-compra.css',
 })
 export class EditarCompra implements OnInit {
-  private compraService = inject(CompraService);
-  private router = inject(Router);
+  router = inject(Router);
+  compraService = inject(CompraService);
+  faturaService = inject(FaturaService);
 
   CategoriaCompra = CategoriaCompra;
 
-  formCompra = new FormGroup({
+  form = new FormGroup({
     fitid: new FormControl(''),
+    trntype: new FormControl('PAYMENT'),
     descricao_compra: new FormControl(''),
     valor_compra: new FormControl(),
     data_compra: new FormControl(new Date()),
-    codigo_categoria_compra: new FormControl(1),
+    codigo_categoria_compra: new FormControl(0),
+    codigo_fatura: new FormControl(0),
   });
 
   ngOnInit() {
-    this.formCompra.setValue({
-      fitid: this.compraService.compra().fitid ?? '',
+    this.form.setValue({
+      fitid: this.compraService.compra().fitid,
+      trntype: this.compraService.compra().trntype,
       descricao_compra: this.compraService.compra().descricao_compra,
       valor_compra: this.compraService.compra().valor_compra.value / 100,
       data_compra: this.compraService.compra().data_compra,
       codigo_categoria_compra:
         this.compraService.compra().categoria_compra.codigo,
+      codigo_fatura: this.compraService.compra().codigo_fatura,
     });
   }
 
   atualizar() {
-    console.log(this.formCompra.value);
+    console.log('editar-compra-component', this.form.value);
     const compra: ICompra = {
-      fitid: this.formCompra.value.fitid ?? '',
-      trntype: 'PAYMENT',
-      descricao_compra: (
-        this.formCompra.value.descricao_compra ?? ''
-      ).toUpperCase(),
+      fitid: String(this.form.value.fitid),
+      trntype: String(this.form.value.trntype),
+      descricao_compra: (this.form.value.descricao_compra ?? '').toUpperCase(),
       data_compra: Timestamp.fromDate(
-        moment(this.formCompra.value.data_compra).toDate()
+        moment(this.form.value.data_compra).toDate()
       ).toDateString(),
-      valor_compra: Currency.formatValue(this.formCompra.value.valor_compra),
-      codigo_categoria_compra:
-        this.formCompra.value.codigo_categoria_compra ?? 1,
+      valor_compra: Currency.formatValue(this.form.value.valor_compra),
+      codigo_categoria_compra: Number(this.form.value.codigo_categoria_compra),
+      codigo_fatura: Number(this.form.value.codigo_fatura),
     };
     this.compraService.editarCompra(compra);
     this.router.navigateByUrl('extrato');

@@ -16,13 +16,14 @@ import { FaturaService } from '../fatura-service';
 })
 export class DetalharFatura {
   faturaService = inject(FaturaService);
-  private compraService = inject(CompraService);
-  private router = inject(Router);
-  private location = inject(Location);
+  compraService = inject(CompraService);
+  router = inject(Router);
+  location = inject(Location);
 
   editarFatura() {
     this.router.navigateByUrl('editar-fatura');
   }
+
   apagarFatura() {
     this.faturaService.apagarFatura(this.faturaService.fatura().codigo_fatura);
     if (
@@ -34,6 +35,7 @@ export class DetalharFatura {
     }
     this.location.back();
   }
+
   selecionarFatura() {
     this.faturaService.faturaAtiva.set(this.faturaService.fatura());
     this.compraService.listarCompras();

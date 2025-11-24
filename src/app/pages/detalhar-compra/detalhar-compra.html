@@ -2,6 +2,12 @@
   <mat-card appearance="filled">
     <mat-card-content>
       <div class="field-row">
+        <div class="field-label">ID</div>
+        <div class="field-value">
+          {{ compraService.compra().fitid }}
+        </div>
+      </div>
+      <div class="field-row">
         <div class="field-label">DESCRIÇÃO</div>
         <div class="field-value">
           {{ compraService.compra().descricao_compra }}
@@ -28,12 +34,21 @@
           {{ compraService.compra().categoria_compra.nome }}
         </div>
       </div>
+      <div class="field-row">
+        <div class="field-label">FATURA</div>
+        <div class="field-value">
+          {{
+            faturaService.getByCodigo(compraService.compra().codigo_fatura)
+              ?.nome_fatura
+          }}
+        </div>
+      </div>
     </mat-card-content>
-    <mat-card-actions class="d-flex gap-2">
-      <button class="w-50" matButton="filled" (click)="editarCompra()">
+    <mat-card-actions class="d-flex flex-column flex-lg-row gap-2">
+      <button class="w-100 w-lg-50" matButton="filled" (click)="editarCompra()">
         Editar
       </button>
-      <button class="w-50" matButton="filled" (click)="apagarCompra()">
+      <button class="w-100 w-lg-50" matButton="filled" (click)="apagarCompra()">
         Apagar
       </button>
     </mat-card-actions>

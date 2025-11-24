@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CompraService } from '../../services/compra-service';
+import { FaturaService } from '../fatura/fatura-service';
 
 @Component({
   selector: 'app-detalhar-compra',
@@ -14,8 +15,9 @@ import { CompraService } from '../../services/compra-service';
 })
 export class DetalharCompra {
   compraService = inject(CompraService);
-  private router = inject(Router);
-  private location = inject(Location);
+  faturaService = inject(FaturaService);
+  router = inject(Router);
+  location = inject(Location);
   editarCompra() {
     this.router.navigateByUrl('editar-compra');
   }

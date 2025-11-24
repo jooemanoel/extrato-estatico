@@ -8,14 +8,19 @@ import { ControleService } from '../../services/controle-service';
   providedIn: 'root',
 })
 export class FaturaService {
-  // Dependências
   private controleService = inject(ControleService);
   private http = inject(HttpClient);
-  // Atributos
-  listaFaturas = signal<Fatura[]>([]);
+
+  listaFaturas = signal<Fatura[]>([Fatura.faturaAvulsa()]);
   fatura = signal<Fatura>(Fatura.fromDTO());
   faturaAtiva = signal<Fatura>(Fatura.fromDTO());
-  // Métodos
+
+  getByCodigo(codigo_fatura: number) {
+    return this.listaFaturas().find(
+      (fatura) => fatura.codigo_fatura === codigo_fatura
+    );
+  }
+
   listarFaturas() {
     this.controleService.load();
     this.http
@@ -24,8 +29,10 @@ export class FaturaService {
       })
       .pipe(finalize(() => this.controleService.unload()))
       .subscribe({
-        next: (faturas) => {
-          this.listaFaturas.set(faturas.map((x) => Fatura.fromDTO(x)));
+        next: (res) => {
+          const faturas = res.map((x) => Fatura.fromDTO(x));
+          faturas.unshift(Fatura.faturaAvulsa());
+          this.listaFaturas.set(faturas);
           this.detectarFaturaMaisProximaDataAtual();
         },
         error: (res) => {
@@ -35,6 +42,7 @@ export class FaturaService {
         },
       });
   }
+
   detectarFaturaMaisProximaDataAtual() {
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
@@ -48,10 +56,10 @@ export class FaturaService {
     if (faturaAtiva) {
       this.faturaAtiva.set(faturaAtiva);
     } else {
-      // se nenhuma fatura encontrada, pode definir como avulsa
       this.faturaAtiva.set(Fatura.faturaAvulsa());
     }
   }
+
   inserirFatura(fatura: IFatura) {
     this.controleService.load();
     this.http
@@ -64,6 +72,7 @@ export class FaturaService {
         this.listarFaturas();
       });
   }
+
   editarFatura(fatura: IFatura) {
     this.controleService.load();
     this.http
@@ -80,6 +89,7 @@ export class FaturaService {
         this.listarFaturas();
       });
   }
+
   apagarFatura(codigo_fatura: number) {
     this.controleService.load();
     this.http
@@ -92,6 +102,7 @@ export class FaturaService {
         this.listarFaturas();
       });
   }
+
   limparFaturaAtiva() {
     this.faturaAtiva.set(Fatura.fromDTO());
   }

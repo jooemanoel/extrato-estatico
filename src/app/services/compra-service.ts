@@ -26,12 +26,36 @@ export class CompraService {
     }
   });
 
+  // listarCompras() {
+  //   console.log('Listar Compras');
+  //   this.controleService.load();
+  //   this.http
+  //     .post<ICompra[]>(
+  //       `${this.controleService.API}/compras/por-data`,
+  //       this.faturaService.faturaAtiva().toDTO(),
+  //       {
+  //         headers: this.controleService.headers(),
+  //       }
+  //     )
+  //     .pipe(finalize(() => this.controleService.unload()))
+  //     .subscribe({
+  //       next: (compras) => {
+  //         this.listaCompras.set(new ListaCompras(compras));
+  //       },
+  //       error: (res) => {
+  //         this.controleService.showErrorMessage(
+  //           res?.error?.message ?? 'Erro desconhecido'
+  //         );
+  //       },
+  //     });
+  // }
+
   listarCompras() {
     console.log('Listar Compras');
     this.controleService.load();
     this.http
       .post<ICompra[]>(
-        `${this.controleService.API}/compras/por-data`,
+        `${this.controleService.API}/compras/por-fatura`,
         this.faturaService.faturaAtiva().toDTO(),
         {
           headers: this.controleService.headers(),
@@ -49,6 +73,7 @@ export class CompraService {
         },
       });
   }
+
   inserirCompra(compra: ICompra) {
     this.controleService.load();
     this.http
@@ -61,6 +86,7 @@ export class CompraService {
         this.listarCompras();
       });
   }
+
   editarCompra(compra: ICompra) {
     this.controleService.load();
     this.http
@@ -77,6 +103,7 @@ export class CompraService {
         this.listarCompras();
       });
   }
+
   apagarCompra(fitid: string) {
     this.controleService.load();
     this.http
@@ -89,12 +116,15 @@ export class CompraService {
         this.listarCompras();
       });
   }
+
   somaCategoria(codigo_categoria_compra: number) {
     return this.listaCompras().somaCategoria(codigo_categoria_compra);
   }
+
   mudarCategoria(categoria: CategoriaCompra = CategoriaCompra.fromCodigo(0)) {
     this.categoria_compra.set(categoria);
   }
+
   limparCategoria() {
     this.categoria_compra.set(CategoriaCompra.fromCodigo(0));
   }

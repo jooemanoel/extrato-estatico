@@ -14,6 +14,7 @@ export class Fatura {
     readonly data_abertura_fatura = new Timestamp(),
     readonly data_fechamento_fatura = new Timestamp()
   ) {}
+
   toDTO(): IFatura {
     return {
       codigo_fatura: this.codigo_fatura,
@@ -22,6 +23,7 @@ export class Fatura {
       data_fechamento_fatura: this.data_fechamento_fatura.toString(),
     };
   }
+
   static fromDTO(fatura: Partial<IFatura> = {}) {
     return new Fatura(
       fatura.codigo_fatura,
@@ -30,15 +32,15 @@ export class Fatura {
       new Timestamp(fatura.data_fechamento_fatura)
     );
   }
+
   static faturaAvulsa(): Fatura {
-    const dataAtual = new Date();
-    const data30DiasAtras = new Date(dataAtual);
-    data30DiasAtras.setDate(data30DiasAtras.getDate() - 30);
+    const dataMinima = new Date('1970-01-01T12:00:00Z');
+    const dataMaxima = new Date('2100-01-01T12:00:00Z');
     return new Fatura(
       0,
-      'AVULSA',
-      Timestamp.fromDate(data30DiasAtras),
-      Timestamp.fromDate(dataAtual)
+      'SEM FATURA',
+      Timestamp.fromDate(dataMinima),
+      Timestamp.fromDate(dataMaxima)
     );
   }
 }

@@ -34,13 +34,11 @@ export class Fatura {
   }
 
   static faturaAvulsa(): Fatura {
-    const dataMinima = new Date('1970-01-01T12:00:00Z');
-    const dataMaxima = new Date('2100-01-01T12:00:00Z');
     return new Fatura(
       0,
       'SEM FATURA',
-      Timestamp.fromDate(dataMinima),
-      Timestamp.fromDate(dataMaxima)
+      Timestamp.fromDate(new Date(0)),
+      Timestamp.fromDate(new Date(0))
     );
   }
 }

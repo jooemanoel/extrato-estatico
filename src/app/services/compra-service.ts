@@ -56,7 +56,9 @@ export class CompraService {
     this.http
       .post<ICompra[]>(
         `${this.controleService.API}/compras/por-fatura`,
-        this.faturaService.faturaAtiva().toDTO(),
+        {
+          codigo_fatura: this.faturaService.faturaAtiva().codigo_fatura
+        },
         {
           headers: this.controleService.headers(),
         }

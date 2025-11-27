@@ -2,16 +2,16 @@
   <mat-card appearance="filled">
     <mat-card-content class="d-flex flex-column p-2 gap-2">
       <mat-form-field>
-          <mat-label>Fatura</mat-label>
-          <mat-select [formControl]="codigo_fatura">
-            @for(fatura of faturaService.listaFaturas(); track
-            fatura.codigo_fatura) {
-            <mat-option [value]="fatura.codigo_fatura">{{
-              fatura.nome_fatura
-            }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        <mat-label>Fatura</mat-label>
+        <mat-select [formControl]="codigo_fatura">
+          @for(fatura of faturaService.listaFaturas(); track
+          fatura.codigo_fatura) {
+          <mat-option [value]="fatura.codigo_fatura">{{
+            fatura.nome_fatura
+          }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
       <input
         class="visually-hidden"
         #fileInput
@@ -19,12 +19,13 @@
         accept=".ofx"
         (change)="lerArquivo($event)"
       />
+      <pre #resultado id="resultado"></pre>
     </mat-card-content>
     <mat-card-actions>
       <button
         class="w-100"
         matButton="filled"
-        (click)="fileInput.value = ''; fileInput.click()"
+        (click)="fileInput.value = ''; resposta = null; fileInput.click()"
       >
         Adicionar
       </button>

@@ -1,3 +1,15 @@
+export interface OfxData {
+  CREDITCARDMSGSRSV1: {
+    CCSTMTTRNRS: {
+      CCSTMTRS: {
+        BANKTRANLIST: {
+          STMTTRN: OfxTransacao[];
+        };
+      };
+    };
+  };
+}
+
 export interface OfxTransacao {
   TRNAMT: string;
   DTPOSTED: string;

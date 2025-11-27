@@ -8,8 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ControleService {
   snackBar = inject(MatSnackBar);
 
-  readonly API = 'http://localhost:8080';
-  // readonly API = 'https://extrato-api-express.vercel.app';
+  // readonly API = 'http://localhost:8080';
+  readonly API = 'https://extrato-api-express.vercel.app';
 
   carregando = signal(0);
   erro = signal('');

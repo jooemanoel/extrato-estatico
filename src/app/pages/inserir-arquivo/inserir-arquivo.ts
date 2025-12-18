@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
@@ -28,6 +29,7 @@ type XmlJson =
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   templateUrl: './inserir-arquivo.html',
   styleUrl: './inserir-arquivo.css',
@@ -40,6 +42,7 @@ export class InserirArquivo {
   router = inject(Router);
 
   codigo_fatura = new FormControl(0);
+  excluir_compras_anteriores = new FormControl(true);
 
   resposta: string | null = null;
 
@@ -104,15 +107,15 @@ export class InserirArquivo {
       json?.CREDITCARDMSGSRSV1?.CCSTMTTRNRS?.CCSTMTRS?.BANKTRANLIST?.STMTTRN ||
       [];
 
-    const comprasParaInserir: ICompra[] = compras.map((transacao) =>
-      this.criarCompra(transacao)
-    );
+    const comprasParaInserir: ICompra[] = compras
+      .filter((compra) => !compra.MEMO?.startsWith('PGTO'))
+      .map((transacao) => this.criarCompra(transacao));
 
     console.log('comprasParaInserir', comprasParaInserir);
 
     this.resposta = JSON.stringify(comprasParaInserir, null, 2);
 
-    this.apagarComprasFatura();
+    if (this.excluir_compras_anteriores.value) this.apagarComprasFatura();
 
     this.compraService.inserirCompras(comprasParaInserir);
     this.router.navigateByUrl('dashboard');
@@ -123,7 +126,7 @@ export class InserirArquivo {
       fitid: String(ofxTransacao.FITID),
       trntype: String(ofxTransacao.TRNTYPE),
       descricao_compra: String(ofxTransacao.MEMO),
-      valor_compra: Number(ofxTransacao.TRNAMT) * 100,
+      valor_compra: Math.round(Number(ofxTransacao.TRNAMT) * 100),
       data_compra: this.formatarData(String(ofxTransacao.DTPOSTED)),
       codigo_categoria_compra: 0,
       codigo_fatura: Number(this.codigo_fatura.value),

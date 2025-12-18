@@ -19,6 +19,9 @@
         accept=".ofx"
         (change)="lerArquivo($event)"
       />
+      <mat-checkbox [formControl]="excluir_compras_anteriores"
+        >Apagar todas as compras anteriores da fatura</mat-checkbox
+      >
       <pre #resultado id="resultado"></pre>
     </mat-card-content>
     <mat-card-actions>
